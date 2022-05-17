@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}PDF to be signed {% endblock title %}
+
+{% block extracss %}
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+th,td {
+  text-align:center;
+    padding: 10px;
+}
+#formation {
+        width: 40%;
+        height: 3rem;
+        text-align: center;
+        color: white;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+</style>
+{% endblock extracss %}
+
+
+
+{% block content %}
+       <h2> Formation : {{ formation_session }} </h2>
+
+     <table class="demo">
+
+            <thead>
+            <tr>
+
+                <th>Document</th>
+                <th>Signer</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for file in files %}
+
+
+
+                        <tr>
+
+                            <td> {{ file.original_filename }}</td>
+                            <td><a href="" class="btn btn-primary"> Sign Attendance </a></td>
+
+
+                        </tr>
+
+
+            {% endfor %}
+
+
+          </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

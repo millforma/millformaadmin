@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Emargements pour : {{ formation.name }}</h5>
+                </div>
+                <div class="card-block">
+                    {% if docs %}
+                      <table class="table table-hover">
+
+                        <thead>
+
+                        <tr>
+                            <th>Nom</th>
+                            <th>Signé par </th>
+                            <th>Télécharger</th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for doc in docs %}
+
+                                    <tr>
+                                        <td>{{ doc.original_filename|slice:"24" }}</td>
+                                        <td> {{ doc.numb_of_signed_trainees }} / {{ formation.trainee.all.count }}</td>
+                                        <td><a href="{{ doc.url}}"><button class="btn btn-success">Go</button></a></td>
+                                    </tr>
+
+                        {% endfor %}
+
+
+
+                        </tbody>
+                    </table>
+                          {% else %}
+                  <h2> IL n'y a aucun émargement signé pour cette formation</h2>
+            {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock content %}

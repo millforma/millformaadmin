@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+    {% load static %}
+
+    {% load widget_tweaks %}
+
+
+
+
+{% block content %}
+        <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><b>Emargements à signer pour :</b> {{ formation.name }}</h5>
+                </div>
+                <div class="card-block">
+
+              {% if files %}
+          <table class="table table-hover">
+
+            <thead>
+            <tr>
+                <th>Formation</th>
+                <th>Document</th>
+                <th>Signer</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for file in files %}
+                        <tr>
+                            <td>{{ formation_session.name }}</td>
+                            <td> {{ file.original_filename|slice:"24" }}</td>
+                            <td><a href="{% url 'signature:pdf_sign' file.id %}" class="btn btn-primary"> Signer </a></td>
+                        </tr>
+            {% endfor %}
+
+            </tbody>
+            </table>
+              {% else %}
+                  <tr><td></td> Vous n'avez aucun émargement à signer pour le moment</tr>
+            {% endif %}
+              </div>
+            </div>
+          </div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

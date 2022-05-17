@@ -1,0 +1,34 @@
+    {% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+
+    {% block extracss %}
+
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Le lien a été envoyé au formateur</h5>
+                </div>
+                <div class="card-block">
+                    <h5>Voici le lien d'émargement : <a href="http://{{ request.get_host}}/teacher/{{ uuid }}">{{ request.get_host}}/teacher/{{ uuid }}</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block script %}
+
+
+
+
+{% endblock %}
+

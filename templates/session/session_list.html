@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+    {% load static %}
+
+    {% load widget_tweaks %}
+{% block extracss %}
+{% endblock extracss %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Liste des session de formation pour {{ formation_session.name }} </h5>
+                </div>
+                <div class="card-block">
+                    <a href="{% url 'main:create_session' formation_session.id %}"><button class="btn btn-pill btn-primary btn-air-primary" type="button"  title=""> Renseigner une nouvelle session</button></a>
+
+                </div>
+            </div>
+            {% if videoChatList %}
+                <div class="row ui-sortable" id="draggableMultiple">
+            {% for videochat in videoChatList %}
+                {% if videochat.finished_session == True %}
+
+                <div class="col-sm-12 col-xl-3">
+                            <div class="card card-absolute">
+                              <div class="card-header bg-success">
+                                <h5><i class="pe-7s-pen mr-2"></i> <b>Session N°{{ videochat.session }}</b></h5>
+                              </div>
+                              <div class="card-body">
+                                    <h5></h5>
+                                  <p><b>Début :</b>  {{ videochat.date_start }} - {{ videochat.time_start }}</p>
+                                  <p><b>Fin :</b>  {{ videochat.date_end }} - {{ videochat.time_end }}</p>
+
+
+                                </div>
+                              </div>
+                            </div>
+                {% endif %}
+            {% endfor %}
+            {% else %}
+                      <p>No Video chats Found</p>
+            {% endif %}
+
+
+
+    {% endblock %}

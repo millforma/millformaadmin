@@ -1,0 +1,45 @@
+    {% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+
+    {% block extracss %}
+
+    {% endblock %}
+
+{% block content %}
+ <div class="card">
+                                        <div class="card-header">
+                                            <h5>Mon Profil</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5>Mes Informations</h5>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <form enctype="multipart/form-data" class="card theme-form" id="form-container" method="POST" style="padding: 50px">
+
+
+                                                        {% csrf_token %}
+
+                                                        <div class="form-group" >
+                                                        {{ profile_form.as_p }}
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+{% endblock content %}
+{% block script %}
+
+<script src="assets/js/vendor-all.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+
+{% endblock %}
