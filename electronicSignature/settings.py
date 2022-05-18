@@ -28,7 +28,7 @@ SECRET_KEY = 'coymwc8aim_a9bhdw)k9-x5a5@2e+y!35+=f-k61*%8sani11c'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'electronicSignature-dev.us-east-2.elasticbeanstalk.com',
+    'django-env-sign.eba-e9uub2gs.us-west-2.elasticbeanstalk.com',
 ]
 
 
