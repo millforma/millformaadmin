@@ -120,7 +120,7 @@ pycparser==2.21
 pydot==1.4.2
 pyflakes==2.4.0
 Pygments==2.12.0
-pylint==2.13.9
+pylint==2.11.1
 PyMuPDF==1.19.6
 pyOpenSSL==22.0.0
 pyparsing==3.0.9
