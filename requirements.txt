@@ -153,7 +153,6 @@ tomli
 tqdm
 traits
 Twisted
-twisted-iocpsupport
 txaio
 typed-ast
 typing-extensions
