@@ -1,9 +1,5 @@
 from django.urls import path
 
-
-
-
-
 from .views.list_attendance import AttendanceSignListView
 from .views.pdf_signature import DocumentSignListView, SignaturePreView
 
