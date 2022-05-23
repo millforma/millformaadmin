@@ -126,6 +126,7 @@ pyOpenSSL
 pyparsing
 pyquery
 python-dateutil
+python3-magic
 pytz
 pyxnat
 PyYAML
