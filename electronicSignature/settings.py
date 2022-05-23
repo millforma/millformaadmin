@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+
 import os
 from pathlib import Path
 
@@ -28,7 +29,9 @@ SECRET_KEY = 'coymwc8aim_a9bhdw)k9-x5a5@2e+y!35+=f-k61*%8sani11c'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'django-env-sign.eba-e9uub2gs.us-west-2.elasticbeanstalk.com',
+    'electronicsignature16-dev.us-east-2.elasticbeanstalk.com',
+    'http://django-env.eba-cuj2ajyh.us-east-2.elasticbeanstalk.com/',
+    'django-env.eba-cuj2ajyh.us-east-2.elasticbeanstalk.com',
 ]
 
 
