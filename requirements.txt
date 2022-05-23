@@ -126,7 +126,7 @@ pyOpenSSL
 pyparsing
 pyquery
 python-dateutil
-python3-magic
+python-magic==0.4.15
 pytz
 pyxnat
 PyYAML
