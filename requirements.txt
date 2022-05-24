@@ -126,10 +126,10 @@ pyOpenSSL
 pyparsing
 pyquery
 python-dateutil
-python-magic==0.4.15
 pytz
 pyxnat
 PyYAML
+python-magic>=0.4.18
 rdflib
 regex
 reportlab

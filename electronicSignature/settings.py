@@ -26,12 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'coymwc8aim_a9bhdw)k9-x5a5@2e+y!35+=f-k61*%8sani11c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
-    'electronicsignature16-dev.us-east-2.elasticbeanstalk.com',
-    'http://django-env.eba-cuj2ajyh.us-east-2.elasticbeanstalk.com/',
-    'django-env.eba-cuj2ajyh.us-east-2.elasticbeanstalk.com',
+    'http://enviro.eba-s5dcw5nw.us-west-2.elasticbeanstalk.com/',
+
 ]
 
 
