@@ -5,7 +5,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from main.models.videochat import VideoChat
@@ -122,7 +122,7 @@ def send_formation_session_created_email(formation_session, instance):
 @auth_user_should_not_access
 def activate_user(request, uidb64, token):
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
 
         user = User.objects.get(pk=uid)
 
