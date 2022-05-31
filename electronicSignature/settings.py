@@ -15,10 +15,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.contrib import messages
-import environ
-
-env = environ.Env()
-environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = 'coymwc8aim_a9bhdw)k9-x5a5@2e+y!35+=f-k61*%8sani11c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -146,8 +142,8 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-API_USER = env('API_USER')
-API_PSSWD = env('API_PSSWD')
+API_USER = 'wberdugo@mill-forma.fr'
+API_PSSWD = 'Millforma1992!'
 UPLOAD_FOLDER_DOCUMENTS = "static"
 UPLOAD_FOLDER_CHATS_DOCUMENT = "static"
 UPLOAD_FOLDER_IMAGES = "static"
