@@ -8,7 +8,7 @@ from main.models.file.document_type import DocumentType
 
 
 class DocumentFile(BaseFile):
-    upload_directory = settings.UPLOAD_FOLDER_DOCUMENTS
+    upload_directory = settings.MEDIA_ROOT
 
     actual_file = models.FileField(
         default=None,

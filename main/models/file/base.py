@@ -20,7 +20,7 @@ from main.utils import UidMixin
 class BaseFile(UidMixin, BaseModel):
     __metaclass__ = ABCMeta
 
-    upload_directory = "media"
+    upload_directory = "media/emargements/"
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
