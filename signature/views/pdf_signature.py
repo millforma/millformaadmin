@@ -1,4 +1,4 @@
-
+import os
 
 import fitz
 import requests
@@ -15,7 +15,7 @@ from django.views.generic import ListView, TemplateView
 from jsignature.utils import draw_signature
 from django.templatetags.static import static
 
-
+from electronicSignature.settings import BASE_DIR, STATIC_ROOT
 from main.models.file.document_type import DocumentType
 from main.models.file.pdf_document import PdfDocument
 from main.models.formationsession import FormationSession
@@ -103,7 +103,8 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
     def sign_pdf(self, source_file, signature, user, formation_session):
         des_file = source_file.actual_file
         img_filename = signature
-        image_file = static('assets/images/electronic_signature.png')
+
+        image_file = os.path.join(STATIC_ROOT, 'assets/images/electronic_signature.png')
 
         document = fitz.open(source_file.actual_file.file)
         page = document[0]
