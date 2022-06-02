@@ -40,7 +40,7 @@ class BaseFile(UidMixin, BaseModel):
 
     @cached_property
     def full_filename(self):
-        return Path(str(self.file_field)).resolve()
+        return Path(settings.MEDIA_ROOT, str(self.file_field)).resolve()
 
     def url(self, default=None):
         if self.file_field:
