@@ -146,12 +146,12 @@ MESSAGE_TAGS = {
 }
 API_USER = 'wberdugo@mill-forma.fr'
 API_PSSWD = 'Millforma1992!'
-UPLOAD_FOLDER_DOCUMENTS = os.path.join(BASE_DIR, 'static/emargements')
+UPLOAD_FOLDER_DOCUMENTS = os.path.join(BASE_DIR, 'static/assets/emargements')
 UPLOAD_FOLDER_CHATS_DOCUMENT = "static"
 UPLOAD_FOLDER_IMAGES = "static"
 THUMBNAIL_DIMENSIONS = (250, 250)
 THUMBNAIL_SUBDIRECTORY = "static/thumbnail"
-MEDIA_ROOT = "/static/emargements"
+MEDIA_ROOT = "/static/assets/emargements"
 PHONE_ACCEPTED_FORMAT = "FR"
 PHONENUMBER_DEFAULT_REGION = "US"
 LANGUAGES = (
