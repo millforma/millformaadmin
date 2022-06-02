@@ -20,7 +20,5 @@ admin.site.register(EntityPhone)
 admin.site.register(FormationSession)
 admin.site.register(Company)
 admin.site.register(PdfDocument)
-admin.site.register(BaseFile)
-
 admin.site.register(VideoChat)
 admin.site.register(DocumentFile)
