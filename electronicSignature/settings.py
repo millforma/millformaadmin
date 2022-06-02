@@ -93,7 +93,7 @@ DATABASES = {
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 STATIC_URL = "/static/"
 
 
@@ -146,7 +146,7 @@ MESSAGE_TAGS = {
 }
 API_USER = 'wberdugo@mill-forma.fr'
 API_PSSWD = 'Millforma1992!'
-UPLOAD_FOLDER_DOCUMENTS = "static"
+UPLOAD_FOLDER_DOCUMENTS = os.path.join(BASE_DIR, 'static/emargements')
 UPLOAD_FOLDER_CHATS_DOCUMENT = "static"
 UPLOAD_FOLDER_IMAGES = "static"
 THUMBNAIL_DIMENSIONS = (250, 250)
