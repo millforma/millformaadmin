@@ -134,7 +134,8 @@ USE_TZ = True
 
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "main:home"
-STATIC_URL = '/static/'
+
+
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',
