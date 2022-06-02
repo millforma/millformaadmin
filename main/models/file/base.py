@@ -20,7 +20,7 @@ from main.utils import UidMixin
 class BaseFile(UidMixin, BaseModel):
     __metaclass__ = ABCMeta
 
-    upload_directory = "media/emargements/"
+    upload_directory = "media/"
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -40,7 +40,7 @@ class BaseFile(UidMixin, BaseModel):
 
     @cached_property
     def full_filename(self):
-        return Path(settings.MEDIA_ROOT, str(self.file_field)).resolve()
+        return Path(str(self.file_field)).resolve()
 
     def url(self, default=None):
         if self.file_field:
