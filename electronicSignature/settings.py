@@ -15,6 +15,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.contrib import messages
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'coymwc8aim_a9bhdw)k9-x5a5@2e+y!35+=f-k61*%8sani11c'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -46,8 +47,7 @@ INSTALLED_APPS = [
     'signature',
     'django.contrib.sites',
 ]
-SITE_ID =2
-
+SITE_ID =config('SITE_ID')
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -144,8 +144,8 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-API_USER = 'wberdugo@mill-forma.fr'
-API_PSSWD = 'Millforma1992!'
+API_USER = config('API_USER')
+API_PSSWD = config('API_PSSWD')
 UPLOAD_FOLDER_DOCUMENTS = os.path.join(BASE_DIR, 'static/assets/emargements')
 UPLOAD_FOLDER_CHATS_DOCUMENT = "static"
 UPLOAD_FOLDER_IMAGES = "static"
@@ -162,9 +162,9 @@ LANGUAGES = (
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale/'),
 )
-EMAIL_SENDER = 'millforma.electronic.sign@gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'email-smtp.us-east-2.amazonaws.com'
-EMAIL_HOST_USER = 'AKIA5QA2SU6DBER64RTK'
-EMAIL_HOST_PASSWORD = 'BEUf+VwboCzp4WjrFwfhrrSO8mazcO11GzaDpQjZvJnc'
-EMAIL_PORT = 587
+EMAIL_SENDER = config('EMAIL_SENDER')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config('EMAIL_PORT')
