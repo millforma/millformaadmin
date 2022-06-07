@@ -159,12 +159,15 @@ LANGUAGES = (
     ('fr', 'French'),
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'newsmillforma@gmail.com'
-EMAIL_HOST_PASSWORD = 'Aymen1999!'
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale/'),
 )
+EMAIL_SENDER = 'millforma.electronic.sign@gmail.com'
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_ACCESS_KEY_ID = 'AKIA5QA2SU6DCYT45YEH'
+AWS_SECRET_ACCESS_KEY = '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'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'email-smtp.us-east-2.amazonaws.com'
+EMAIL_HOST_USER = 'AKIA5QA2SU6DBER64RTK'
+EMAIL_HOST_PASSWORD = 'BEUf+VwboCzp4WjrFwfhrrSO8mazcO11GzaDpQjZvJnc'
+EMAIL_PORT = 587

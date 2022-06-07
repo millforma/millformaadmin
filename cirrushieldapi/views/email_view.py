@@ -1,6 +1,6 @@
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-
+from django.core.mail import send_mail
 from electronicSignature import settings
 from main.models.videochat import VideoChat
 from main.utils import EmailThread
@@ -18,12 +18,13 @@ def send_emargementteacherlink(link, formation, request):
         'formation': formation,
         'link': link,
     })
+    send_mail(
+        email_subject,
+        email_body,
+        settings.EMAIL_SENDER,
+        [teacher.email]
+    )
 
-    email = EmailMessage(subject=email_subject, body=email_body,
-                        from_email=settings.EMAIL_HOST_USER,
-                         to=[teacher.email]
-                         )
-    EmailThread(email).start()
 
 
 def send_emargementlearnerlink(link, formation, request):
@@ -41,8 +42,9 @@ def send_emargementlearnerlink(link, formation, request):
     emails = []
     for trainee in formation.trainee.all():
         emails.append(trainee.user.email)
-    email = EmailMessage(subject=email_subject, body=email_body,
-                        from_email=settings.EMAIL_HOST_USER,
-                         to=emails
-                         )
-    EmailThread(email).start()
+    send_mail(
+        email_subject,
+        email_body,
+        settings.EMAIL_SENDER,
+        emails
+    )
