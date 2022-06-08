@@ -6,7 +6,7 @@ from django.views.generic import FormView
 from django.contrib import messages
 from cirrushieldapi.apiCalls import GetFormationSession
 from cirrushieldapi.forms.formation_session_form import FormationSessionForm
-from cirrushieldapi.views.email_view import send_emargementteacherlink, send_emargementlearnerlink
+from cirrushieldapi.views.email_view import send_emargementteacherlink, send_emargementlearnerlink, send_id
 from main.models.formationsession import FormationSession
 
 
@@ -87,9 +87,10 @@ class SaveFormation(FormView,UserPassesTestMixin):
                 current_site = Site.objects.get_current()
                 link_teacher = current_site.domain + '/teacher/' + str(final_session.id)
                 link_learner = current_site.domain + '/learner/' + str(final_session.id)
+                link_reset_passwd= current_site.domain + '/password-reset/'
                 send_emargementteacherlink(link_teacher, final_session, self.request)
                 send_emargementlearnerlink(link_learner, final_session, self.request)
-
+                send_id(link_reset_passwd, final_session, self.request)
                 final_session.save()
                 messages.success(self.request, "La session a bien été importée")
 

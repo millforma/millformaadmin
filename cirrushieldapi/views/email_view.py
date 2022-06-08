@@ -25,7 +25,27 @@ def send_emargementteacherlink(link, formation, request):
         [teacher.email]
     )
 
+def send_id(link,formation, request):
 
+    current_site = request.get_host()
+
+
+    email_subject = 'Vos Informations de connexion'
+    email_body = render_to_string('email/send_id.html', {
+
+        'domain': current_site,
+        'link': link,
+    })
+    emails = []
+    for trainee in formation.trainee.all():
+        emails.append(trainee.user.email)
+    emails.append(formation.teacher_name.email)
+    send_mail(
+        email_subject,
+        email_body,
+        settings.EMAIL_SENDER,
+        emails
+    )
 
 def send_emargementlearnerlink(link, formation, request):
 
