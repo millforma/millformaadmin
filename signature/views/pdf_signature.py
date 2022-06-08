@@ -74,7 +74,7 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
         doc_id = self.kwargs['doc_id']
         doc = PdfDocument.objects.get(id=doc_id)
         context['doc_url'] = doc.url()
-        context['doc_name'] = doc.full_filename
+        context['doc_name'] = doc.original_filename
         context['path'] =doc.file_field.name
         context['form'] = SignatureForm()
         messages.success(self.request, "Veuillez vérifier votre email pour le code de vérification")
