@@ -36,16 +36,16 @@
                     <div class="mb-4">
                         <i class="feather icon-unlock auth-icon"></i>
                     </div>
-                    <h3 class="mb-4">Login</h3>
+                    <h3 class="mb-4">Se connecter</h3>
                     <form method="POST" class="register-form text-center" style="display: inline-grid" id="login-form">
                                 {% csrf_token %}
                         {{ form }}
                             <div class="form-group form-button" style="padding-top: 10px">
-                                <input type="submit" name="signin" id="signin" class="form-submit btn btn-primary shadow-2 mb-4" value="{% translate "Log In"%}"/>
+                                <input type="submit" name="signin" id="signin" class="form-submit btn btn-primary shadow-2 mb-4" value="Se connecter"/>
                             </div>
                         </form>
 
-                    <p class="mb-2 text-muted">Forgot password? <a href="{% url 'password_change' %}">Reset</a></p>
+                    <p class="mb-2 text-muted">Mot de passe oublié? <a href="{% url 'password_change' %}">Réinitialiser</a></p>
 
                 </div>
             </div>
