@@ -21,7 +21,10 @@ class SessionForm(forms.ModelForm):
             'user')  # To get request.user. Do not use kwargs.pop('user', None) due to potential security hole
 
         super(SessionForm, self).__init__(*args, **kwargs)
-        user = self.user
+        self.fields['date_start'].label = "Date de début"
+        self.fields['date_end'].label = "Date de fin"
+        self.fields['time_start'].label = "Heure de début"
+        self.fields['time_end'].label = "Heure de fin"
 
 
 

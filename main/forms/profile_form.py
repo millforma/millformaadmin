@@ -7,7 +7,7 @@ class ProfileForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["first_name"] = forms.CharField(
-            label=_("First name"),
+            label="Prénom",
             max_length=200,
             required=False,
             widget=forms.TextInput(
@@ -19,7 +19,7 @@ class ProfileForm(forms.Form):
             ),
         )
         self.fields["last_name"] = forms.CharField(
-            label=_("Last name"),
+            label="Nom",
             max_length=200,
             required=False,
             widget=forms.TextInput(
@@ -37,7 +37,7 @@ class ProfileForm(forms.Form):
             ),
         )
         self.fields["username"] = forms.CharField(
-            label=_("User name"),
+            label="Nom d'utilisateur",
             max_length=200,
             widget=forms.TextInput(
                 attrs={
@@ -47,13 +47,13 @@ class ProfileForm(forms.Form):
             ),
         )
         self.fields["old_password"] = forms.CharField(
-            label=_("Old password"),
+            label="Mot de passe actuel",
             max_length=200,
             required=False,
             widget=forms.PasswordInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": _("(only if you want to change)"),
+                    "placeholder": "(seulement si vous changez de mot de passe)",
                 }
             ),
         )
@@ -64,7 +64,7 @@ class ProfileForm(forms.Form):
             widget=forms.PasswordInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": _("(only if you want to change)"),
+                    "placeholder": "(seulement si vous changez de mot de passe)",
                 }
             ),
         )
@@ -75,7 +75,7 @@ class ProfileForm(forms.Form):
             widget=forms.PasswordInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": _("(only if you want to change)"),
+                    "placeholder": "(seulement si vous changez de mot de passe)",
                 }
             ),
         )
@@ -95,5 +95,5 @@ class ProfileForm(forms.Form):
     def clean_email(self):
         email = self.cleaned_data["email"]
         if not re.match(self.EMAIL_REGEX, email):
-            self.add_error("email", _("Not a valid email"))
+            self.add_error("email", "Adresse e-mail invalide")
         return email

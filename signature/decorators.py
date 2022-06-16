@@ -11,10 +11,10 @@ def send_verification_code(function):
         try:
             doc_id = kwargs['doc_id']
             doc = PdfDocument.objects.get(id=doc_id)
-            subject = 'Verification code for signature'
+
             code = random.randint(1111, 9999)
 
-            send_email_verification_code(subject, request.request, code)
+            send_email_verification_code(code, request.request )
 
             doc.verification_code = code
             doc.save()

@@ -25,6 +25,24 @@ def send_emargementteacherlink(link, formation, request):
         [teacher.email]
     )
 
+def send_verification_code(code, request):
+
+
+    user=request.user
+    email_subject = 'Code de vérification pour signature'
+    email_body = render_to_string('email/send_verif_code.html', {
+
+        'code': code,
+    })
+    send_mail(
+        email_subject,
+        email_body,
+        settings.EMAIL_SENDER,
+        [user.email]
+    )
+
+
+
 def send_id(link,formation, request):
 
     current_site = request.get_host()
