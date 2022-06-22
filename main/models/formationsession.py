@@ -45,7 +45,7 @@ class FormationSession(BaseModel):
     commercial = models.ForeignKey(to=User, limit_choices_to={'groups__name': "commercial"},
                                    on_delete=models.DO_NOTHING, related_name="commercial")
     name = models.CharField(max_length=200)
-    trainee = models.ManyToManyField(Person,db_constraint=False)
+    trainee = models.ManyToManyField(Person)
     num_present_trainee = models.IntegerField(default=0)
     doc_has_been_sent = models.BooleanField(default=False)
     foad = models.BooleanField(default=False)

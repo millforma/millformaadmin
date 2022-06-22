@@ -64,13 +64,13 @@ class Event(EventAbstract):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='events'
     )
-    trainee = models.ManyToManyField(Person, related_name="trainee")
+    trainee = models.ManyToManyField(Person, related_name="trainee",db_constraint=False)
     teacher = models.ForeignKey(to=User, limit_choices_to={'groups__name': "teacher"}, on_delete=models.DO_NOTHING,
                                 default=None, blank=True,null=True)
     title = models.CharField(max_length=200, unique=True,default="",null=True,blank=True)
     description = models.TextField()
     formation_session = models.ForeignKey(FormationSession, on_delete=models.CASCADE)
-    video_chat=models.ForeignKey(VideoChat,on_delete=models.DO_NOTHING, default=None, blank=True,null=True)
+    video_chat=models.ForeignKey(VideoChat,on_delete=models.CASCADE, default=None, blank=True,null=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     objects = EventManager()
