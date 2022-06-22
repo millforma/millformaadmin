@@ -1,8 +1,9 @@
 from functools import wraps
 import random
 
+from cirrushieldapi.views.email_view import send_email_verification_code
 from main.models.file.pdf_document import PdfDocument
-from main.views.email_view import send_email_verification_code
+
 
 
 def send_verification_code(function):

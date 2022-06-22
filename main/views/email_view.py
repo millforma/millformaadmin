@@ -29,22 +29,7 @@ def send_activation_email(user, request):
                          )
     EmailThread(email).start()
 
-def send_email_verification_code(request,code):
-    current_site = request.get_host()
-    user=request.user
-    email_subject = "Code de vérification pour signature d'émargements"
-    email_body = render_to_string('auth/signature_verification_code.html', {
-        'user': user,
-        'domain': current_site,
-        'code': code,
 
-    })
-
-    email = EmailMessage(subject=email_subject, body=email_body,
-                         from_email=settings.DEFAULT_FROM_EMAIL,
-                         to=[settings.EMAIL_HOST_USER]
-                         )
-    EmailThread(email).start()
 
 def send_videochatlink(videochat_instance_id, request):
     videochat_instance = VideoChat.objects.get(id=videochat_instance_id)

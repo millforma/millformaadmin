@@ -25,7 +25,7 @@ def send_emargementteacherlink(link, formation, request):
         [teacher.email]
     )
 
-def send_verification_code(code, request):
+def send_email_verification_code(code, request):
 
 
     user=request.user
@@ -86,3 +86,4 @@ def send_emargementlearnerlink(link, formation, request):
         settings.EMAIL_SENDER,
         emails
     )
+
