@@ -81,7 +81,7 @@ class Event(EventAbstract):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('ScheduleCalendar:event-detail', args=(self.id,))
+        return reverse('ScheduleCalendar:event-detail',  args=(self.id,))
 
     @property
     def get_html_url(self):
