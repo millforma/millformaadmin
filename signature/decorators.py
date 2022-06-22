@@ -14,7 +14,7 @@ def send_verification_code(function):
 
             code = random.randint(1111, 9999)
 
-            send_email_verification_code(code, request.request )
+            send_email_verification_code(request.request, code)
 
             doc.verification_code = code
             doc.save()
