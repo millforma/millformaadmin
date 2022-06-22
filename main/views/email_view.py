@@ -15,7 +15,7 @@ from main.utils import generate_token, EmailThread
 
 def send_activation_email(user, request):
     current_site = request.get_host()
-    email_subject = 'Activate your account'
+    email_subject = 'Activer votre compte'
     email_body = render_to_string('auth/activate.html', {
         'user': user,
         'domain': current_site,
@@ -29,10 +29,10 @@ def send_activation_email(user, request):
                          )
     EmailThread(email).start()
 
-def send_email_verification_code(subject, request,code):
+def send_email_verification_code(request,code):
     current_site = request.get_host()
     user=request.user
-    email_subject = subject
+    email_subject = "Code de vérification pour signature d'émargements"
     email_body = render_to_string('auth/signature_verification_code.html', {
         'user': user,
         'domain': current_site,
