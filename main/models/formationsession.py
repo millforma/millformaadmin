@@ -13,6 +13,7 @@ from main.models.person import Person
 
 
 class FormationSession(BaseModel):
+
     OPCO_SANTE = 1
     OPCO2i = 2
     OPCO_MOBILITES = 3
@@ -38,20 +39,19 @@ class FormationSession(BaseModel):
         (UNIFORMATION, "Uniformation"),
         (CONSTRUCTYS, "Constructys"),
     ]
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     year = models.IntegerField()
     commercial = models.ForeignKey(to=User, limit_choices_to={'groups__name': "commercial"},
                                    on_delete=models.DO_NOTHING, related_name="commercial")
-
     name = models.CharField(max_length=200)
-    trainee = models.ManyToManyField(Person)
+    trainee = models.ManyToManyField(Person,db_constraint=False)
     num_present_trainee = models.IntegerField(default=0)
     doc_has_been_sent = models.BooleanField(default=False)
     foad = models.BooleanField(default=False)
     training_site = models.ForeignKey(to=Address, on_delete=models.DO_NOTHING)
     prerequis_formation = models.BooleanField(default=False)
     completed_videochat_sessions = models.IntegerField(default=0, null=True, blank=True)
-
     teacher_name = models.ForeignKey(to=User, limit_choices_to={'groups__name': "teacher"}, on_delete=models.DO_NOTHING)
     opco_name = models.IntegerField(choices=OPCO_NAMES_CHOICES, default=1)
     date_autorised_start = models.DateField(auto_now=False, auto_now_add=False)
