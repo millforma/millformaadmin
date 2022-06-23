@@ -22,10 +22,10 @@ class Company(Entity):
     num_decla_activite = models.CharField(max_length=100, default="non renseignee", null=True, blank=True)
     num_siret = models.CharField(max_length=100, default="non renseignee", null=True, blank=True)
     code_ape = models.CharField(max_length=100, default=0, null=True, blank=True)
-    email = models.EmailField(max_length=254,null=True,blank=True)
+    email = models.EmailField(max_length=254)
     numb_employees = models.IntegerField(default=0)
     Industry = models.CharField(max_length=100, default="non renseignee", null=True, blank=True)
-    phone = models.ForeignKey(Phone, default=None, null=True,blank=True, related_name="company_phone",
+    phone = models.ForeignKey(Phone, default=None, blank=True, related_name="company_phone",
                               on_delete=models.DO_NOTHING)
 
     def __str__(self):
