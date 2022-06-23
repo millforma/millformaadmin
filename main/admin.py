@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-
+from django.apps import apps
 from main.models.address import Address
 from main.models.address_type import AddressType
 from main.models.company import Company
@@ -22,3 +22,12 @@ admin.site.register(Company)
 admin.site.register(PdfDocument)
 admin.site.register(VideoChat)
 admin.site.register(DocumentFile)
+
+# all other models
+models = apps.get_models()
+
+for model in models:
+    try:
+        admin.site.register(model)
+    except admin.sites.AlreadyRegistered:
+        pass
