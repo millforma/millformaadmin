@@ -52,7 +52,10 @@ def _genDescription(width, height, formation_id):
     textleftstyle.fontSize = 8
     formation_session = FormationSession.objects.get(id=formation_id)
     client_company = formation_session.client_account
-    millforma = Company.objects.get(name="Mill Forma")
+    try:
+        millforma = Company.objects.get(name="Mill Forma")
+    except Company.DoesNotExist:
+        millforma = Company.objects.create(name="Mill Forma")
     if client_company.adresse != None:
         client_company_address = client_company.adresse.string()
     else:
