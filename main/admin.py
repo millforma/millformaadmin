@@ -26,3 +26,12 @@ admin.site.register(PdfDocument)
 admin.site.register(VideoChat)
 admin.site.register(DocumentFile)
 admin.site.register(Phone)
+
+# all other models
+models = apps.get_models()
+
+for model in models:
+    try:
+        admin.site.register(model)
+    except admin.sites.AlreadyRegistered:
+        pass
