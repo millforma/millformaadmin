@@ -14,30 +14,36 @@ from main.models.person import Person
 
 class FormationSession(BaseModel):
 
-    OPCO_SANTE = 1
-    OPCO2i = 2
-    OPCO_MOBILITES = 3
-    OPCO_EP = 4
-    OPCO_COMMERCE = 5
-    AKTO = 6
-    OCAPIAT = 7
-    AFDAS = 8
-    ATLAS = 9
-    UNIFORMATION = 10
-    CONSTRUCTYS = 11
+    AKTO_Reseau_Fafih = 1
+    AFDAS = 2
+    AFDAS_Intermittent = 3
+    OPCO_ATLAS = 4
+    CAISSE_DES_DEPOTS_ET_CONSIGNATIONS = 5
+    OPCALIA = 6
+    AGEFICE = 7
+    FP = 8
+    AKTO_Reseau_Intergros = 9
+    OPCOMMERCE = 10
+    OPCO_EP = 11
+    OPCOmobilite = 12
+    OCAPIAT = 13
+    OPCO_2I = 14
 
     OPCO_NAMES_CHOICES = [
-        (OPCO_SANTE, "OpcoSanté"),
-        (OPCO2i, "Opco2I"),
-        (OPCO_MOBILITES, "OpcoMobilités"),
-        (OPCO_EP, "OpcoEp"),
-        (OPCO_COMMERCE, "OpCommerce"),
-        (AKTO, "Akto"),
-        (OCAPIAT, "Ocapiat"),
-        (AFDAS, "Afdas"),
-        (ATLAS, "Atlas"),
-        (UNIFORMATION, "Uniformation"),
-        (CONSTRUCTYS, "Constructys"),
+        (AKTO_Reseau_Fafih, "AKTO Réseau Fafih"),
+        (AFDAS, "AFDAS"),
+        (AFDAS_Intermittent, "AFDAS (Intermittent)"),
+        (OPCO_ATLAS, "OPCO ATLAS"),
+        (CAISSE_DES_DEPOTS_ET_CONSIGNATIONS, "CAISSE DES DEPOTS ET CONSIGNATIONS"),
+        (OPCALIA, "OPCALIA"),
+        (AGEFICE, "AGEFICE"),
+        (FP, "FP"),
+        (AKTO_Reseau_Intergros, "AKTO Réseau Intergros"),
+        (OPCOMMERCE, "OPCOMMERCE"),
+        (OPCO_EP, "OPCO EP"),
+        (OPCOmobilite, "OPCOmobilité"),
+        (OCAPIAT, "OCAPIAT"),
+        (OPCO_2I, "OPCO 2I"),
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

@@ -135,7 +135,7 @@ USE_TZ = True
 
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "main:home"
-
+DEFAULT_FROM_EMAIL = 'millforma.signature@gmail.com'
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',

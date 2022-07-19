@@ -260,8 +260,9 @@ def getOpco(opco_id):
     xpars['success'] = search_was_successful
 
     opco = xpars
+    opco_name = xpars['Data']['OPCO']['Name']
 
-    return opco
+    return opco_name
 
 
 def getCommercial(commercial_id):
