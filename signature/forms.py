@@ -37,3 +37,10 @@ class JSignatureField(Field):
 class SignatureForm(forms.Form):
     signature = JSignatureField()
     verification_code = forms.IntegerField()
+
+    def __init__(self, *args, **kwargs):
+        super(SignatureForm, self).__init__(*args, **kwargs)
+
+        self.fields['signature'].label = "Merci de signer dans le cadre ci-dessous"
+        self.fields['verification_code'].label = "Code de vérification envoyé par e-mail"
+
