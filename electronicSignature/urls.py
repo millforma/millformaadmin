@@ -18,7 +18,7 @@ from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
 from django.views.static import serve
 
-from electronicSignature import settings
+from electronicSignature import settings, MySetPasswordForm
 from main.views.login_view import CustomLoginView
 
 app_name = 'electronicsignature'
@@ -68,7 +68,7 @@ path(
     path(
         "password-reset-confirm/<uidb64>/<token>/",
         auth_views.PasswordResetConfirmView.as_view(
-
+            form_class=MySetPasswordForm
         ),
         name="password_reset_confirm",
     ),
