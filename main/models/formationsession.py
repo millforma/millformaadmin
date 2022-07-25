@@ -67,7 +67,7 @@ class FormationSession(BaseModel):
     training_duration = models.IntegerField(default=0)
     training_done = models.IntegerField(default=0, null=True, blank=True)
     is_finished=models.BooleanField(default=False)
-    client_account = models.ForeignKey(to=Company, on_delete=models.DO_NOTHING())
+    client_account = models.ForeignKey(to=Company, on_delete=models.DO_NOTHING)
     old_num_formation = models.CharField(max_length=35, default="DC-00000")
     date_creation_formation = models.DateField(auto_now=True)
 
