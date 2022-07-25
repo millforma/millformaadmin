@@ -74,6 +74,7 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
         doc_id = self.kwargs['doc_id']
         doc = PdfDocument.objects.get(id=doc_id)
         context['doc_url'] = doc.url()
+        context['actual_filename'] = doc.full_upload_path
         context['doc_name'] = doc.original_filename
         context['path'] =doc.file_field.name
         context['form'] = SignatureForm()
