@@ -46,16 +46,18 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'signature',
     'django.contrib.sites',
+    'corsheaders',
 ]
 SITE_ID =config('SITE_ID')
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 
 ]
 
@@ -165,3 +167,9 @@ EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
+
+CORS_ALLOWED_ORIGINS = [
+    "http://millforma-admin.fr/",
+    "https://millforma-admin.fr/",
+    "http://localhost:8080",
+]
