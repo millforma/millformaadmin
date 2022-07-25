@@ -90,6 +90,7 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
     @staticmethod
     def get_success_url(id_formation):
 
+
         return reverse('signature:Attendance_list_view', kwargs={'formation_id': id_formation})
 
     def form_invalid(self, signature_form):
@@ -181,7 +182,7 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
         source_file.actual_file = result
         source_file.save()
         document.close()
-
+        messages.success(self.request, _("Merci, votre émargement est désormais signé !"))
         return source_file
 
     def form_valid(self, signature_form):
