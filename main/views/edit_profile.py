@@ -40,7 +40,7 @@ class ProfileView(LoginRequiredMixin, generic.TemplateView):
 
     @staticmethod
     def get_success_url():
-        return reverse_lazy("profile_edit_view")
+        return reverse_lazy("main:home")
 
     def form_invalid(
             self, profile_form
