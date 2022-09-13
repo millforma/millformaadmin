@@ -1,4 +1,5 @@
 from django.core.mail import EmailMessage
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from electronicSignature import settings
@@ -18,6 +19,7 @@ def send_links_for_formation(request,formation_id):
     send_emargementteacherlink(link_teacher, final_session, current_site)
     send_emargementlearnerlink(link_learner, final_session, current_site)
     send_id(link_reset_passwd, final_session, current_site)
+    return redirect('main:home')
 
 
 def send_emargementteacherlink(link, formation, current_site):
