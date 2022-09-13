@@ -35,7 +35,7 @@ def GetFormationSession(formation_id):
                   "Number_of_Trainees,,Formation_a_distance_liste," \
                   "Numero_de_la_rue,Rue,Ville_Commune,Code_postal,Pre_requisites_Verified,Formateur,OPCO," \
                   "Authorized_Start_Date,Authorized_End_Date,Expected_Start_Date,Expected_End_Date," \
-                  "Total_Number_of_Training_Hours," \
+                  "Cout_du_formateur,Total_Number_of_Training_Hours," \
                   "+from+Contrat_de_Formation+where+Numero_du_dossier=" \
                   + num_dossier
     callUrl = url + selectQuery

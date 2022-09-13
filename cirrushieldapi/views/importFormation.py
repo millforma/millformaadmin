@@ -40,6 +40,7 @@ class SaveFormation(FormView,UserPassesTestMixin):
                 "date_end": formation_session['Data']['Contrat_de_Formation']['Expected_End_Date'],
                 "training_duration": int(
                     formation_session['Data']['Contrat_de_Formation']['Total_Number_of_Training_Hours']),
+                "teacher_price": formation_session['Data']['Contrat_de_Formation']['Cout_du_formateur'],
 
                 "old_num_formation": formation_id,
 
@@ -63,13 +64,10 @@ class SaveFormation(FormView,UserPassesTestMixin):
                                                                 commercial=form.cleaned_data["commercial"],
                                                                 client_account=form.cleaned_data["client_account"],
                                                                 name=form.cleaned_data["name"],
-
                                                                 num_present_trainee=form.cleaned_data[
                                                                     "num_present_trainee"],
-
                                                                 foad=form.cleaned_data["foad"],
                                                                 training_site=form.cleaned_data["training_site"],
-
                                                                 teacher_name=form.cleaned_data["teacher_name"],
                                                                 opco_name=form.cleaned_data["opco_name"],
                                                                 date_autorised_start=form.cleaned_data[
@@ -80,17 +78,10 @@ class SaveFormation(FormView,UserPassesTestMixin):
                                                                 date_end=form.cleaned_data["date_end"],
                                                                 training_duration=form.cleaned_data[
                                                                     "training_duration"],
-
+                                                                teacher_price=form.cleaned_data["teacher_price"],
                                                                 )
 
                 final_session.trainee.set(form.cleaned_data["trainee"])
-                current_site = Site.objects.get_current()
-                link_teacher = current_site.domain + '/teacher/' + str(final_session.id)
-                link_learner = current_site.domain + '/learner/' + str(final_session.id)
-                link_reset_passwd= current_site.domain + '/password-reset/'
-                send_emargementteacherlink(link_teacher, final_session, self.request)
-                send_emargementlearnerlink(link_learner, final_session, self.request)
-                send_id(link_reset_passwd, final_session, self.request)
                 final_session.save()
                 messages.success(self.request, "La session a bien été importée")
 

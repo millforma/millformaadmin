@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'signature',
     'django.contrib.sites',
     'corsheaders',
+    'pdfDossier',
 ]
 SITE_ID =config('SITE_ID')
 MIDDLEWARE = [

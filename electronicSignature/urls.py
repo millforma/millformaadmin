@@ -18,9 +18,11 @@ from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
 from django.views.static import serve
 
+import main
 from electronicSignature import settings
 from electronicSignature.MySetPasswordForm import MySetPasswordForm
 from main.views.login_view import CustomLoginView
+from main.views.page_not_found_view import page_not_found_view
 
 app_name = 'electronicsignature'
 
@@ -28,6 +30,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include('signature.urls', namespace='signature')),
     path("", include('cirrushieldapi.urls', namespace='cirrushieldapi')),
+    path("", include('pdfDossier.urls', namespace='pdf')),
     path("", include('main.urls', namespace='main')),
     re_path(
         r"^public/(?P<path>.*)$",
@@ -45,7 +48,7 @@ urlpatterns = [
         auth_views.LogoutView.as_view(next_page="login"),
         name="logout",
     ),
-path(
+    path(
         "change-password/",
         auth_views.PasswordChangeView.as_view(
             template_name="auth/change-password.html", success_url="/"
@@ -81,4 +84,4 @@ path(
     ),
 
 ]
-handler404 = "main.views.page_not_found_view"
+handler404 = page_not_found_view

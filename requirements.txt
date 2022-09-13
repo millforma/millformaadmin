@@ -130,6 +130,7 @@ pytz
 pyxnat
 PyYAML
 python-magic>=0.4.18
+python-docx
 rdflib
 regex
 reportlab

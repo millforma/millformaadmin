@@ -2,13 +2,27 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from electronicSignature import settings
+from main.models.formationsession import FormationSession
 from main.models.videochat import VideoChat
 from main.utils import EmailThread
+from django.contrib.sites.models import Site
 
 
-def send_emargementteacherlink(link, formation, request):
 
-    current_site = request.get_host()
+def send_links_for_formation(request,formation_id):
+    final_session = FormationSession.objects.get(id=formation_id)
+    current_site = Site.objects.get_current()
+    link_teacher = current_site.domain + '/teacher/' + str(final_session.id)
+    link_learner = current_site.domain + '/learner/' + str(final_session.id)
+    link_reset_passwd = current_site.domain + '/password-reset/'
+    send_emargementteacherlink(link_teacher, final_session, current_site)
+    send_emargementlearnerlink(link_learner, final_session, current_site)
+    send_id(link_reset_passwd, final_session, current_site)
+
+
+def send_emargementteacherlink(link, formation, current_site):
+
+
     teacher = formation.teacher_name
 
     email_subject = 'Lien pour émargements'

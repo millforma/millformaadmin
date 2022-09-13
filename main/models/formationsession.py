@@ -59,6 +59,7 @@ class FormationSession(BaseModel):
     prerequis_formation = models.BooleanField(default=False)
     completed_videochat_sessions = models.IntegerField(default=0, null=True, blank=True)
     teacher_name = models.ForeignKey(to=User, limit_choices_to={'groups__name': "teacher"}, on_delete=models.DO_NOTHING, blank=True,null=True)
+    teacher_price = models.DecimalField(max_digits=6, decimal_places=0, blank=True, null=True)
     opco_name = models.IntegerField(choices=OPCO_NAMES_CHOICES, default=1)
     date_autorised_start = models.DateField(auto_now=False, auto_now_add=False)
     date_autorised_end = models.DateField(auto_now=False, auto_now_add=False)
