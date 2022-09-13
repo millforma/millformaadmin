@@ -6,6 +6,7 @@ from electronicSignature import settings
 from main.models.formationsession import FormationSession
 from main.models.videochat import VideoChat
 from main.utils import EmailThread
+from django.contrib import messages
 from django.contrib.sites.models import Site
 
 
@@ -19,6 +20,7 @@ def send_links_for_formation(request,formation_id):
     send_emargementteacherlink(link_teacher, final_session, current_site)
     send_emargementlearnerlink(link_learner, final_session, current_site)
     send_id(link_reset_passwd, final_session, current_site)
+    messages.success(request, "La lien a bien été envoyé")
     return redirect('main:home')
 
 
