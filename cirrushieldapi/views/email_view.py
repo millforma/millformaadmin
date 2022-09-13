@@ -57,9 +57,9 @@ def send_email_verification_code(request,code):
 
 
 
-def send_id(link,formation, request):
+def send_id(link,formation, current_site):
 
-    current_site = request.get_host()
+
 
 
     email_subject = 'Vos Informations de connexion'
@@ -79,9 +79,9 @@ def send_id(link,formation, request):
         emails
     )
 
-def send_emargementlearnerlink(link, formation, request):
+def send_emargementlearnerlink(link, formation, current_site):
 
-    current_site = request.get_host()
+
     teacher = formation.teacher_name
 
     email_subject = 'Lien pour émargements'
