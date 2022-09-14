@@ -1,10 +1,8 @@
 import threading
-
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 import six
 import uuid
 from random import randint
-
 from django.utils.datetime_safe import datetime as datetime_safe
 
 

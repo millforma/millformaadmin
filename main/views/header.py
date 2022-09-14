@@ -1,5 +1,3 @@
-import os.path
-
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Table, Image, Paragraph
 
@@ -24,6 +22,7 @@ def genHeaderTable(width, height):
     ])
 
     return res
+
 def genHeaderReglementTable(width, height):
     widthList = [
         width * 56 / 100,  # col 1 - left image

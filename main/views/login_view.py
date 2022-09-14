@@ -1,14 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import (
-    REDIRECT_FIELD_NAME, get_user_model, login as auth_login,
-    logout as auth_logout, update_session_auth_hash, authenticate,
+     login as auth_login, authenticate,
 )
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
 
 
 class CustomLoginView(LoginView):

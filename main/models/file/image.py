@@ -1,6 +1,5 @@
 import os
 import PIL
-
 from pathlib import Path
 from PIL import Image, ExifTags
 from django.conf import settings

@@ -8,7 +8,6 @@ from django.http import HttpResponse
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Table
-
 from main.models.file.document_type import DocumentType
 from main.models.file.pdf_document import PdfDocument
 from main.models.formationsession import FormationSession

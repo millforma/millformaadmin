@@ -1,5 +1,4 @@
 from django.db import models
-
 from main.models.activity_type import ActivityType
 from main.models.base import BaseModel
 from django.utils.translation import gettext_lazy as _

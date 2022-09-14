@@ -1,6 +1,4 @@
 from django import forms
-
-from main.models.formationsession import FormationSession
 from main.models.videochat import VideoChat
 from main.widget import DatePickerInput, TimePickerInput
 

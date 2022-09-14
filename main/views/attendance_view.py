@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import TemplateView
-
 from main.models.file.pdf_document import PdfDocument
 from main.models.formationsession import FormationSession
 

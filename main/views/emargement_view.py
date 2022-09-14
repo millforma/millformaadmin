@@ -1,15 +1,11 @@
 import io
-
-from django.shortcuts import redirect
 from django.urls import reverse
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Table
-
 from main.models import Event
 from main.models.file.pdf_document import PdfDocument
 from main.models.formationsession import FormationSession
-from main.views.email_view import send_attendance_inquiry
 from main.views.emargement import genEmargementFirst
 from main.views.footer import genFooterTable
 from main.views.header import genHeaderTable

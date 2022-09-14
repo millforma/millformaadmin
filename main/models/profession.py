@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.functional import cached_property
-
 from main.models.activity import Activity
 from main.models.activity_type import ActivityType
 

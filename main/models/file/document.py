@@ -1,9 +1,6 @@
 from django.db import models
 from django.utils.functional import cached_property
-
 from main.models.file.base import BaseFile
-from django.conf import settings
-
 from main.models.file.document_type import DocumentType
 
 

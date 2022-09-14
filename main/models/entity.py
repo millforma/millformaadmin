@@ -1,14 +1,11 @@
 from django.db import models, IntegrityError
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-
 from main.models.activity import Activity
 from main.models.address import Address
 from main.models.address_type import AddressType
 from main.models.base import BaseModel
-
 from django.utils.translation import gettext_lazy as _
-
 from main.models.phone import Phone
 
 
@@ -59,6 +56,7 @@ class EntityAddress(BaseModel):
         if self.comment:  # add the comment
             return f"{result} - {str(self.comment)}"
         return result
+
     def string(self):
         if self.address==None:
             return "Non renseignée"
@@ -66,6 +64,7 @@ class EntityAddress(BaseModel):
             result = str(self.address)
 
         return result
+
     class Meta:
         verbose_name = _("Entity address")
         verbose_name_plural = _("Entity addresses")

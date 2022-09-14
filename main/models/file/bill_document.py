@@ -1,6 +1,5 @@
 from .document import DocumentFile
 from django.db import models
-
 from ..formationsession import FormationSession
 
 

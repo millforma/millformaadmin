@@ -1,11 +1,8 @@
 from django.utils import timezone
 from reportlab.lib.enums import TA_CENTER
-from reportlab.lib.pagesizes import A4
 from reportlab.platypus import Table, Paragraph, Image
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import ListFlowable, ListItem
-from reportlab.lib import colors
-
 from main.models.company import Company
 from main.models.formationsession import FormationSession
 
@@ -62,7 +59,6 @@ def _genTitle(width, height):
 
 
 def _genEntre(width, height, formation_id):
-
     text1style = ParagraphStyle('texttwo')
     text1style.fontSize = 11
     text1style.leading = 15
@@ -70,9 +66,9 @@ def _genEntre(width, height, formation_id):
     client_company = formation_session.client_account
     millforma = Company.objects.get(name="Mill Forma")
     if client_company.adresse != None:
-        client_company_address=client_company.adresse.string()
+        client_company_address = client_company.adresse.string()
     else:
-        client_company_address="Non renseignée"
+        client_company_address = "Non renseignée"
 
     text1 = Paragraph(
         "<b>Entre :</b>" + "<br/>" + "<br/>" +
@@ -104,6 +100,7 @@ def _genEntre(width, height, formation_id):
     ])
     return res
 
+
 def _genTableau(width, height, formation_id):
     widthList = [
         width * 0.5,
@@ -112,11 +109,11 @@ def _genTableau(width, height, formation_id):
 
     formation_session = FormationSession.objects.get(id=formation_id)
     number_of_trainee = formation_session.trainee.count()
-    heightList = [1 / (number_of_trainee+1) * height for i in range(number_of_trainee+1)]
+    heightList = [1 / (number_of_trainee + 1) * height for i in range(number_of_trainee + 1)]
 
-    data = [[None for j in range(2)] for i in range(number_of_trainee+1)]
-    data[0][0]="Stagiaire"
-    data[0][1]="Fonction"
+    data = [[None for j in range(2)] for i in range(number_of_trainee + 1)]
+    data[0][0] = "Stagiaire"
+    data[0][1] = "Fonction"
     i = 1
     for trainee in formation_session.trainee.all():
         columnData = str(trainee.user.first_name + " " + trainee.user.last_name)
@@ -134,6 +131,7 @@ def _genTableau(width, height, formation_id):
 
     ])
     return res
+
 
 def genConventionFormationSecond(width, height, formation_id):
     widthList = [
@@ -162,9 +160,9 @@ def _genPagetwoMain(width, height, formation_id):
     client_company = formation_session.client_account
     millforma = Company.objects.get(name="Mill Forma")
     if formation_session.prerequis_formation == True:
-        prerequis="Oui"
+        prerequis = "Oui"
     else:
-        prerequis="Non"
+        prerequis = "Non"
     text1 = Paragraph(
         "<b>1 - OBJET :</b>" + "<br/>" + "<br/>" +
         "L’action de formation entre dans la catégorie : Action d'adaptation et de développement des compétences "
@@ -371,7 +369,7 @@ def _genPagethreeMain(width, height, formation_id):
     return res
 
 
-def genConventionFormationFourth(width, height,formation_id):
+def genConventionFormationFourth(width, height, formation_id):
     widthList = [
         width * 0.1,
         width * 0.8,
@@ -383,7 +381,7 @@ def genConventionFormationFourth(width, height,formation_id):
     ]
 
     res = Table([
-        ['', _genPagefourthMain(widthList[1], heightList[0],formation_id), ''],
+        ['', _genPagefourthMain(widthList[1], heightList[0], formation_id), ''],
         ['', _genSignature(widthList[1], heightList[1]), ''],
     ],
         colWidths=widthList, )
@@ -427,21 +425,16 @@ def _genPagefourthMain(width, height, formation_id):
         "Le prix de l’action de formation est fixé à :" + "<br/>" + "<br/>",
         textstyle)
     if formation_session.teacher_price == None:
-        teacher_price="Non renseigné"
-        tva="Prix Formateur non renseigné"
+        teacher_price = "Non renseigné"
+        tva = "Prix Formateur non renseigné"
     else:
-        teacher_price=float(formation_session.teacher_price)
-        tva=float(formation_session.teacher_price) * 0.2
-
-
-
-
-
+        teacher_price = float(formation_session.teacher_price)
+        tva = float(formation_session.teacher_price) * 0.2
 
     text2 = Paragraph(
-        "TOTAL HT : "+str(teacher_price)+"$ HT." + "<br/>" +
-        "TVA (20%) : "+str(tva)+"$." + "<br/>" +
-        "TOTAL TTC : "+str(teacher_price+tva)+"$" + "<br/>" + "<br/>",
+        "TOTAL HT : " + str(teacher_price) + "$ HT." + "<br/>" +
+        "TVA (20%) : " + str(tva) + "$." + "<br/>" +
+        "TOTAL TTC : " + str(teacher_price + tva) + "$" + "<br/>" + "<br/>",
         textstyle)
 
     text3 = Paragraph(
@@ -449,16 +442,14 @@ def _genPagefourthMain(width, height, formation_id):
         """En cas de cessation anticipée de la formation du fait de l’organisme de formation ou en cas de renoncement 
         par l’entreprise bénéficiaire pour un autre motif que la force majeure dûment reconnue, la présente 
         convention est résiliée selon les modalités financières suivantes : Aucun versement.""" + "<br/>"
-        +"""Si le stagiaire est empêché de suivre la formation par suite de force majeure dûment reconnue, 
+        + """Si le stagiaire est empêché de suivre la formation par suite de force majeure dûment reconnue, 
         la convention de formation professionnelle est résiliée. Dans ce cas, seules les prestations effectivement 
-        dispensées sont dues au prorata temporis de leur valeur prévue au présent contrat.""" + "<br/>" + "<br/>"+
+        dispensées sont dues au prorata temporis de leur valeur prévue au présent contrat.""" + "<br/>" + "<br/>" +
         "11 - CAS DE DIFFEREND" + "<br/>" + "<br/>" +
         """Si une contestation ou un différend n’ont pu être réglés à l’amiable, seul le tribunal de 
         commerce dans le ressort de la juridiction du siège social du centre de formation sera compétent 
-        pour régler le litige."""+"<br/>"+"<br/>",
+        pour régler le litige.""" + "<br/>" + "<br/>",
         textstyle)
-
-
 
     res = Table([
         [text1],
@@ -482,7 +473,7 @@ def _genSignature(width, height):
 
     textleftstyle = ParagraphStyle('textleft')
     textleftstyle.fontSize = 7.1
-    textleft = Paragraph( "<br/>"+"Fait à paris, LE "+ timezone.now().strftime('%Y-%m-%d') + "<br/>"
+    textleft = Paragraph("<br/>" + "Fait à paris, LE " + timezone.now().strftime('%Y-%m-%d') + "<br/>"
                          + "En double exemplaire" + "<br/>" + "<br/>"
                          + "Le Prestataire" + "<br/>"
                          + "«Bon pour accord»",

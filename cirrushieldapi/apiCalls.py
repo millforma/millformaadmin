@@ -1,14 +1,12 @@
 import unidecode
-from django.contrib.auth.models import User, Group
 import xmltodict
 import requests
 
-
+from django.contrib.auth.models import User, Group
 from electronicSignature import settings
 from main.models.address import Address
 from main.models.address_type import AddressType
 from main.models.company import Company
-
 from main.models.entity import EntityPhone, EntityAddress
 from main.models.person import Person
 from main.models.phone import Phone
@@ -41,8 +39,13 @@ def GetFormationSession(formation_id):
     callUrl = url + selectQuery
     response = requests.get(callUrl)
     search_was_successful = (response.status_code == 200)  # 200 = SUCCESS
+
+    # parse the response into dict
     xpars = xmltodict.parse(response.text)
+
     year = xpars['Data']['Contrat_de_Formation']['Annee_du_contrat']
+
+    # slice the year out of dd/mm/yyyy
     if year != None:
         formatted_year = year[-4:]
     else:
@@ -53,6 +56,7 @@ def GetFormationSession(formation_id):
     tutor_id = xpars['Data']['Contrat_de_Formation']['Formateur']
     xpars['Data']['Contrat_de_Formation']['Formateur'] = getTutor(tutor_id)
 
+    # ugly needs modif 5 ifs..
     if xpars['Data']['Contrat_de_Formation']['Authorized_Start_Date'] != None:
         xpars['Data']['Contrat_de_Formation']['Authorized_Start_Date'] = xpars['Data']['Contrat_de_Formation'][
                                                                              'Authorized_Start_Date'][:10]
@@ -91,11 +95,10 @@ def GetFormationSession(formation_id):
         )
     else:
         try:
-            db_address = Address.objects.get(details="Formation à distance" )
+            db_address = Address.objects.get(details="Formation à distance")
         except Address.DoesNotExist:
             db_address = Address.objects.create(details="Formation à distance")
-        xpars['Data']['Contrat_de_Formation']['Numero_de_la_rue']=db_address
-
+        xpars['Data']['Contrat_de_Formation']['Numero_de_la_rue'] = db_address
 
     search_result = xpars
 
@@ -118,10 +121,10 @@ def getTrainee(session_id):
         if search_was_successful and trainee != None:
             length = len(trainees)
             if length == 1:
-                selectQuery = "&selectQuery=Select+First_Name,Last_Name,Email,Mobile,Fonction_stagiaire+from+Contact+where+Id="\
+                selectQuery = "&selectQuery=Select+First_Name,Last_Name,Email,Mobile,Fonction_stagiaire+from+Contact+where+Id=" \
                               + trainees['Stagiaire']
             else:
-                selectQuery = "&selectQuery=Select+First_Name,Last_Name,Email,Mobile,Fonction_stagiaire+from+Contact+where+Id="\
+                selectQuery = "&selectQuery=Select+First_Name,Last_Name,Email,Mobile,Fonction_stagiaire+from+Contact+where+Id=" \
                               + trainee['Stagiaire']
             callUrl = url + selectQuery
             response = requests.get(callUrl)
@@ -241,7 +244,7 @@ def getTutor(tutor_id):
                 phone_type=1,
                 phone=phone_company,
             )
-            teacher_company.adresse=address
+            teacher_company.adresse = address
             teacher_company.save()
 
     return tutor
@@ -370,7 +373,6 @@ def getClient(client_id, foad):
                                             Industry=client_account_industry, num_siret=client_account_siret,
                                             contact=representant_company, phone=phone_company)
             if type(client_account_billingstreet) != str or type(client_account_Num_rue) != str:
-
                 address_company = Address.objects.create(details=client_account_Num_rue + client_account_billingstreet,
                                                          postal_code=client_account_billing_zip)
 
@@ -398,8 +400,8 @@ def create_address(address_text, postal_code, id_commune):
     if type(address_text) == str:
         address_text = address_text + ", " + str(xpars['Data']['Ville']['Name'])
     else:
-        address_text=str(xpars['Data']['Ville']['Name'])
-        postal_code="00000"
+        address_text = str(xpars['Data']['Ville']['Name'])
+        postal_code = "00000"
     try:
         db_address = Address.objects.get(details=address_text)
     except Address.DoesNotExist:

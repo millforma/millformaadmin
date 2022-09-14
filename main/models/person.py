@@ -1,18 +1,16 @@
 import uuid
-
 from django.conf import settings
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
-
 from main.models.base import BaseModel
 from main.models.entity import Entity
 from main.models.file.image import ImageFile
 from main.models.profession import Profession
-from main.models.activity import ActivityType
+
 
 
 

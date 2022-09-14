@@ -3,15 +3,12 @@ import magic
 from abc import ABCMeta, abstractmethod
 from os.path import splitext, basename
 from pathlib import Path
-
 from django.conf import settings
 from django.db import models
 from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
-
-
 from main.models.base import BaseModel
 from main.models.entity import Entity
 from main.utils import UidMixin

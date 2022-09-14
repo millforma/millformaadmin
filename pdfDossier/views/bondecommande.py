@@ -1,12 +1,9 @@
 from django.utils import timezone
-
-import datetime
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import Table, Paragraph, Image
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import ListFlowable, ListItem
 from reportlab.lib import colors
-
 from main.models.company import Company
 from main.models.formationsession import FormationSession
 

@@ -1,6 +1,5 @@
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Table, Paragraph
-
 from main.models.formationsession import FormationSession
 
 

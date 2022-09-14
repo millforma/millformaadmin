@@ -2,13 +2,28 @@ from django import forms
 
 from main.models.formationsession import FormationSession
 
+#Form for info checking after successful import from cirrus
+
+#Data from this form will be used to create a Formation session
 
 class FormationSessionForm(forms.ModelForm):
     class Meta:
         model = FormationSession
-        fields = ('year','old_num_formation','commercial','name','trainee','num_present_trainee',
-                  'foad','training_site','teacher_name','teacher_price','opco_name',
-                  'date_autorised_start','date_autorised_end','date_start','date_end','training_duration','client_account')
+        fields = ('year',
+                  'old_num_formation',
+                  'commercial',
+                  'name',
+                  'trainee',
+                  'num_present_trainee',
+                  'foad',
+                  'training_site',
+                  'teacher_name',
+                  'teacher_price',
+                  'opco_name',
+                  'date_autorised_start','date_autorised_end',
+                  'date_start','date_end',
+                  'training_duration',
+                  'client_account')
 
     def __init__(self, *args, **kwargs):
 

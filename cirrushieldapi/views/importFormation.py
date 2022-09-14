@@ -1,16 +1,14 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.sites.models import Site
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import resolve_url
-from django.urls import reverse
 from django.views.generic import FormView
 from django.contrib import messages
 from cirrushieldapi.apiCalls import GetFormationSession
 from cirrushieldapi.forms.formation_session_form import FormationSessionForm
-from cirrushieldapi.views.email_view import send_emargementteacherlink, send_emargementlearnerlink, send_id
 from main.models.formationsession import FormationSession
 
 
-class SaveFormation(FormView,UserPassesTestMixin):
+# Create Formation session on sumbit of formation_session_form
+class SaveFormation(FormView, UserPassesTestMixin):
     template_name = 'main/formation-session-save.html'
     form_class = FormationSessionForm
 

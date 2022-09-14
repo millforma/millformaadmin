@@ -1,7 +1,6 @@
 from reportlab.platypus import Table, Paragraph, Image
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib import colors
-
 from main.models.company import Company
 from main.models.formationsession import FormationSession
 

@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
-
 from .document import DocumentFile
 from django.db import models
-
 from .document_type import DocumentType
 from ..formationsession import FormationSession
 

@@ -1,20 +1,13 @@
 from datetime import datetime
-
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db import IntegrityError
 from django.urls import reverse
-
-from django.views.generic import FormView, TemplateView, ListView
-
+from django.views.generic import FormView, TemplateView
 from main.forms.videochatlink_form import SessionForm
 from main.models import Event
-from main.models.file.document_type import DocumentType
-from main.models.file.pdf_document import PdfDocument
 from main.models.formationsession import FormationSession
 from main.models.videochat import VideoChat
-from main.views.email_view import send_videochatlink
-
 from main.views.emargement_view import Generate_emargement
 
 

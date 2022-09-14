@@ -1,13 +1,10 @@
 import uuid
-
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
-
 from main.models.address import Address
 from main.models.base import BaseModel
 from main.models.company import Company
-
 from main.models.person import Person
 
 
@@ -28,7 +25,6 @@ class FormationSession(BaseModel):
     OPCOmobilite = 12
     OCAPIAT = 13
     OPCO_2I = 14
-
     OPCO_NAMES_CHOICES = [
         (AKTO_Reseau_Fafih, "AKTO Réseau Fafih"),
         (AFDAS, "AFDAS"),
