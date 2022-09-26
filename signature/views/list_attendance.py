@@ -12,11 +12,12 @@ class AttendanceSignListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        formation_session= self.kwargs['formation_id']
+        formation_session = self.kwargs['formation_id']
         formation_session = FormationSession.objects.get(id=formation_session)
-        type=DocumentType.objects.get(name__in=[1,9])
+        type = DocumentType.objects.filter(name__in=[1, 9])
 
-        pdf_files = PdfDocument.objects.filter(formation_session=formation_session,type_of_document=type).exclude(is_signed_by=self.request.user)
+        pdf_files = PdfDocument.objects.filter(formation_session=formation_session, type_of_document__in=type).exclude(
+            is_signed_by=self.request.user)
 
         context['files'] = pdf_files
         context['formation_session'] = formation_session
