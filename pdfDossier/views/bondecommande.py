@@ -42,14 +42,14 @@ def genBondecommandeTable(width, height, formation_id, user):
 def _genBondecommande(formation_id):
     width, height = A4
     textstyle = ParagraphStyle('text')
-    textstyle.fontSize = 7.1
+    textstyle.fontSize = 10
 
     text = Paragraph("<b><u>Bon de commande</u></b>",
                      textstyle)
     res = Table([
         [text]
     ],
-        0.15 * width,
+        0.18 * width,
     )
 
     res.setStyle([
@@ -72,10 +72,10 @@ def _genCommande(width, height, formation_id, user):
     textleftstyle.fontSize = 7.1
 
     textleft = Paragraph("<font color='black'><b><u>L'ORGANISME DE FORMATION</u></b></font>" + "<br/>"
-                         + "Raison Sociale :" + millforma.raison_sociale + "<br/>"
-                         + "Numéro de déclaration d'activité :" + millforma.num_decla_activite + "<br/>"
-                         + "Siret :" + millforma.num_siret + "<br/>"
-                         + "Adresse :" + millforma.adresse.string() + "<br/>"
+                         + "Raison Sociale : " + millforma.raison_sociale + "<br/>"
+                         + "Numéro de déclaration d'activité : " + millforma.num_decla_activite + "<br/>"
+                         + "Siret : " + millforma.num_siret + "<br/>"
+                         + "Adresse : " + millforma.adresse.string() + "<br/>"
                          + "<font color='black'> Ci-après « le donneur d'ordre »</font>",
                          textleftstyle)
     if client_company.adresse != None:
@@ -87,11 +87,11 @@ def _genCommande(width, height, formation_id, user):
     textrightstyle.fontSize = 7.1
     textrightstyle.textColor = colors.HexColor('#808080')
     textright = Paragraph("<font color='black'><b><u>LE FORMATEUR</u></b></font>" + "<br/>"
-                          + "Raison Sociale :" + client_company.raison_sociale + "<br/>"
-                          + "Représenté par :" + client_company.contact.first_name +" "+
+                          + "Raison Sociale : " + client_company.raison_sociale + "<br/>"
+                          + "Représenté par : " + client_company.contact.first_name +" "+
                           client_company.contact.last_name + "<br/>"
-                          + "Siret :" + client_company.num_siret + "<br/>"
-                          + "Adresse :" + client_company_address + "<br/>"
+                          + "Siret : " + client_company.num_siret + "<br/>"
+                          + "Adresse : " + client_company_address + "<br/>"
                           + "<font color='black'> Ci-après « le prestataire »</font>" + "<br/>" + "<br/>"
                           + "<font color='black'> Ci-après « le sous-traitant »</font>",
                           textrightstyle)
@@ -136,7 +136,7 @@ def _genArticle(width, height, formation_id):
         sous-traitant au bénéfice du donneur d'ordre""",
         text2style)
 
-    text3 = Paragraph("<b><u>Article 2: Objet du contrat :</u></b>",
+    text3 = Paragraph("<b><u>Article 2: Objet du contrat : </u></b>",
                       titlestyle)
 
     styles = getSampleStyleSheet()
@@ -171,7 +171,7 @@ def _genArticle(width, height, formation_id):
                      leftIndent=45),
             ListItem(Paragraph("Dates :&nbsp;&nbsp;" + formation_session_date_start + " au " +
                                formation_session_date_end, style), leftIndent=45),
-            ListItem(Paragraph("Soit un total de :&nbsp;&nbsp;" + str(teacher_price), style),
+            ListItem(Paragraph("Soit un total de :&nbsp;&nbsp;" + str(teacher_price) + "€", style),
                      leftIndent=45),
 
         ],
@@ -182,7 +182,7 @@ def _genArticle(width, height, formation_id):
     )
 
     text5style = ParagraphStyle('textright')
-    text5style.fontSize = 7.1
+    text5style.fontSize = 8
     text5 = Paragraph(
         "Le formateur s'engage à respecter les exigences du réferentiel Qualiopi, selon les directives du "
         "donneur d'ordre." + "<br/>" +
@@ -295,7 +295,7 @@ def _genSignature(width, height):
 
     textleftstyle = ParagraphStyle('textleft')
     textleftstyle.fontSize = 7.1
-    textleft = Paragraph("<br/>" + "Fait à paris, LE " + timezone.now().strftime('%Y-%m-%d') + "<br/>"
+    textleft = Paragraph("<br/>" + "Fait à paris, le " + timezone.now().strftime('%Y/%m/%d') + "<br/>"
                          + "En double exemplaire" + "<br/>" + "<br/>"
                          + "Le Prestataire" + "<br/>"
                          + "«Bon pour accord»",

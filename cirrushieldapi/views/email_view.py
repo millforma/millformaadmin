@@ -7,6 +7,36 @@ from django.contrib import messages
 from django.contrib.sites.models import Site
 
 
+
+# function which is called on button télécharger on home view
+def send_convention(request , formation_id):
+    session = FormationSession.objects.get(id=formation_id)
+    current_site = Site.objects.get_current()
+    # links for email purpose
+    link = current_site.domain + '/learner/' + str(session.id)
+    teacher = session.teacher_name
+
+    email_subject = 'Signature convention de formation'
+    email_body = render_to_string('email/send_convention.html', {
+        'teacher': teacher,
+        'domain': current_site,
+        'formation': session,
+        'link': link,
+    })
+    send_mail(
+        email_subject,
+        email_body,
+        settings.EMAIL_SENDER,
+        [teacher.email]
+    )
+
+    # success
+    messages.success(request, "La convention de formation a bien été envoyée")
+
+    return redirect('main:home')
+
+
+
 # function which is called on button télécharger on home view
 def send_links_for_formation(request, formation_id):
     final_session = FormationSession.objects.get(id=formation_id)

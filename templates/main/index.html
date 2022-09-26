@@ -27,6 +27,7 @@
                                             <th>Nom</th>
                                             <th>Dossier de formation</th>
                                             <th>Lien émargements</th>
+                                            <th>Convention de formation</th>
                                             <th>Formateur</th>
                                             <th>Email responsable</th>
                                             <th>Lieu de la formation</th>
@@ -44,6 +45,7 @@
                                             <td><a href="{% url 'main:attendance_list' formation.id %}">{{ formation.name }}</a></td>
                                             <td><a href="{% url 'pdfDossier:generate_formation' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Télécharger"  /></a></td>
                                             <td><a href="{% url 'cirrushieldapi:send_link' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Envoyer"  /></a></td>
+                                            <td><a href="{% url 'cirrushieldapi:send_convention' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Envoyer"  /></a></td>
                                             <td>{{ formation.teacher_name.last_name }} {{ formation.teacher_name.first_name }}</td>
                                             <td>{{ formation.client_account.contact.email }}</td>
                                             <td>{{ formation.training_site }}</td>

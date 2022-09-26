@@ -57,13 +57,13 @@ def _genContenu(width, height, formation_id):
     textstyle = ParagraphStyle('textleft')
     textstyle.fontSize = 9
     if formation_session.date_start != None:
-        formation_session_date_start=formation_session.date_start.strftime('%Y-%m-%d')
+        formation_session_date_start=formation_session.date_start.strftime('%Y/%m/%d')
     else:
-        formation_session_date_start="Non renseignée"
+        formation_session_date_start="..../../.."
     if formation_session.date_end != None:
-        formation_session_date_end=formation_session.date_end.strftime('%Y-%m-%d')
+        formation_session_date_end=formation_session.date_end.strftime('%Y/%m/%d')
     else:
-        formation_session_date_end="Non renseignée"
+        formation_session_date_end="..../../.."
     textleft = Paragraph(
         "Intitulé de la formation : " + formation_session.name + "<br/>"
         + "Nom du formateur : " + formation_session.teacher_name.last_name + " " +

@@ -14,7 +14,7 @@ class AttendanceSignListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         formation_session= self.kwargs['formation_id']
         formation_session = FormationSession.objects.get(id=formation_session)
-        type=DocumentType.objects.get(name=1)
+        type=DocumentType.objects.get(name__in=[1,9])
 
         pdf_files = PdfDocument.objects.filter(formation_session=formation_session,type_of_document=type).exclude(is_signed_by=self.request.user)
 

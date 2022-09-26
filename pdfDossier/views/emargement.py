@@ -27,7 +27,6 @@ def genEmargementFirst(width, height, formation_id, day, event):
         ['', _genTableTitle(widthList[1], heightList[3], event), ''],
         ['', _genTableContent(widthList[1], heightList[4], formation_id), ''],
         ['', _genSignature(widthList[1], heightList[5]), ''],
-
     ],
         colWidths=widthList,
         rowHeights=heightList)

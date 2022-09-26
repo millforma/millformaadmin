@@ -193,7 +193,7 @@ def _genPagetwoMain(width, height):
                 "et de la nécessité pour Mill Forma de conserver une bonne image de marque.",
                 style), leftIndent=45),
             ListItem(Paragraph(
-                "S’engager à respecter les exigences du référentiel Qualiopi, selon les directives du donneur d’ordre.",
+                "Respecter les exigences du référentiel Qualiopi, selon les directives du donneur d’ordre.",
                 style), leftIndent=45),
         ],
         bulletType='bullet',
@@ -291,7 +291,7 @@ def _genPagethreeMain(width, height):
         les supports pédagogiques utilisés en prestation et ce en quantité suffisante. Les supports de formation 
         ne pourront faire apparaître, sauf accord contraire, d’autres logos et chartes graphique que celles 
         de Mill Forma."""
-        "<br/>"+"<u><b>10) Droit :</b></u>" + "<br/>" + "<br/>" +
+        "<br/>"+"<br/>"+"<u><b>10) Droit :</b></u>" + "<br/>" + "<br/>" +
         """Le contrat est soumis au droit français. En cas de différend concernant la formation, l'exécution ou
          la cessation du contrat, les parties s'engagent à tenter de trouver un accord amiable. A défaut d'un tel
           accord amiable entre les parties pour tout différend survenant entre elles, il est fait attribution de
@@ -323,7 +323,7 @@ def _genPagethreeEnd(width, height):
     textleftstyle.fontSize = 12
 
     textleft = Paragraph("<b><u>Fait à Paris en double exemplaire :</u></b>" + "<br/>" + "<br/>" + "<br/>"
-                         + "Le :" + timezone.now().strftime('%Y-%m-%d') + "<br/>" + "<br/>" + "<br/>"
+                         + "Le :" + timezone.now().strftime('%Y/%m/%d') + "<br/>" + "<br/>" + "<br/>"
                          + "Signature et paraphe sur chaque page," + "<br/>" + "<br/>" + "<br/>" + "<br/>"
                          + "Pour le prestataire" + "<br/>" + "<br/>"
                          + "« Lu et approuvé »" + "<br/>",

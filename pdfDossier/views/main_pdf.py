@@ -21,6 +21,7 @@ from pdfDossier.views.convocation import genConvocation
 
 from pdfDossier.views.footer import genFooterTable
 from pdfDossier.views.header import genHeaderTable, genHeaderReglementTable
+from pdfDossier.views.ques_satisfation_a_chaud import genQuesSatisfactionChaud
 
 from pdfDossier.views.reglement_interieur import genReglementInterieurFirstPageTable, genReglementInterieurSecondPageTable
 
@@ -83,13 +84,7 @@ def Generate_formation_files_view(request, formation_id):
     doc = docx.Document(compte_rendu_path)
     files.append(("QCM PREREQUIS MILL FORMA.docx", compte_rendu))
 
-    buffer = io.BytesIO()
-    # Adding QCM Files
-    compte_rendu = buffer.getvalue()
-    buffer.close()
-    compte_rendu_path = os.path.join(module_dir, 'word_files/Questionnaire de Satisfaction Client a chaud MILL-FORMA.docx')
-    doc = docx.Document(compte_rendu_path)
-    files.append(("Questionnaire de Satisfaction Client a chaud MILL-FORMA.docx", compte_rendu))
+
 
 
     # Create a file-like buffer to receive PDF data.
@@ -199,6 +194,43 @@ def Generate_formation_files_view(request, formation_id):
 
 
     ######################################################################################################
+    ####################################### QUESTIONNAIRE DE SATISFACTION A CHAUD#########################################
+    buffer = io.BytesIO()
+    ques_satisfaction_chaud = canvas.Canvas(buffer, pagesize=A4)
+    ques_satisfaction_chaud.setTitle('Questionnaire de satisfaction à chaud')
+
+    heightList_multiple_page = [height * 0.14,
+                                height * 0.735,
+                                height * 0.125,
+                                ]
+
+    quessatisfactionchaud = Table([
+        [genHeaderTable(width, heightList_multiple_page[0])],
+        [genQuesSatisfactionChaud(width, heightList_multiple_page[1], formation_id)],
+        [genFooterTable(width, heightList_multiple_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_multiple_page
+    )
+
+    quessatisfactionchaud.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+
+    quessatisfactionchaud.wrapOn(ques_satisfaction_chaud, 0, 0)
+    quessatisfactionchaud.drawOn(ques_satisfaction_chaud, 0, 0)
+
+    ques_satisfaction_chaud.showPage()
+
+    ques_satisfaction_chaud.save()
+    quessatisfachaud = buffer.getvalue()
+    save_file_in_db(quessatisfachaud, formation_session, "Questionnaire_de_satisfaction_a_chaud.pdf", user=request.user)
+    buffer.close()
+    files.append(("Questionnaire_de_satisfaction_a_chaud.pdf", quessatisfachaud))
+
+    # ##################################################################################################################
 
     ####################################### REGLEMENT INTERIEUR ##########################################
     buffer = io.BytesIO()
