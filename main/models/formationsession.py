@@ -1,4 +1,5 @@
 import uuid
+import json
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
@@ -7,7 +8,8 @@ from main.models.base import BaseModel
 from main.models.company import Company
 from main.models.person import Person
 
-
+class Objectifs_peda(models.Model):
+    description=models.TextField(null=True)
 
 class FormationSession(BaseModel):
 
@@ -67,7 +69,7 @@ class FormationSession(BaseModel):
     client_account = models.ForeignKey(to=Company, on_delete=models.DO_NOTHING, blank=True,null=True)
     old_num_formation = models.CharField(max_length=35, default="DC-00000")
     date_creation_formation = models.DateField(auto_now=True)
-
+    objectifs_peda=models.ManyToManyField(Objectifs_peda,blank=True,null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

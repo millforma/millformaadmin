@@ -71,10 +71,11 @@ def _genEntre(width, height, formation_id):
     except Company.DoesNotExist:
         print("Add message")
     if teacher_company != None :
-
+        teacher_company_num_siret=teacher_company.num_siret
         teacher_company_address=teacher_company.adresse.string()
     else:
         teacher_company_address="Non renseignée"
+        teacher_company_num_siret ="Non renseigné"
     text1 = Paragraph(
         "<b>Entre :</b>" + "<br/>" + "<br/>" +
         """La société Mill-Forma, sous le numéro de SIRET 84127900300013 dont
@@ -84,7 +85,7 @@ def _genEntre(width, height, formation_id):
         + "<b>Et :</b>" +
         "<br/>"  + formation_session.teacher_name.last_name + " " + formation_session.teacher_name.first_name +
         " - situé au  " + teacher_company_address + "<br/>"
-        + "N° Siret : " + formation_session.teacher_name.company.num_siret+ "<br/>" + "<br/>" +
+        + "N° Siret : " + str(teacher_company_num_siret)+ "<br/>" + "<br/>" +
         "Ci-après dénommé le prestataire" + "<br/>" + "<br/>" + "<br/>" +
         "Ci-après collectivement désignées « les parties »" + "<br/>" + "<br/>" + "<br/>" +
         "<u><b>1) Objet :</b></u>" + "<br/>" + "<br/>" +

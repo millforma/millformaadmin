@@ -1,13 +1,16 @@
+import json
+
 import unidecode
 import xmltodict
 import requests
-
+import re
 from django.contrib.auth.models import User, Group
 from electronicSignature import settings
 from main.models.address import Address
 from main.models.address_type import AddressType
 from main.models.company import Company
 from main.models.entity import EntityPhone, EntityAddress
+from main.models.formationsession import Objectifs_peda
 from main.models.person import Person
 from main.models.phone import Phone
 
@@ -31,7 +34,7 @@ def GetFormationSession(formation_id):
     url = "https://www.cirrus-shield.net/RestApi/Query?authToken=" + authToken
     selectQuery = "&selectQuery=Select+Name,Id,CreationDate,Annee_du_contrat,Commercial_principal,Client_Account," \
                   "Number_of_Trainees,,Formation_a_distance_liste," \
-                  "Numero_de_la_rue,Rue,Ville_Commune,Code_postal,Pre_requisites_Verified,Formateur,OPCO," \
+                  "Numero_de_la_rue,Rue,Ville_Commune,Code_postal,Training_Offer,Pre_requisites_Verified,Formateur,OPCO," \
                   "Authorized_Start_Date,Authorized_End_Date,Expected_Start_Date,Expected_End_Date," \
                   "Cout_du_formateur,Total_Number_of_Training_Hours," \
                   "+from+Contrat_de_Formation+where+Numero_du_dossier=" \
@@ -86,6 +89,10 @@ def GetFormationSession(formation_id):
     client = xpars['Data']['Contrat_de_Formation']['Client_Account']
     foad = xpars['Data']['Contrat_de_Formation']['Formation_a_distance_liste']
     xpars['Data']['Contrat_de_Formation']['Client_Account'] = getClient(client, foad)
+
+    if xpars['Data']['Contrat_de_Formation']['Training_Offer'] != None:
+        xpars['Data']['Contrat_de_Formation']['Training_Offer']=getObjectif(xpars['Data']['Contrat_de_Formation']['Training_Offer'])
+
     if (xpars['Data']['Contrat_de_Formation']['Formation_a_distance_liste'] != "Oui"):
         xpars['Data']['Contrat_de_Formation']['Numero_de_la_rue'] = create_address(
             str(xpars['Data']['Contrat_de_Formation']['Numero_de_la_rue']) + " " +
@@ -104,6 +111,27 @@ def GetFormationSession(formation_id):
 
     return search_result
 
+def getObjectif(objectif_id):
+    authToken = GetAuthToken()
+    authToken = authToken.replace('"', '')
+    url = "https://www.cirrus-shield.net/RestApi/Query?authToken=" + authToken
+    selectQuery = "&selectQuery=Select+Objectif_pedagogique+from+Product+where+Id=" + objectif_id
+    callUrl = url + selectQuery
+    response = requests.get(callUrl)
+    search_was_successful = (response.status_code == 200)  # 200 = SUCCESS
+    xpars = xmltodict.parse(response.text)
+
+    sentences = re.split(r' *[\.\?!][\'"\)\]]* *', xpars['Data']['Product']['Objectif_pedagogique'])
+    my_objectifs=[]
+    for objectif in sentences:
+        if objectif != "":
+            my_objectifs.append(
+                Objectifs_peda.objects.create(
+                    description=objectif
+                )
+            )
+
+    return my_objectifs
 
 def getTrainee(session_id):
     final_trainees = []
@@ -111,7 +139,7 @@ def getTrainee(session_id):
     authToken = GetAuthToken()
     authToken = authToken.replace('"', '')
     url = "https://www.cirrus-shield.net/RestApi/Query?authToken=" + authToken
-    selectQuery = "&selectQuery=Select+Stagiaire+from+Trainee+where+Contrat_de_Formation=" + session_id
+    selectQuery = "&selectQuery=Select+Stagiaire+from+Trainee+Where+Contrat_de_Formation=" + session_id
     callUrl = url + selectQuery
     response = requests.get(callUrl)
     search_was_successful = (response.status_code == 200)  # 200 = SUCCESS

@@ -1,10 +1,12 @@
+import json
+
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import resolve_url
 from django.views.generic import FormView
 from django.contrib import messages
 from cirrushieldapi.apiCalls import GetFormationSession
 from cirrushieldapi.forms.formation_session_form import FormationSessionForm
-from main.models.formationsession import FormationSession
+from main.models.formationsession import FormationSession, Objectifs_peda
 
 
 # Create Formation session on sumbit of formation_session_form
@@ -39,7 +41,7 @@ class SaveFormation(FormView, UserPassesTestMixin):
                 "training_duration": int(
                     formation_session['Data']['Contrat_de_Formation']['Total_Number_of_Training_Hours']),
                 "teacher_price": formation_session['Data']['Contrat_de_Formation']['Cout_du_formateur'],
-
+                "objectifs_peda":formation_session['Data']['Contrat_de_Formation']['Training_Offer'],
                 "old_num_formation": formation_id,
 
             }
@@ -56,6 +58,7 @@ class SaveFormation(FormView, UserPassesTestMixin):
             try:
                 FormationSession.objects.get(old_num_formation=form.cleaned_data["old_num_formation"])
             except FormationSession.DoesNotExist:
+
                 final_session = FormationSession.objects.create(year=form.cleaned_data["year"],
                                                                 old_num_formation=form.cleaned_data[
                                                                     "old_num_formation"],
@@ -77,7 +80,9 @@ class SaveFormation(FormView, UserPassesTestMixin):
                                                                 training_duration=form.cleaned_data[
                                                                     "training_duration"],
                                                                 teacher_price=form.cleaned_data["teacher_price"],
+
                                                                 )
+                final_session.objectifs_peda.set(form.cleaned_data["objectifs_peda"])
 
                 final_session.trainee.set(form.cleaned_data["trainee"])
                 final_session.save()

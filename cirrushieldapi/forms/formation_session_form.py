@@ -23,7 +23,8 @@ class FormationSessionForm(forms.ModelForm):
                   'date_autorised_start','date_autorised_end',
                   'date_start','date_end',
                   'training_duration',
-                  'client_account')
+                  'client_account',
+                  'objectifs_peda')
 
     def __init__(self, *args, **kwargs):
 
@@ -46,5 +47,5 @@ class FormationSessionForm(forms.ModelForm):
         self.fields['date_end'].label = "Date de fin"
         self.fields['training_duration'].label = "Durée de la formation"
         self.fields['client_account'].label = "Client"
-
+        self.fields['objectifs_peda'].label = "Objectifs pédagogiques"
 

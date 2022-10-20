@@ -99,7 +99,7 @@ def _genContenuFirst(width, height, trainee):
     textstyle = ParagraphStyle('textfirst')
     textstyle.fontSize = 12
 
-    textfirst = Paragraph("Le 16/08/2021," + "<br/>" + "À l’attention de : " + trainee.user.first_name +
+    textfirst = Paragraph("Le 16/08/2021," + "<br/>" + "À l’attention de : " + trainee.user.first_name +" "+
                           trainee.user.last_name,
                           textstyle)
 

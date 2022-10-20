@@ -18,6 +18,7 @@ from pdfDossier.views.contrat_de_partenariat_formateur import genContratFormateu
 from pdfDossier.views.convention_de_formation import genConventionFormationFirst, genConventionFormationSecond, \
     genConventionFormationThird, genConventionFormationFourth
 from pdfDossier.views.convocation import genConvocation
+from pdfDossier.views.deroule_pedagogique import genDeroulePedagogiqueFirst, genDeroulePedagogiqueSecond
 
 from pdfDossier.views.footer import genFooterTable
 from pdfDossier.views.header import genHeaderTable, genHeaderReglementTable
@@ -195,43 +196,100 @@ def Generate_formation_files_view(request, formation_id):
 
     ######################################################################################################
     ####################################### QUESTIONNAIRE DE SATISFACTION A CHAUD#########################################
-    buffer = io.BytesIO()
-    ques_satisfaction_chaud = canvas.Canvas(buffer, pagesize=A4)
-    ques_satisfaction_chaud.setTitle('Questionnaire de satisfaction à chaud')
+    for trainee in formation_session.trainee.all():
+        buffer = io.BytesIO()
+        ques_satisfaction_chaud = canvas.Canvas(buffer, pagesize=A4)
+        ques_satisfaction_chaud.setTitle('Questionnaire de satisfaction à chaud')
 
-    heightList_multiple_page = [height * 0.14,
-                                height * 0.735,
-                                height * 0.125,
-                                ]
+        heightList_multiple_page = [height * 0.14,
+                                    height * 0.735,
+                                    height * 0.125,
+                                    ]
 
-    quessatisfactionchaud = Table([
-        [genHeaderTable(width, heightList_multiple_page[0])],
-        [genQuesSatisfactionChaud(width, heightList_multiple_page[1], formation_id)],
-        [genFooterTable(width, heightList_multiple_page[2])],
-    ],
-        colWidths=width,
-        rowHeights=heightList_multiple_page
-    )
+        quessatisfactionchaud = Table([
+            [genHeaderTable(width, heightList_multiple_page[0])],
+            [genQuesSatisfactionChaud(width, heightList_multiple_page[1], formation_id,trainee.user)],
+            [genFooterTable(width, heightList_multiple_page[2])],
+        ],
+            colWidths=width,
+            rowHeights=heightList_multiple_page
+        )
 
-    quessatisfactionchaud.setStyle([
+        quessatisfactionchaud.setStyle([
 
-        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+            ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
 
-    ])
+        ])
 
-    quessatisfactionchaud.wrapOn(ques_satisfaction_chaud, 0, 0)
-    quessatisfactionchaud.drawOn(ques_satisfaction_chaud, 0, 0)
+        quessatisfactionchaud.wrapOn(ques_satisfaction_chaud, 0, 0)
+        quessatisfactionchaud.drawOn(ques_satisfaction_chaud, 0, 0)
 
-    ques_satisfaction_chaud.showPage()
+        ques_satisfaction_chaud.showPage()
 
-    ques_satisfaction_chaud.save()
-    quessatisfachaud = buffer.getvalue()
-    save_file_in_db(quessatisfachaud, formation_session, "Questionnaire_de_satisfaction_a_chaud.pdf", user=request.user)
-    buffer.close()
-    files.append(("Questionnaire_de_satisfaction_a_chaud.pdf", quessatisfachaud))
+        ques_satisfaction_chaud.save()
+        quessatisfachaud = buffer.getvalue()
+        name_file="Questionnaire_de_satisfaction_a_chaud"+str(trainee.user.last_name)+str(trainee.user.first_name)+".pdf"
+        save_file_in_db(quessatisfachaud, formation_session, name_file,
+                        user=request.user,doc_type=4)
+        buffer.close()
+        files.append((name_file, quessatisfachaud))
 
     # ##################################################################################################################
+        ####################################### DEROULE PEDA######################################################
+        buffer = io.BytesIO()
+        deroule_peda = canvas.Canvas(buffer, pagesize=A4)
+        deroule_peda.setTitle('Déroulé pédagogique')
 
+        heightList_multiple_page = [height * 0.14,
+                                    height * 0.735,
+                                    height * 0.125,
+                                    ]
+
+        firstPagederoulePeda = Table([
+            [genHeaderTable(width, heightList_multiple_page[0])],
+            [genDeroulePedagogiqueFirst(width, heightList_multiple_page[1], formation_id)],
+            [genFooterTable(width, heightList_multiple_page[2])],
+        ],
+            colWidths=width,
+            rowHeights=heightList_multiple_page
+        )
+        secondPagederoulePeda = Table([
+            [genHeaderTable(width, heightList_multiple_page[0])],
+            [genDeroulePedagogiqueSecond(width, heightList_multiple_page[1])],
+            [genFooterTable(width, heightList_multiple_page[2])],
+        ],
+            colWidths=width,
+            rowHeights=heightList_multiple_page
+        )
+        firstPagederoulePeda.setStyle([
+
+            ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+        ])
+        secondPagederoulePeda.setStyle([
+
+            ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+        ])
+
+        firstPagederoulePeda.wrapOn(deroule_peda, 0, 0)
+        firstPagederoulePeda.drawOn(deroule_peda, 0, 0)
+
+        deroule_peda.showPage()
+
+        secondPagederoulePeda.wrapOn(deroule_peda, 0, 0)
+        secondPagederoulePeda.drawOn(deroule_peda, 0, 0)
+
+        deroule_peda.showPage()
+
+        deroule_peda.save()
+        deroulepeda = buffer.getvalue()
+        save_file_in_db(deroulepeda, formation_session, "Deroule_peda.pdf", user=request.user,
+                        doc_type=6)
+        buffer.close()
+        files.append(("Deroule_peda.pdf", deroulepeda))
+
+        ######################################################################################################################
     ####################################### REGLEMENT INTERIEUR ##########################################
     buffer = io.BytesIO()
     pdf_reglement_interieur = canvas.Canvas(buffer, pagesize=A4)
