@@ -136,7 +136,9 @@ strong {
 .theme-bg {
   background: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
 }
-
+.form-signature{
+  width: 40%;
+}
 .theme-bg2 {
   background: linear-gradient(-135deg, #899FD4 0%, #A389D4 100%);
 }
