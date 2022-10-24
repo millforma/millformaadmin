@@ -78,8 +78,8 @@
                 {% block script %}
 
 
-                <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" type="text/javascript"></script>
-                <script>
+                <script nonce="{{request.csp_nonce}}" src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" type="text/javascript"></script>
+                <script nonce="{{request.csp_nonce}}">
                     $(document).ready( function () {
                         $('#myTable').DataTable();
                     } );
@@ -87,26 +87,26 @@
 
                 </script>
 
-                <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.buttons.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/jszip.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/buttons.colVis.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/pdfmake.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/vfs_fonts.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.autoFill.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.select.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/buttons.bootstrap4.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/buttons.html5.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/buttons.print.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.bootstrap4.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.responsive.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/responsive.bootstrap4.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.keyTable.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.colReorder.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.fixedHeader.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.rowReorder.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/dataTables.scroller.min.js'%}"></script>
-                <script src="{% static 'assets/js/datatable/datatable-extension/custom.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.buttons.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/jszip.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/buttons.colVis.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/pdfmake.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/vfs_fonts.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.autoFill.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.select.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/buttons.bootstrap4.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/buttons.html5.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/buttons.print.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.bootstrap4.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.responsive.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/responsive.bootstrap4.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.keyTable.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.colReorder.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.fixedHeader.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.rowReorder.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/dataTables.scroller.min.js'%}"></script>
+                <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/datatable/datatable-extension/custom.js'%}"></script>
                 {% endblock script %}
             </div>
         </div>

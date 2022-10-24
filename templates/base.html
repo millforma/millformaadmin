@@ -8,8 +8,8 @@
     <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 11]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<script nonce="{{request.csp_nonce}}" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script nonce="{{request.csp_nonce}}"  src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
     <!-- Meta -->
     <meta charset="utf-8">
@@ -30,7 +30,7 @@
       <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cherry+Swash'>
     <link rel="stylesheet" href="{% static 'assets/css/nav_style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-      <script src="{% static 'assets/js/jquery-3.5.1.min.js'%}"></script>
+      <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/jquery-3.5.1.min.js'%}"></script>
     <link href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"  rel="stylesheet" />
     {% block extracss %}
 
@@ -197,10 +197,10 @@
 
 
 
-        <script src="{% static 'assets/js/jquery-3.5.1.min.js'%}"></script>
-        <script src="{% static 'assets/js/vendor-all.min.js' %}"></script>
-        <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'assets/js/pcoded.min.js' %}"></script>
+        <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/jquery-3.5.1.min.js'%}"></script>
+        <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/vendor-all.min.js' %}"></script>
+        <script nonce="{{request.csp_nonce}}" src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/pcoded.min.js' %}"></script>
     {% block script %}
 
 
