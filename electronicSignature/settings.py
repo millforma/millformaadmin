@@ -19,7 +19,6 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -30,7 +29,6 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -49,7 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'pdfDossier',
 ]
-SITE_ID =config('SITE_ID')
+SITE_ID = config('SITE_ID')
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -85,7 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'electronicSignature.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -99,7 +96,6 @@ DATABASES = {
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = "/static/"
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -116,7 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -129,7 +124,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -176,8 +170,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
 ]
 CSP_DEFAULT_SRC = ("'none'",)
-CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com','cdn.datatables.net','stackpath.bootstrapcdn.com')
-CSP_SCRIPT_SRC = ("'self'", 'documentcloud.adobe.com','code.jquery.com','cdnjs.cloudflare.com','stackpath.bootstrapcdn.com')
-CSP_FONT_SRC = ("'self'", 'fonts.gstatic.com','fonts.googleapis.com')
+CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com', 'cdn.datatables.net', 'stackpath.bootstrapcdn.com')
+CSP_SCRIPT_SRC = (
+"'self'", 'documentcloud.adobe.com', 'code.jquery.com', 'cdnjs.cloudflare.com', 'stackpath.bootstrapcdn.com')
+CSP_FONT_SRC = ("'self'", 'fonts.gstatic.com', 'fonts.googleapis.com')
 CSP_IMG_SRC = ("'self'",)
-CSP_INCLUDE_NONCE_IN = ("script-src", "font-src", "style-src",)
+CSP_CONNECT_SRC = ("'self'", 'millforma-admin.fr')
+CSP_FRAME_SRC = ("'self'", 'documentcloud.adobe.com')
+CSP_INCLUDE_NONCE_IN = ("script-src", "font-src", "style-src", "connect-src", "frame-src")
