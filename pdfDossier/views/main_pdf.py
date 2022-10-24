@@ -284,7 +284,7 @@ def Generate_formation_files_view(request, formation_id):
 
         deroule_peda.save()
         deroulepeda = buffer.getvalue()
-        save_file_in_db(deroulepeda, formation_session, "Deroule_peda.pdf", user=request.user,
+        save_file_in_db(deroulepeda, formation_session, "Deroule_pedagogique.pdf", user=request.user,
                         doc_type=6)
         buffer.close()
         files.append(("Deroule_peda.pdf", deroulepeda))
