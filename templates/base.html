@@ -197,10 +197,10 @@
 
 
 
-        <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/jquery-3.5.1.min.js'%}"></script>
-        <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/vendor-all.min.js' %}"></script>
-        <script nonce="{{request.csp_nonce}}" src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
-        <script nonce="{{request.csp_nonce}}" src="{% static 'assets/js/pcoded.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery-3.5.1.min.js'%}"></script>
+        <script src="{% static 'assets/js/vendor-all.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'assets/js/pcoded.min.js' %}"></script>
     {% block script %}
 
 

@@ -22,7 +22,7 @@
                     <h5>Signer votre émargement {{ doc_name }}</h5>
                 </div>
                 <div class="card-block">
-                    <form nonce="{{request.csp_nonce}}" style="width: 40%" action="" method="post">
+                    <form style="width: 40%" action="" method="post">
                      {% csrf_token %}
 
                      {{ form }}
@@ -48,11 +48,11 @@
 
 
 
-    <script nonce="{{request.csp_nonce}}" src="{% static 'js/django_jsignature.js' %}"></script>
-    <script nonce="{{request.csp_nonce}}" src="{% static 'js/jSignature.min.js' %}"></script>
-    <script nonce="{{request.csp_nonce}}" src="{% static 'js/jsignature_admin_init.js' %}"></script>
-    <script nonce="{{request.csp_nonce}}" src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-    <script nonce="{{request.csp_nonce}}" >
+    <script src="{% static 'js/django_jsignature.js' %}"></script>
+    <script src="{% static 'js/jSignature.min.js' %}"></script>
+    <script src="{% static 'js/jsignature_admin_init.js' %}"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script>
         document.addEventListener("adobe_dc_view_sdk.ready", function(){
             var adobeDCView = new AdobeDC.View({clientId: "e3eb34af4932481693d6f87dfb7f0805", divId: "adobe-dc-view"});
             adobeDCView.previewFile({
