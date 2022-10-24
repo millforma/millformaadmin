@@ -171,7 +171,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CSP_DEFAULT_SRC = ("'none'",)
 CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com', 'cdn.datatables.net', 'stackpath.bootstrapcdn.com',"'unsafe-inline'",)
-CSP_SCRIPT_SRC = ("'self'","'unsafe-inline'","'unsafe-eval'",)
+CSP_SCRIPT_SRC = ("'self'",'documentcloud.adobe.com',"'unsafe-inline'","'unsafe-eval'",)
 CSP_FONT_SRC = ("'self'", 'fonts.gstatic.com', 'fonts.googleapis.com',"'unsafe-inline'",)
 CSP_IMG_SRC = ("'self'","'unsafe-inline'",)
 CSP_CONNECT_SRC = ("'self'", 'millforma-admin.fr',"'unsafe-inline'","'unsafe-eval'",)
