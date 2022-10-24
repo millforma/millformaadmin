@@ -175,3 +175,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://millforma-admin.fr/",
     "http://localhost:8080",
 ]
+CSP_DEFAULT_SRC = ("'none'",)
+CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com','cdn.datatables.net')
+CSP_SCRIPT_SRC = ("'self'", 'documentcloud.adobe.com','code.jquery.com','cdnjs.cloudflare.com','stackpath.bootstrapcdn.com')
+CSP_FONT_SRC = ("'self'", 'fonts.gstatic.com','fonts.googleapis.com')
+CSP_IMG_SRC = ("'self'",)
