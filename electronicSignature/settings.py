@@ -170,11 +170,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
 ]
 CSP_DEFAULT_SRC = ("'none'",)
-CSP_STYLE_SRC = ("'self'", 'unsafe-inline', 'fonts.googleapis.com', 'cdn.datatables.net', 'stackpath.bootstrapcdn.com',)
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", "'fonts.googleapis.com'", "'cdn.datatables.net'", "'stackpath.bootstrapcdn.com'",)
 CSP_SCRIPT_SRC = (
-    "'self'", 'unsafe-inline', 'unsafe-eval',)
-CSP_FONT_SRC = ("'self'", 'fonts.gstatic.com', 'fonts.googleapis.com',)
+    "'self'", "'unsafe-inline'", "'unsafe-eval'",)
+CSP_FONT_SRC = ("'self'", "'fonts.gstatic.com'", "'fonts.googleapis.com'",)
 CSP_IMG_SRC = ("'self'",)
-CSP_CONNECT_SRC = ("'self'", 'millforma-admin.fr',)
-CSP_FRAME_SRC = ("'self'", 'documentcloud.adobe.com', 'unsafe-inline',)
+CSP_CONNECT_SRC = ("'self'", "'millforma-admin.fr'",)
+CSP_FRAME_SRC = ("'self'", "'documentcloud.adobe.com'", "'unsafe-inline'",)
 CSP_INCLUDE_NONCE_IN = ("script-src", "font-src", "style-src", "connect-src", "frame-src")
