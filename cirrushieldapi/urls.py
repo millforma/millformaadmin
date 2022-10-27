@@ -4,6 +4,7 @@ from cirrushieldapi.views.email_view import send_links_for_formation, send_conve
 from cirrushieldapi.views.importFormation import SaveFormation
 from cirrushieldapi.views.searchFormationSession import SearchFormation
 from main.views.LinkView import LinkView
+from pdfDossier.views.main_pdf import Generate_convention
 
 app_name = 'cirrushieldapi'
 
@@ -13,4 +14,5 @@ urlpatterns = [
     path('link/<uuid:formation_id>/', LinkView.as_view(), name='link_view'),
     path('send_link/<uuid:formation_id>/', send_links_for_formation, name='send_link'),
     path('send_convention/<uuid:formation_id>/', send_convention, name='send_convention'),
+    path('download_convention/<uuid:formation_id>/', Generate_convention, name='download_convention'),
 ]

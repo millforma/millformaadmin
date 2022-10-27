@@ -56,6 +56,176 @@ def generate_zip(files):
 
     return mem_zip.getvalue()
 
+def Generate_convocations(request, formation_id):
+    width, height = A4
+    module_dir = os.path.dirname(__file__)
+    formation_session = FormationSession.objects.get(id=formation_id)
+    num_dossier=formation_session.old_num_formation
+    files = []
+    heightList_multiple_page = [height * 0.14,
+                                height * 0.735,
+                                height * 0.125,
+                                ]
+    ####################################### CONVOCATION #########################################################
+    formation_session = FormationSession.objects.get(id=formation_id)
+
+    for trainee in formation_session.trainee.all():
+        buffer = io.BytesIO()
+        convocation = canvas.Canvas(buffer, pagesize=A4)
+        convocation.setTitle('Convocation')
+
+        heightList_solo_page = [height * 0.14,
+                                height * 0.735,
+                                height * 0.125,
+                                ]
+
+        Convocation = Table([
+            [genHeaderTable(width, heightList_multiple_page[0])],
+            [genConvocation(width, heightList_multiple_page[1], trainee, formation_id)],
+            [genFooterTable(width, heightList_multiple_page[2])],
+        ],
+            colWidths=width,
+            rowHeights=heightList_multiple_page
+        )
+
+        Convocation.setStyle([
+
+            ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+        ])
+
+        Convocation.wrapOn(convocation, 0, 0)
+        Convocation.drawOn(convocation, 0, 0)
+
+        convocation.showPage()
+
+        convocation.save()
+        name_of_trainee = trainee.user.first_name +' '+ trainee.user.last_name
+        file_name = f"Convocation_{name_of_trainee}.pdf"
+        convoc = buffer.getvalue()
+        save_file_in_db(convoc, formation_session, file_name, user=request.user,doc_type=3)
+
+        buffer.close()
+
+        files.append((file_name, convoc))
+    #############################################################################################################
+    full_zip_in_memory = generate_zip(files)
+    name_folder = str(num_dossier) + "_convocation.zip"
+    response = HttpResponse(full_zip_in_memory, content_type='application/force-download')
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format(name_folder)
+
+    return response
+
+def Generate_convention(request, formation_id):
+    width, height = A4
+    module_dir = os.path.dirname(__file__)
+    formation_session = FormationSession.objects.get(id=formation_id)
+    num_dossier=formation_session.old_num_formation
+    files = []
+    heightList_multiple_page = [height * 0.14,
+                                height * 0.735,
+                                height * 0.125,
+                                ]
+    ####################################### CONVENTION DE FORMATION ######################################
+    buffer = io.BytesIO()
+    convention_de_formation = canvas.Canvas(buffer, pagesize=A4)
+    convention_de_formation.setTitle('Convention de formation')
+
+    heightList_solo_page = [height * 0.14,
+                            height * 0.735,
+                            height * 0.125,
+                            ]
+
+    ConventionFormationFirst = Table([
+        [genHeaderTable(width, heightList_solo_page[0])],
+        [genConventionFormationFirst(width, heightList_solo_page[1], formation_id)],
+        [genFooterTable(width, heightList_solo_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_solo_page
+    )
+    ConventionFormationSecond = Table([
+        [genHeaderTable(width, heightList_solo_page[0])],
+        [genConventionFormationSecond(width, heightList_multiple_page[1], formation_id)],
+        [genFooterTable(width, heightList_solo_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_solo_page
+    )
+    ConventionFormationThird = Table([
+        [genHeaderTable(width, heightList_solo_page[0])],
+        [genConventionFormationThird(width, heightList_multiple_page[1], formation_id)],
+        [genFooterTable(width, heightList_solo_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_solo_page
+    )
+    ConventionFormationFourth = Table([
+        [genHeaderTable(width, heightList_solo_page[0])],
+        [genConventionFormationFourth(width, heightList_solo_page[1], formation_id)],
+        [genFooterTable(width, heightList_solo_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_solo_page
+    )
+
+    ConventionFormationFirst.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+    ConventionFormationSecond.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+    ConventionFormationThird.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+    ConventionFormationFourth.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+
+    ConventionFormationFirst.wrapOn(convention_de_formation, 0, 0)
+    ConventionFormationFirst.drawOn(convention_de_formation, 0, 0)
+
+    convention_de_formation.showPage()
+
+    ConventionFormationSecond.wrapOn(convention_de_formation, 0, 0)
+    ConventionFormationSecond.drawOn(convention_de_formation, 0, 0)
+
+    convention_de_formation.showPage()
+
+    ConventionFormationThird.wrapOn(convention_de_formation, 0, 0)
+    ConventionFormationThird.drawOn(convention_de_formation, 0, 0)
+
+    convention_de_formation.showPage()
+
+    ConventionFormationFourth.wrapOn(convention_de_formation, 0, 0)
+    ConventionFormationFourth.drawOn(convention_de_formation, 0, 0)
+
+    convention_de_formation.showPage()
+
+    convention_de_formation.save()
+    conventiondeformation = buffer.getvalue()
+    save_file_in_db(conventiondeformation, formation_session, "Convention_de_formation.pdf",
+                    user=request.user, doc_type=9)
+    buffer.close()
+    files.append(("Convention_de_formation.pdf", conventiondeformation))
+
+    ########################################################################################################
+    full_zip_in_memory = generate_zip(files)
+    name_folder = str(num_dossier) + "_convocation.zip"
+    response = HttpResponse(full_zip_in_memory, content_type='application/force-download')
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format(name_folder)
+
+    return response
+
+
 
 def Generate_formation_files_view(request, formation_id):
     width, height = A4
@@ -167,7 +337,7 @@ def Generate_formation_files_view(request, formation_id):
     contratdepartenariat = buffer.getvalue()
     save_file_in_db(contratdepartenariat, formation_session, "Contrat_de_partenariat.pdf", user=request.user,doc_type=2)
     buffer.close()
-    files.append(("Contrat_de_dartenariat.pdf", contratdepartenariat))
+    files.append(("Contrat_de_partenariat.pdf", contratdepartenariat))
 
 
 
@@ -325,98 +495,7 @@ def Generate_formation_files_view(request, formation_id):
 
 
     ####################################################################################################
-    ####################################### CONVENTION DE FORMATION ######################################
-    buffer = io.BytesIO()
-    convention_de_formation = canvas.Canvas(buffer, pagesize=A4)
-    convention_de_formation.setTitle('Convention de formation')
 
-    heightList_solo_page = [height * 0.14,
-                            height * 0.735,
-                            height * 0.125,
-                            ]
-
-    ConventionFormationFirst = Table([
-        [genHeaderTable(width, heightList_solo_page[0])],
-        [genConventionFormationFirst(width, heightList_solo_page[1], formation_id)],
-        [genFooterTable(width, heightList_solo_page[2])],
-    ],
-        colWidths=width,
-        rowHeights=heightList_solo_page
-    )
-    ConventionFormationSecond = Table([
-        [genHeaderTable(width, heightList_solo_page[0])],
-        [genConventionFormationSecond(width, heightList_solo_page[1], formation_id)],
-        [genFooterTable(width, heightList_solo_page[2])],
-    ],
-        colWidths=width,
-        rowHeights=heightList_solo_page
-    )
-    ConventionFormationThird = Table([
-        [genHeaderTable(width, heightList_solo_page[0])],
-        [genConventionFormationThird(width, heightList_solo_page[1], formation_id)],
-        [genFooterTable(width, heightList_solo_page[2])],
-    ],
-        colWidths=width,
-        rowHeights=heightList_solo_page
-    )
-    ConventionFormationFourth = Table([
-        [genHeaderTable(width, heightList_solo_page[0])],
-        [genConventionFormationFourth(width, heightList_solo_page[1], formation_id)],
-        [genFooterTable(width, heightList_solo_page[2])],
-    ],
-        colWidths=width,
-        rowHeights=heightList_solo_page
-    )
-
-    ConventionFormationFirst.setStyle([
-
-        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
-
-    ])
-    ConventionFormationSecond.setStyle([
-
-        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
-
-    ])
-    ConventionFormationThird.setStyle([
-
-        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
-
-    ])
-    ConventionFormationFourth.setStyle([
-
-        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
-
-    ])
-
-    ConventionFormationFirst.wrapOn(convention_de_formation, 0, 0)
-    ConventionFormationFirst.drawOn(convention_de_formation, 0, 0)
-
-    convention_de_formation.showPage()
-
-    ConventionFormationSecond.wrapOn(convention_de_formation, 0, 0)
-    ConventionFormationSecond.drawOn(convention_de_formation, 0, 0)
-
-    convention_de_formation.showPage()
-
-    ConventionFormationThird.wrapOn(convention_de_formation, 0, 0)
-    ConventionFormationThird.drawOn(convention_de_formation, 0, 0)
-
-    convention_de_formation.showPage()
-
-    ConventionFormationFourth.wrapOn(convention_de_formation, 0, 0)
-    ConventionFormationFourth.drawOn(convention_de_formation, 0, 0)
-
-    convention_de_formation.showPage()
-
-    convention_de_formation.save()
-    conventiondeformation = buffer.getvalue()
-    save_file_in_db(conventiondeformation, formation_session, "Convention_de_formation.pdf",
-                    user=request.user,doc_type=9)
-    buffer.close()
-    files.append(("Convention_de_formation.pdf", conventiondeformation))
-
-    ########################################################################################################
 ####################################### COMPTE RENDU DE FORMATION######################################################
     buffer = io.BytesIO()
     compte_rendu_de_formation = canvas.Canvas(buffer, pagesize=A4)
@@ -547,50 +626,6 @@ def Generate_formation_files_view(request, formation_id):
     files.append(("Evaluation_satisfactions_clients.pdf", evaluationsatisf))
 
     #######################################################################################################################
-
-    ####################################### CONVOCATION #########################################################
-    formation_session = FormationSession.objects.get(id=formation_id)
-
-    for trainee in formation_session.trainee.all():
-        buffer = io.BytesIO()
-        convocation = canvas.Canvas(buffer, pagesize=A4)
-        convocation.setTitle('Convocation')
-
-        heightList_solo_page = [height * 0.14,
-                                height * 0.735,
-                                height * 0.125,
-                                ]
-
-        Convocation = Table([
-            [genHeaderTable(width, heightList_multiple_page[0])],
-            [genConvocation(width, heightList_multiple_page[1], trainee, formation_id)],
-            [genFooterTable(width, heightList_multiple_page[2])],
-        ],
-            colWidths=width,
-            rowHeights=heightList_multiple_page
-        )
-
-        Convocation.setStyle([
-
-            ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
-
-        ])
-
-        Convocation.wrapOn(convocation, 0, 0)
-        Convocation.drawOn(convocation, 0, 0)
-
-        convocation.showPage()
-
-        convocation.save()
-        name_of_trainee = trainee.user.first_name +' '+ trainee.user.last_name
-        file_name = f"Convocation_{name_of_trainee}.pdf"
-        convoc = buffer.getvalue()
-        save_file_in_db(convoc, formation_session, file_name, user=request.user,doc_type=3)
-
-        buffer.close()
-
-        files.append((file_name, convoc))
-    #############################################################################################################
 
 
     full_zip_in_memory = generate_zip(files)

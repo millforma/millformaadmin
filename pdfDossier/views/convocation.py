@@ -140,8 +140,7 @@ def _genContenuSecond(width, height):
                           "https://www.ratp.fr/itineraires</link></font>" + "<br/>",
                           textrightstyle)
     textrighttwo = Paragraph("Règlement intérieur de formation : " + "<br/>" + "<br/>" +
-                             "<font color='blue'><link href='https://mill-forma.fr/wp-content/uploads/2021/06/"
-                             "Reglement-interieur-stagiaires.pdf'>https://www.ratp.fr/itineraires</link></font>",
+                             "<font color='blue'><link href='https://mill-forma.fr/wp-content/uploads/2022/05/V2_Reglement-interieur-stagiaires.pdf'>https://mill-forma.fr/wp-content/uploads/2022/05/V2_Reglement-interieur-stagiaires.pdf</link></font>",
                              textrightstyle)
     lefttopImgPath = "https://mill-forma.fr/wp-content/uploads/2021/10/ratp.png"
     lefttopImgWidth = width * 0.2

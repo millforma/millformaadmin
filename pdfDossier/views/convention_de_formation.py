@@ -147,7 +147,8 @@ def genConventionFormationSecond(width, height, formation_id):
         colWidths=widthList, )
     res.setStyle([
         # ('ALIGN', (1, 0), (1, 0), 'CENTER'),
-        ('BOTTOMPADDING', (1, 1), (-1, -1), 0.1 * height),
+        ('BOTTOMPADDING', (1, 0), (1, 0), 0.1 * height),
+
     ])
     return res
 
@@ -157,12 +158,26 @@ def _genPagetwoMain(width, height, formation_id):
     text1style.fontSize = 11
     # text1style.leading = 15
     formation_session = FormationSession.objects.get(id=formation_id)
+    if formation_session.date_autorised_start != None:
+        formation_session_date_start = formation_session.date_autorised_start.strftime('%Y-%m-%d')
+    else:
+        formation_session_date_start = "Non renseignée"
+    if formation_session.date_autorised_end != None:
+        formation_session_date_end = formation_session.date_autorised_end.strftime('%Y-%m-%d')
+    else:
+        formation_session_date_end = "Non renseignée"
+
     client_company = formation_session.client_account
     millforma = Company.objects.get(name="Mill Forma")
     if formation_session.prerequis_formation == True:
         prerequis = "Oui"
     else:
         prerequis = "Non"
+
+    styles = getSampleStyleSheet()
+    style = styles["Normal"]
+    style.fontSize = 11
+
     text1 = Paragraph(
         "<b>1 - OBJET :</b>" + "<br/>" + "<br/>" +
         "L’action de formation entre dans la catégorie : Action d'adaptation et de développement des compétences "
@@ -180,9 +195,38 @@ def _genPagetwoMain(width, height, formation_id):
         + "<b>Le programme détaillé de l’action de formation figure en annexe de la présente convention. </b>" +
         "<br/>" + "<br/>"
         + "<b>3 - NIVEAU DE CONNAISSANCES PREALABLES NECESSAIRE </b>" + "<br/>" + "<br/>" +
-        prerequis + "<br/>" + "<br/>" + "<br/>"
+        prerequis + "<br/>" + "<br/>" +
+        "<b>4 - ORGANISATION DE L’ACTION DE FORMATION</b>" + "<br/>" + "<br/>"
+        + "L’action de formation aura lieu du : " + formation_session_date_end + " au " + formation_session_date_end +
+        "<br/>" + "<br/>"
+        + "Lieu de formation :" + str(formation_session.training_site) + "<br/>"
+        + "La Formation est-elle en FOAD ? " + str(formation_session.foad) + "<br/>"
+        + "Les conditions générales dans lesquelles la formation est dispensée, notamment les moyens pédagogiques"
+          " et techniques, sont les suivantes :" + "<br/>" + "<br/>"
         ,
         text1style)
+    text2 = ListFlowable(
+        [
+            ListItem(Paragraph(
+                "Réflexions et travaux sur des cas pratiques",
+                style), leftIndent=45),
+            ListItem(Paragraph(
+                "Apport théorique",
+                style), leftIndent=45),
+            ListItem(Paragraph(
+                "Questionnaire et exercices",
+                style), leftIndent=45),
+            ListItem(Paragraph(
+                "Tests de contrôle de connaissances à chaque étape", style),
+                leftIndent=45),
+            ListItem(Paragraph(
+                "Retours d'expériences",
+                style), leftIndent=45),
+        ],
+        bulletType='bullet',
+        start='bulletchar',
+        bulletFontSize=11,
+    )
 
     styles = getSampleStyleSheet()
     style = styles["Normal"]
@@ -191,6 +235,7 @@ def _genPagetwoMain(width, height, formation_id):
 
     res = Table([
         [text1],
+        [text2],
     ],
         width,
     )
@@ -251,50 +296,17 @@ def _genPagethreeMain(width, height, formation_id):
     client_company = formation_session.client_account
     millforma = Company.objects.get(name="Mill Forma")
 
+
     text1 = Paragraph(
-        "<b>4 - ORGANISATION DE L’ACTION DE FORMATION</b>" + "<br/>" + "<br/>"
-        + "L’action de formation aura lieu du : " + formation_session_date_end + " au " + formation_session_date_end +
-        "<br/>" + "<br/>"
-        + "Lieu de formation :" + str(formation_session.training_site) + "<br/>"
-        + "La Formation est-elle en FOAD ? " + str(formation_session.foad) + "<br/>"
-        + "Les conditions générales dans lesquelles la formation est dispensée, notamment les moyens pédagogiques"
-          " et techniques, sont les suivantes :" + "<br/>" + "<br/>"
-        ,
-        textstyle)
-
-    text2 = ListFlowable(
-        [
-            ListItem(Paragraph(
-                "Réflexions et travaux sur des cas pratiques",
-                style), leftIndent=45),
-            ListItem(Paragraph(
-                "Apport théorique",
-                style), leftIndent=45),
-            ListItem(Paragraph(
-                "Questionnaire et exercices",
-                style), leftIndent=45),
-            ListItem(Paragraph(
-                "Tests de contrôle de connaissances à chaque étape", style),
-                leftIndent=45),
-            ListItem(Paragraph(
-                "Retours d'expériences",
-                style), leftIndent=45),
-        ],
-        bulletType='bullet',
-        start='bulletchar',
-        bulletFontSize=11,
-    )
-
-    text3 = Paragraph(
         "Si la formation se déroule en intra dans les locaux du client, Il est de sa responsabilité de vérifier "
-        "l'accès aux besoins suivant : " + "<br/>" + "<br/>" + "<br/>",
+        "l'accès aux besoins suivant : " + "<br/>",
         textstyle)
 
     textstyle = ParagraphStyle('text')
     textstyle.fontSize = 11
     textstyle.leading = 15
 
-    text4 = ListFlowable(
+    text2 = ListFlowable(
         [
             ListItem(Paragraph(
                 "Capacité d’accueil de la salle nécessaire pour la formation ",
@@ -314,14 +326,14 @@ def _genPagethreeMain(width, height, formation_id):
         bulletFontSize=11,
 
     )
-    text5 = Paragraph(
+    text3 = Paragraph(
         "Le détail des Conditions générales de vente est disponible sur le site internet. (www.mill-forma.fr)"
         + "<br/>" +
-        "La signature de cette convention vaut acceptation des CGVs." + "<br/>" +
-        "5 - MOYENS PERMETTANT D’APPRECIER LES RESULTATS DE L’ACTION",
+        "La signature de cette convention vaut acceptation des CGVs." + "<br/>" + "<br/>" +
+        "<b>5 - MOYENS PERMETTANT D’APPRECIER LES RESULTATS DE L’ACTION</b>" + "<br/>" ,
         textstyle)
 
-    text6 = ListFlowable(
+    text4 = ListFlowable(
         [
             ListItem(Paragraph(
                 "QCM",
@@ -344,12 +356,21 @@ def _genPagethreeMain(width, height, formation_id):
         bulletFontSize=11,
 
     )
-    text7 = Paragraph("6 - SANCTION DE LA FORMATION" + "<br/>" + "<br/>" + "<br/>" +
+    text5 = Paragraph("<br/>" + "<br/>" + "<b>6 - SANCTION DE LA FORMATION</b>" + "<br/>" + "<br/>" +
                       "En application de l’article L.6353-1 du Code du travail, une attestation mentionnant les "
                       "objectifs, la nature et la durée de l’action et les résultats de l’évaluation des acquis de "
                       "la formation sera remise au stagiaire à l’issue de la formation." + "<br/>",
                       textstyle)
-
+    text6 = Paragraph(
+        "<b>7 - MOYENS PERMETTANT DE SUIVRE L’EXECUTION DE L’ACTION</b>" + "<br/>" + "<br/>" +
+        "Feuilles de présence signées par le stagiaire et le formateur et par demi-journée de formation"
+        + "<br/>" + "<br/>" +
+        "<b>8 - NON REALISATION DE LA PRESTATION DE FORMATION</b>" + "<br/>" + "<br/>" +
+        "En application de l’article L. 6354-1 du Code du travail, il est convenu entre les signataires de"
+        " la présente convention, que faute de réalisation totale ou partielle de la prestation de formation,"
+        " l’organisme prestataire doit rembourser au cocontractant les sommes indûment perçues de ce fait."
+        + "<br/>" + "<br/>" ,
+        textstyle)
     res = Table([
         [text1],
         [text2],
@@ -357,7 +378,7 @@ def _genPagethreeMain(width, height, formation_id):
         [text4],
         [text5],
         [text6],
-        [text7],
+
 
     ],
         width,
@@ -411,41 +432,31 @@ def _genPagefourthMain(width, height, formation_id):
     client_company = formation_session.client_account
     millforma = Company.objects.get(name="Mill Forma")
 
-    text1 = Paragraph(
-        "7 - MOYENS PERMETTANT DE SUIVRE L’EXECUTION DE L’ACTION" + "<br/>" + "<br/>" +
-        "Feuilles de présence signées par le stagiaire et le formateur et par demi-journée de formation"
-        + "<br/>" + "<br/>" +
-        "8 - NON REALISATION DE LA PRESTATION DE FORMATION" + "<br/>" + "<br/>" +
-        "En application de l’article L. 6354-1 du Code du travail, il est convenu entre les signataires de"
-        " la présente convention, que faute de réalisation totale ou partielle de la prestation de formation,"
-        " l’organisme prestataire doit rembourser au cocontractant les sommes indûment perçues de ce fait."
-        + "<br/>" + "<br/>" +
-        "9 - DISPOSITIONS FINANCIERES" + "<br/>" + "<br/>" +
-        "Le paiement des frais de formation se fera directement à l’organisme (subrogation de paiement)" + "<br/>" +
-        "Le prix de l’action de formation est fixé à :" + "<br/>" + "<br/>",
-        textstyle)
     if formation_session.teacher_price == None:
         teacher_price = "Non renseigné"
         tva = "Prix Formateur non renseigné"
     else:
         teacher_price = float(formation_session.teacher_price)
         tva = float(formation_session.teacher_price) * 0.2
-
+    text1 = Paragraph("9 - DISPOSITIONS FINANCIERES" + "<br/>" + "<br/>" +
+                      "Le paiement des frais de formation se fera directement à l’organisme (subrogation de paiement)"
+                      + "<br/>" +"Le prix de l’action de formation est fixé à :" + "<br/>" + "<br/>",
+        textstyle)
     text2 = Paragraph(
-        "TOTAL HT : " + str(teacher_price) + "$ HT." + "<br/>" +
-        "TVA (20%) : " + str(tva) + "$." + "<br/>" +
-        "TOTAL TTC : " + str(teacher_price + tva) + "$" + "<br/>" + "<br/>",
+        "TOTAL HT : " + str(teacher_price) + "€ HT." + "<br/>" +
+        "TVA (20%) : " + str(tva) + "€." + "<br/>" +
+        "TOTAL TTC : " + str(teacher_price + tva) + "€" + "<br/>" + "<br/>",
         textstyle)
 
     text3 = Paragraph(
-        "10 - INTERRUPTION DU STAGE" + "<br/>" + "<br/>" +
+        "<b>10 - INTERRUPTION DU STAGE</b>" + "<br/>" + "<br/>" +
         """En cas de cessation anticipée de la formation du fait de l’organisme de formation ou en cas de renoncement 
         par l’entreprise bénéficiaire pour un autre motif que la force majeure dûment reconnue, la présente 
         convention est résiliée selon les modalités financières suivantes : Aucun versement.""" + "<br/>"
         + """Si le stagiaire est empêché de suivre la formation par suite de force majeure dûment reconnue, 
         la convention de formation professionnelle est résiliée. Dans ce cas, seules les prestations effectivement 
         dispensées sont dues au prorata temporis de leur valeur prévue au présent contrat.""" + "<br/>" + "<br/>" +
-        "11 - CAS DE DIFFEREND" + "<br/>" + "<br/>" +
+        "<b>11 - CAS DE DIFFEREND</b>" + "<br/>" + "<br/>" +
         """Si une contestation ou un différend n’ont pu être réglés à l’amiable, seul le tribunal de 
         commerce dans le ressort de la juridiction du siège social du centre de formation sera compétent 
         pour régler le litige.""" + "<br/>" + "<br/>",
@@ -455,6 +466,7 @@ def _genPagefourthMain(width, height, formation_id):
         [text1],
         [text2],
         [text3],
+
     ],
         width,
     )

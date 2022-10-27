@@ -8,6 +8,8 @@ from django.contrib.sites.models import Site
 
 
 
+
+
 # function which is called on button télécharger on home view
 def send_convention(request , formation_id):
     session = FormationSession.objects.get(id=formation_id)
