@@ -359,11 +359,13 @@ def getClient(client_id, foad):
     client_account_industry = xpars['Data']['Account']['Industry']
     client_account_siret = xpars['Data']['Account']['SIRET']
     client_account_tel_fixe = xpars['Data']['Account']['Tel_Fixe_1']
-    if xpars['Data']['Account']['Numero_de_la_rue'] and xpars['Data']['Account']['Billing_Street'] != None:
+    if type(xpars['Data']['Account']['Numero_de_la_rue']) == str:
         client_account_Num_rue = xpars['Data']['Account']['Numero_de_la_rue']
-        client_account_billingstreet = xpars['Data']['Account']['Billing_Street']
     else :
         client_account_Num_rue = ""
+    if type(xpars['Data']['Account']['Billing_Street']) == str:
+        client_account_billingstreet = xpars['Data']['Account']['Billing_Street']
+    else :
         client_account_billingstreet = ""
 
     if search_was_successful:
