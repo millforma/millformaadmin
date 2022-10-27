@@ -121,10 +121,10 @@ def getObjectif(objectif_id):
     search_was_successful = (response.status_code == 200)  # 200 = SUCCESS
     xpars = xmltodict.parse(response.text)
 
-    sentences = re.split(r' *[\.\?!][\'"\)\]]* *', xpars['Data']['Product']['Objectif_pedagogique'])
+    sentences = re.split(r'(\r\n?|\n)+', xpars['Data']['Product']['Objectif_pedagogique'])
     my_objectifs=[]
     for objectif in sentences:
-        if objectif != "":
+        if objectif != "" and objectif != '\n':
             my_objectifs.append(
                 Objectifs_peda.objects.create(
                     description=objectif

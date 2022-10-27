@@ -14,8 +14,7 @@ def genFooterTable(width, height):
     textstyle= ParagraphStyle('tex1')
     textstyle.fontSize = 7.1
 
-    text = Paragraph("""MILL-FORMA | SAS au capital de 6000 euros – RCS de Paris - 35 rue de l’annonciation 
-                        PARIS 75016 | Numéro SIRET : 84127900300013 | Déclaration d’activité n°: 11755769175 
+    text = Paragraph("""MILL-FORMA | SAS au capital de 6000 euros – RCS de Paris - 13 B Rue de l'abreuvoir 92400 Courbevoie | Numéro SIRET : 84127900300021 | Déclaration d’activité n°: 11755769175 
                         enregistrée auprès du préfet de la région ILE DE France Cet enregistrement ne vaut pas agrément 
                         de l’Etat MILL-FORMA vous souhaite une excellente formation !""", textstyle)
 

@@ -19,9 +19,11 @@ from pdfDossier.views.convention_de_formation import genConventionFormationFirst
     genConventionFormationThird, genConventionFormationFourth
 from pdfDossier.views.convocation import genConvocation
 from pdfDossier.views.deroule_pedagogique import genDeroulePedagogiqueFirst, genDeroulePedagogiqueSecond
+from pdfDossier.views.evaluation_formation_clients import genEvaluationFormationClients
 
 from pdfDossier.views.footer import genFooterTable
 from pdfDossier.views.header import genHeaderTable, genHeaderReglementTable
+from pdfDossier.views.qcm_prerequis_mill_forma import genQcmPrerequisMillForma, genQcmPrerequisMillFormaSecond
 from pdfDossier.views.ques_satisfation_a_chaud import genQuesSatisfactionChaud
 
 from pdfDossier.views.reglement_interieur import genReglementInterieurFirstPageTable, genReglementInterieurSecondPageTable
@@ -61,31 +63,6 @@ def Generate_formation_files_view(request, formation_id):
     formation_session = FormationSession.objects.get(id=formation_id)
     num_dossier=formation_session.old_num_formation
     files = []
-    buffer = io.BytesIO()
-    # Adding QCM Files
-    compte_rendu = buffer.getvalue()
-    buffer.close()
-    compte_rendu_path=os.path.join(module_dir, 'word_files/COMPTE-RENDU DE FORMATION.docx')
-    doc = docx.Document(compte_rendu_path)
-    files.append(("COMPTE-RENDU DE FORMATION.docx", compte_rendu))
-
-    buffer = io.BytesIO()
-    # Adding QCM Files
-    compte_rendu = buffer.getvalue()
-    buffer.close()
-    compte_rendu_path = os.path.join(module_dir, 'word_files/QCM EVALUATION DES ACQUIS.docx')
-    doc = docx.Document(compte_rendu_path)
-    files.append(("QCM EVALUATION DES ACQUIS.docx", compte_rendu))
-
-    buffer = io.BytesIO()
-    # Adding QCM Files
-    compte_rendu = buffer.getvalue()
-    buffer.close()
-    compte_rendu_path = os.path.join(module_dir, 'word_files/QCM PREREQUIS MILL FORMA.docx')
-    doc = docx.Document(compte_rendu_path)
-    files.append(("QCM PREREQUIS MILL FORMA.docx", compte_rendu))
-
-
 
 
     # Create a file-like buffer to receive PDF data.
@@ -126,7 +103,7 @@ def Generate_formation_files_view(request, formation_id):
     save_file_in_db(bondecommande, formation_session, "BonDeCommande.pdf", user=request.user,doc_type=10)
 
     buffer.close()
-    files.append(("BonDeCommande.pdf", bondecommande))
+    files.append(("Bon_de_commande.pdf", bondecommande))
 
     # ----------------------
     buffer = io.BytesIO()
@@ -188,9 +165,9 @@ def Generate_formation_files_view(request, formation_id):
 
     pdf_contrat_de_partenariat_formateur.save()
     contratdepartenariat = buffer.getvalue()
-    save_file_in_db(contratdepartenariat, formation_session, "Contrat_De_Partenariat.pdf", user=request.user,doc_type=2)
+    save_file_in_db(contratdepartenariat, formation_session, "Contrat_de_partenariat.pdf", user=request.user,doc_type=2)
     buffer.close()
-    files.append(("Contrat_De_Partenariat.pdf", contratdepartenariat))
+    files.append(("Contrat_de_dartenariat.pdf", contratdepartenariat))
 
 
 
@@ -228,7 +205,7 @@ def Generate_formation_files_view(request, formation_id):
 
         ques_satisfaction_chaud.save()
         quessatisfachaud = buffer.getvalue()
-        name_file="Questionnaire_de_satisfaction_a_chaud"+str(trainee.user.last_name)+str(trainee.user.first_name)+".pdf"
+        name_file="Questionnaire_de_satisfaction_a_chaud_"+str(trainee.user.last_name)+str(trainee.user.first_name)+".pdf"
         save_file_in_db(quessatisfachaud, formation_session, name_file,
                         user=request.user,doc_type=4)
         buffer.close()
@@ -287,7 +264,7 @@ def Generate_formation_files_view(request, formation_id):
         save_file_in_db(deroulepeda, formation_session, "Deroule_pedagogique.pdf", user=request.user,
                         doc_type=6)
         buffer.close()
-        files.append(("Deroule_peda.pdf", deroulepeda))
+        files.append(("Deroule_pedagogique.pdf", deroulepeda))
 
         ######################################################################################################################
     ####################################### REGLEMENT INTERIEUR ##########################################
@@ -478,6 +455,99 @@ def Generate_formation_files_view(request, formation_id):
     files.append(("Compte_rendu_de_formation.pdf", compterendudeformation))
 
     ######################################################################################################################
+    ####################################### QCM PREREQUIS MILL FORMA ######################################
+    buffer = io.BytesIO()
+    qcm_prerequis_mill_forma = canvas.Canvas(buffer, pagesize=A4)
+    qcm_prerequis_mill_forma.setTitle('Qcm Prerequis Mill Forma')
+
+    heightList_solo_page = [height * 0.14,
+                            height * 0.735,
+                            height * 0.125,
+                            ]
+
+    QcmPrerequisMillFormaFirst = Table([
+        [genHeaderTable(width, heightList_solo_page[0])],
+        [genQcmPrerequisMillForma(width, heightList_solo_page[1], formation_id)],
+        [genFooterTable(width, heightList_solo_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_solo_page
+    )
+    QcmPrerequisMillFormaSecond = Table([
+        [genHeaderTable(width, heightList_solo_page[0])],
+        [genQcmPrerequisMillFormaSecond(width, heightList_solo_page[1])],
+        [genFooterTable(width, heightList_solo_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_solo_page
+    )
+
+    QcmPrerequisMillFormaFirst.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+    QcmPrerequisMillFormaSecond.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+
+    QcmPrerequisMillFormaFirst.wrapOn(qcm_prerequis_mill_forma, 0, 0)
+    QcmPrerequisMillFormaFirst.drawOn(qcm_prerequis_mill_forma, 0, 0)
+
+    qcm_prerequis_mill_forma.showPage()
+
+    QcmPrerequisMillFormaSecond.wrapOn(qcm_prerequis_mill_forma, 0, 0)
+    QcmPrerequisMillFormaSecond.drawOn(qcm_prerequis_mill_forma, 0, 0)
+    qcm_prerequis_mill_forma.showPage()
+
+    qcm_prerequis_mill_forma.save()
+    qcmprerequis = buffer.getvalue()
+    save_file_in_db(qcmprerequis, formation_session, "Questionnaire_prerequis.pdf", user=request.user,doc_type=4)
+    buffer.close()
+    files.append(("Questionnaire_prerequis.pdf", qcmprerequis))
+
+    #######################################################################################################################
+    ####################################### EVALUATION FORMATION SATISFACTION CLIENTS######################################
+    buffer = io.BytesIO()
+    evaluation_satisfactions_clients = canvas.Canvas(buffer, pagesize=A4)
+    evaluation_satisfactions_clients.setTitle('Evaluation satisfaction clients')
+
+    heightList_solo_page = [height * 0.14,
+                            height * 0.735,
+                            height * 0.125,
+                            ]
+
+    EvaluationFormationClients = Table([
+        [genHeaderTable(width, heightList_solo_page[0])],
+        [genEvaluationFormationClients(width, heightList_solo_page[1])],
+        [genFooterTable(width, heightList_solo_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_solo_page
+    )
+
+    EvaluationFormationClients.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+
+    EvaluationFormationClients.wrapOn(evaluation_satisfactions_clients, 0, 0)
+    EvaluationFormationClients.drawOn(evaluation_satisfactions_clients, 0, 0)
+
+    evaluation_satisfactions_clients.showPage()
+
+    evaluation_satisfactions_clients.save()
+
+    evaluationsatisf = buffer.getvalue()
+    save_file_in_db(evaluationsatisf, formation_session, "Evaluation_satisfactions_clients.pdf", user=request.user,doc_type=4)
+    buffer.close()
+    files.append(("Evaluation_satisfactions_clients.pdf", evaluationsatisf))
+
+    #######################################################################################################################
+
     ####################################### CONVOCATION #########################################################
     formation_session = FormationSession.objects.get(id=formation_id)
 
@@ -512,7 +582,7 @@ def Generate_formation_files_view(request, formation_id):
         convocation.showPage()
 
         convocation.save()
-        name_of_trainee = trainee.user.first_name + trainee.user.last_name
+        name_of_trainee = trainee.user.first_name +' '+ trainee.user.last_name
         file_name = f"Convocation_{name_of_trainee}.pdf"
         convoc = buffer.getvalue()
         save_file_in_db(convoc, formation_session, file_name, user=request.user,doc_type=3)
