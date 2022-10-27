@@ -354,13 +354,17 @@ def getClient(client_id, foad):
     client_account_email = xpars['Data']['Account']['Email_1']
     client_account_nb_employes = xpars['Data']['Account']['Nb_d_employes_1']
     client_account_Nom = xpars['Data']['Account']['Nom_1']
-    client_account_Num_rue = xpars['Data']['Account']['Numero_de_la_rue']
     client_account_opco = xpars['Data']['Account']['OPCO']
     client_account_prenom = xpars['Data']['Account']['Prenom_1']
-    client_account_billingstreet = xpars['Data']['Account']['Billing_Street']
     client_account_industry = xpars['Data']['Account']['Industry']
     client_account_siret = xpars['Data']['Account']['SIRET']
     client_account_tel_fixe = xpars['Data']['Account']['Tel_Fixe_1']
+    if xpars['Data']['Account']['Numero_de_la_rue'] and xpars['Data']['Account']['Billing_Street'] != None:
+        client_account_Num_rue = xpars['Data']['Account']['Numero_de_la_rue']
+        client_account_billingstreet = xpars['Data']['Account']['Billing_Street']
+    else :
+        client_account_Num_rue = ""
+        client_account_billingstreet = ""
 
     if search_was_successful:
 
@@ -401,6 +405,7 @@ def getClient(client_id, foad):
                                             Industry=client_account_industry, num_siret=client_account_siret,
                                             contact=representant_company, phone=phone_company)
             if type(client_account_billingstreet) != str or type(client_account_Num_rue) != str:
+
                 address_company = Address.objects.create(details=client_account_Num_rue + client_account_billingstreet,
                                                          postal_code=client_account_billing_zip)
 
