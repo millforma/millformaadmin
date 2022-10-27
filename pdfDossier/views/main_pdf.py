@@ -110,7 +110,7 @@ def Generate_convocations(request, formation_id):
         files.append((file_name, convoc))
     #############################################################################################################
     full_zip_in_memory = generate_zip(files)
-    name_folder = str(num_dossier) + "_convocation.zip"
+    name_folder = "Convocations.zip"
     response = HttpResponse(full_zip_in_memory, content_type='application/force-download')
     response['Content-Disposition'] = 'attachment; filename="{}"'.format(name_folder)
 
@@ -219,7 +219,7 @@ def Generate_convention(request, formation_id):
 
     ########################################################################################################
     full_zip_in_memory = generate_zip(files)
-    name_folder = str(num_dossier) + "_convocation.zip"
+    name_folder ="Convention_de_formation.zip"
     response = HttpResponse(full_zip_in_memory, content_type='application/force-download')
     response['Content-Disposition'] = 'attachment; filename="{}"'.format(name_folder)
 

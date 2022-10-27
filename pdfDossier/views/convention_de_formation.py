@@ -348,7 +348,7 @@ def _genPagethreeMain(width, height, formation_id):
                 "Tests de contrôle de connaissances à chaque étape", style),
                 leftIndent=45),
             ListItem(Paragraph(
-                "-	Entretiens avec le formateur", style),
+                "Entretiens avec le formateur", style),
                 leftIndent=45),
         ],
         bulletType='bullet',

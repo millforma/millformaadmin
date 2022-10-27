@@ -1,3 +1,4 @@
+from django.utils import timezone
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.styles import ParagraphStyle
@@ -99,7 +100,7 @@ def _genContenuFirst(width, height, trainee):
     textstyle = ParagraphStyle('textfirst')
     textstyle.fontSize = 12
 
-    textfirst = Paragraph("Le 16/08/2021," + "<br/>" + "À l’attention de : " + trainee.user.first_name +" "+
+    textfirst = Paragraph(timezone.now().strftime('%Y-%m-%d') + "<br/>" + "À l’attention de : " + trainee.user.first_name +" "+
                           trainee.user.last_name,
                           textstyle)
 
