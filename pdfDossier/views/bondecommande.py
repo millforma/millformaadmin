@@ -65,7 +65,8 @@ def _genCommande(width, height, formation_id, user):
         width * 0.5,
     ]
     formation_session = FormationSession.objects.get(id=formation_id)
-    client_company = formation_session.client_account
+    teacher = formation_session.teacher_name
+    teacher_company = formation_session.teacher_name.company
     millforma = Company.objects.get(name="Mill Forma")
     textleftstyle = ParagraphStyle('textleft')
     textleftstyle.textColor = colors.HexColor('#808080')
@@ -78,20 +79,22 @@ def _genCommande(width, height, formation_id, user):
                          + "Adresse : " + millforma.adresse.string() + "<br/>"
                          + "<font color='black'> Ci-après « le donneur d'ordre »</font>",
                          textleftstyle)
-    if client_company.adresse != None:
-        client_company_address=client_company.adresse.string()
+
+
+    if teacher.company.adresse.address != None:
+        teacher_company_address=teacher.company.adresse.string()
     else:
-        client_company_address="Non renseignée"
+        teacher_company_address="Non renseignée"
 
     textrightstyle = ParagraphStyle('textright')
     textrightstyle.fontSize = 7.1
     textrightstyle.textColor = colors.HexColor('#808080')
     textright = Paragraph("<font color='black'><b><u>LE FORMATEUR</u></b></font>" + "<br/>"
-                          + "Raison Sociale : " + client_company.raison_sociale + "<br/>"
-                          + "Représenté par : " + client_company.contact.first_name +" "+
-                          client_company.contact.last_name + "<br/>"
-                          + "Siret : " + client_company.num_siret + "<br/>"
-                          + "Adresse : " + client_company_address + "<br/>"
+                          + "Raison Sociale : " + teacher.company.raison_sociale + "<br/>"
+                          + "Représenté par : " + teacher.first_name +" "+
+                          teacher.last_name + "<br/>"
+                          + "Siret : " + teacher.company.num_siret + "<br/>"
+                          + "Adresse : " + teacher_company_address + "<br/>"
                           + "<font color='black'> Ci-après « le prestataire »</font>" + "<br/>" + "<br/>"
                           + "<font color='black'> Ci-après « le sous-traitant »</font>",
                           textrightstyle)

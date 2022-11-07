@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -71,12 +72,12 @@ class SaveFormation(FormView, UserPassesTestMixin):
                                                                 training_site=form.cleaned_data["training_site"],
                                                                 teacher_name=form.cleaned_data["teacher_name"],
                                                                 opco_name=form.cleaned_data["opco_name"],
-                                                                date_autorised_start=form.cleaned_data[
-                                                                    "date_autorised_start"],
-                                                                date_autorised_end=form.cleaned_data[
-                                                                    "date_autorised_end"],
-                                                                date_start=form.cleaned_data["date_start"],
-                                                                date_end=form.cleaned_data["date_end"],
+                                                                date_autorised_start=(form.cleaned_data[
+                                                                    "date_autorised_start"]+datetime.timedelta(days=1)) if form.cleaned_data["date_autorised_start"] else (form.cleaned_data["date_autorised_start"]),
+                                                                date_autorised_end=(form.cleaned_data[
+                                                                    "date_autorised_end"]+datetime.timedelta(days=1)) if form.cleaned_data["date_autorised_end"] else (form.cleaned_data["date_autorised_end"]),
+                                                                date_start=(form.cleaned_data["date_start"]+datetime.timedelta(days=1)) if form.cleaned_data["date_start"] else (form.cleaned_data["date_start"]),
+                                                                date_end=(form.cleaned_data["date_end"]+datetime.timedelta(days=1)) if form.cleaned_data["date_end"] else (form.cleaned_data["date_end"]),
                                                                 training_duration=form.cleaned_data[
                                                                     "training_duration"],
                                                                 teacher_price=form.cleaned_data["teacher_price"],

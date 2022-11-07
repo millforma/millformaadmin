@@ -220,7 +220,10 @@ def _genTableautwo(width, height,formation_id):
     objectifsstyle.fontSize = 7
 
     textleft = Paragraph("<i>Avant la formation</i>", textstyle),
-    textright = Paragraph(list_objectifs[2].description, textstyle),
+    if len(list_objectifs)>2:
+        textright = Paragraph(list_objectifs[2].description, textstyle),
+    else:
+        textright = Paragraph(list_objectifs[0].description, textstyle),
     textrightone = Paragraph("Prendre connaissance des besoins des participants lors des audits téléphoniques. Remonter d’information à Mill-Forma Envoyer tous les documents obligatoires (CV, rib, Kbis, contrat de partenariat ainsi que l’ordre de mission signé) ", textstyle),
     textrighttwo = Paragraph("Faire remplir le QCM de prérequis", textstyle),
     textrightthree = Paragraph("Remontée d’information avant la demande de prise en charge afin de réadapter si besoins les programmes et durées de formation.", textstyle),
