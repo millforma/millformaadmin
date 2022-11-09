@@ -50,9 +50,7 @@ class SaveFormation(FormView, UserPassesTestMixin):
         return context
 
     def get_success_url(self):
-        formation_id = self.kwargs['formation_id']
-        formation = FormationSession.objects.get(old_num_formation=formation_id).id
-        return resolve_url('cirrushieldapi:link_view', formation_id=formation)
+        return resolve_url('main:home')
 
     def form_valid(self, form):
         if form.is_valid():
