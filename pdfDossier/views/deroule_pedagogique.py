@@ -138,7 +138,10 @@ def _genTableau(width, height,formation_id):
     textrightstyle = ParagraphStyle('textright')
     textrightstyle.fontSize = 7
     textlefttwo = Paragraph("<b>Après-midi</b>", textrightstyle),
-    textrighttwo = Paragraph(list_objectifs[1].description, textrightstyle),
+    if len(list_objectifs)>1:
+        textrighttwo = Paragraph(list_objectifs[1].description, textrightstyle),
+    else:
+        textrighttwo = Paragraph(list_objectifs[0].description, textrightstyle),
 
     res = Table([
         [titleleft, titleright],
@@ -220,8 +223,8 @@ def _genTableautwo(width, height,formation_id):
     objectifsstyle.fontSize = 7
 
     textleft = Paragraph("<i>Avant la formation</i>", textstyle),
-    if len(list_objectifs)>2:
-        textright = Paragraph(list_objectifs[2].description, textstyle),
+    if len(list_objectifs)>1:
+        textright = Paragraph(list_objectifs[1].description, textstyle),
     else:
         textright = Paragraph(list_objectifs[0].description, textstyle),
     textrightone = Paragraph("Prendre connaissance des besoins des participants lors des audits téléphoniques. Remonter d’information à Mill-Forma Envoyer tous les documents obligatoires (CV, rib, Kbis, contrat de partenariat ainsi que l’ordre de mission signé) ", textstyle),
