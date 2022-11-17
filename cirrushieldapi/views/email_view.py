@@ -133,3 +133,16 @@ def send_id(link, formation, current_site):
         settings.EMAIL_SENDER,
         emails
     )
+
+def resend_username(user):
+    email_subject = 'Votre username de connexion Mill Forma'
+    email_body = render_to_string('email/resend_username.html', {
+        'username':user.username,
+    })
+
+    send_mail(
+        email_subject,
+        email_body,
+        settings.EMAIL_SENDER,
+        user.email,
+    )

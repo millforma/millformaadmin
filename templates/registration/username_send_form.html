@@ -1,17 +1,25 @@
-
 <!DOCTYPE html>
-<html lang="en">
 {% load static %}
-{% load i18n %}
-<head>
+<html lang="en">
 
+<head>
+    <title>Recevoir votre username</title>
+
+    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 10]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+    <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="" />
+    <meta name="keywords" content="">
+    <meta name="author" content="" />
 
-    <title>Mill Forma</title>
-        <!-- Favicon icon -->
+    <!-- Favicon icon -->
     <link rel="icon" href="{% static 'assets/images/favicon.ico' %}" type="image/x-icon">
     <!-- fontawesome icon -->
     <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/css/fontawesome-all.min.css' %}">
@@ -20,8 +28,8 @@
     <!-- vendor css -->
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 
-
 </head>
+
 <body>
     <div class="auth-wrapper">
         <div class="auth-content">
@@ -34,19 +42,16 @@
             <div class="card">
                 <div class="card-body text-center">
                     <div class="mb-4">
-                        <i class="feather icon-unlock auth-icon"></i>
+                        <i class="feather icon-mail auth-icon"></i>
                     </div>
-                    <h3 class="mb-4">Se connecter</h3>
-                    <form method="POST" class="register-form text-center" style="display: inline-grid" id="login-form">
-                                {% csrf_token %}
-                        {{ form }}
-                            <div class="form-group form-button" style="padding-top: 10px">
-                                <input type="submit" name="signin" id="signin" class="form-submit btn btn-primary shadow-2 mb-4" value="Se connecter"/>
-                            </div>
-                        </form>
+                    <h3 class="mb-4">Recevoir votre username</h3>
+                    <h5>Merci de renseigner votre e-mail</h5>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input class="btn btn-primary mb-4 shadow-2" type="submit" value="Envoyer">
+                      </form>
 
-                    <p class="mb-2 text-muted">Mot de passe oublié? <a href="{% url 'password_change' %}">Réinitialiser</a></p>
-                    <p class="mb-2 text-muted">Username oublié? <a href="{% url 'cirrushieldapi:username_send' %}">Recevoir par email</a></p>
 
                 </div>
             </div>
@@ -56,6 +61,7 @@
     <!-- Required Js -->
 <script src="{% static 'assets/js/vendor-all.min.js' %}"></script>
 	<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/pcoded.min.js' %}"></script>
 
 </body>
 </html>

@@ -534,6 +534,61 @@ def Generate_formation_files_view(request, formation_id):
     files.append(("Compte_rendu_de_formation.pdf", compterendudeformation))
 
     ######################################################################################################################
+    ####################################### QCM ACQUIS MILL FORMA ######################################
+    buffer = io.BytesIO()
+    qcm_acquis_mill_forma = canvas.Canvas(buffer, pagesize=A4)
+    qcm_acquis_mill_forma.setTitle('Qcm Evaluation des acquis Mill Forma')
+
+    heightList_solo_page = [height * 0.14,
+                            height * 0.735,
+                            height * 0.125,
+                            ]
+
+    QcmAcquisMillFormaFirst = Table([
+        [genHeaderTable(width, heightList_solo_page[0])],
+        [genQcmPrerequisMillForma(width, heightList_solo_page[1], formation_id)],
+        [genFooterTable(width, heightList_solo_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_solo_page
+    )
+    QcmAcquisMillFormaSecond = Table([
+        [genHeaderTable(width, heightList_solo_page[0])],
+        [genQcmPrerequisMillFormaSecond(width, heightList_solo_page[1])],
+        [genFooterTable(width, heightList_solo_page[2])],
+    ],
+        colWidths=width,
+        rowHeights=heightList_solo_page
+    )
+
+    QcmAcquisMillFormaFirst.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+    QcmAcquisMillFormaSecond.setStyle([
+
+        ('LEFTPADDING', (1, 1), (0, 2), 0.1475 * width),
+
+    ])
+
+    QcmAcquisMillFormaFirst.wrapOn(qcm_acquis_mill_forma, 0, 0)
+    QcmAcquisMillFormaFirst.drawOn(qcm_acquis_mill_forma, 0, 0)
+
+    qcm_acquis_mill_forma.showPage()
+
+    QcmAcquisMillFormaSecond.wrapOn(qcm_acquis_mill_forma, 0, 0)
+    QcmAcquisMillFormaSecond.drawOn(qcm_acquis_mill_forma, 0, 0)
+    qcm_acquis_mill_forma.showPage()
+
+    qcm_acquis_mill_forma.save()
+
+    qcmacquis = buffer.getvalue()
+    save_file_in_db(qcmacquis, formation_session, "Qcm_Acquis.pdf", user=request.user,doc_type=4)
+    buffer.close()
+    files.append(("Qcm_Acquis.pdf", qcmacquis))
+
+    #############################################################################################################
     ####################################### QCM PREREQUIS MILL FORMA ######################################
     buffer = io.BytesIO()
     qcm_prerequis_mill_forma = canvas.Canvas(buffer, pagesize=A4)
