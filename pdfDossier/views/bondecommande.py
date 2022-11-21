@@ -89,8 +89,13 @@ def _genCommande(width, height, formation_id, user):
     textrightstyle = ParagraphStyle('textright')
     textrightstyle.fontSize = 7.1
     textrightstyle.textColor = colors.HexColor('#808080')
+    if teacher_company.raison_sociale == None:
+        teacher_raison_sociale= teacher.first_name + teacher.last_name
+    else:
+        teacher_raison_sociale=teacher_company.raison_sociale
+
     textright = Paragraph("<font color='black'><b><u>LE FORMATEUR</u></b></font>" + "<br/>"
-                          + "Raison Sociale : " + teacher.company.raison_sociale + "<br/>"
+                          + "Raison Sociale : " + teacher_raison_sociale + "<br/>"
                           + "Représenté par : " + teacher.first_name +" "+
                           teacher.last_name + "<br/>"
                           + "Siret : " + teacher.company.num_siret + "<br/>"
