@@ -11,7 +11,7 @@ from main.models.entity import EntityAddress, EntityPhone
 from main.models.file.base import BaseFile
 from main.models.file.document import DocumentFile
 from main.models.file.pdf_document import PdfDocument
-from main.models.formationsession import FormationSession
+from main.models.formationsession import FormationSession, Objectifs_peda
 from main.models.person import PersonProfession, Person
 from main.models.phone import Phone
 from main.models.videochat import VideoChat
@@ -29,4 +29,5 @@ admin.site.register(DocumentFile)
 admin.site.register(Phone)
 admin.site.register(Event)
 admin.site.register(Person)
+admin.site.register(Objectifs_peda)
 
