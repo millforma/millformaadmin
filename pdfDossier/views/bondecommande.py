@@ -94,11 +94,16 @@ def _genCommande(width, height, formation_id, user):
     else:
         teacher_raison_sociale=teacher_company.raison_sociale
 
+    if teacher_company.num_siret == None:
+        teacher_num_siret= "Non renseigné"
+    else:
+        teacher_num_siret=teacher_company.num_siret
+
     textright = Paragraph("<font color='black'><b><u>LE FORMATEUR</u></b></font>" + "<br/>"
                           + "Raison Sociale : " + teacher_raison_sociale + "<br/>"
                           + "Représenté par : " + teacher.first_name +" "+
                           teacher.last_name + "<br/>"
-                          + "Siret : " + teacher.company.num_siret + "<br/>"
+                          + "Siret : " + teacher_num_siret + "<br/>"
                           + "Adresse : " + teacher_company_address + "<br/>"
                           + "<font color='black'> Ci-après « le prestataire »</font>" + "<br/>" + "<br/>"
                           + "<font color='black'> Ci-après « le sous-traitant »</font>",

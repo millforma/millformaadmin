@@ -4,6 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db import IntegrityError
 from django.urls import reverse
 from django.views.generic import FormView, TemplateView
+
+from cirrushieldapi.views.email_view import send_emargement_trainees
 from main.forms.videochatlink_form import SessionForm
 from main.models import Event
 from main.models.formationsession import FormationSession
@@ -46,10 +48,10 @@ class CreateVideoChatView(LoginRequiredMixin,UserPassesTestMixin, FormView):
                                  video_chat_time_start.hour, video_chat_time_start.minute,
                                  video_chat_time_start.second)
 
-                video_chat_end_date = form.cleaned_data["date_end"]
+
                 video_chat_end_time = form.cleaned_data["time_end"]
 
-                end = datetime(video_chat_end_date.year, video_chat_end_date.month, video_chat_end_date.day,
+                end = datetime(video_chat_date_start.year, video_chat_date_start.month, video_chat_date_start.day,
                                video_chat_end_time.hour, video_chat_end_time.minute,
                                video_chat_end_time.second)
 
@@ -67,7 +69,7 @@ class CreateVideoChatView(LoginRequiredMixin,UserPassesTestMixin, FormView):
                             session=formation.completed_videochat_sessions + 1,
                             date_start=form.cleaned_data["date_start"],
                             time_start=form.cleaned_data["time_start"],
-                            date_end=form.cleaned_data["date_end"],
+                            date_end=form.cleaned_data["date_start"],
                             time_end=form.cleaned_data["time_end"],
                             finished_session=True)
 
@@ -105,9 +107,10 @@ class CreateVideoChatView(LoginRequiredMixin,UserPassesTestMixin, FormView):
 
                             formation.save()
                         Generate_emargement(request=self.request, formation_id=formation.id, event=event.id)
-
+                        send_emargement_trainees(self.request,formation,date_start_event)
                         messages.add_message(self.request, messages.SUCCESS,
                                              'La session est crée, la demande de signature a été envoyée aux stagiaires')
+
                     except IntegrityError:
                         messages.add_message(self.request, messages.ERROR,
                                              'Erreur une session porte déjà cet ID')

@@ -1,12 +1,13 @@
 import datetime
 import json
-
+from django.contrib.sites.models import Site
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import resolve_url
 from django.views.generic import FormView
 from django.contrib import messages
 from cirrushieldapi.apiCalls import GetFormationSession
 from cirrushieldapi.forms.formation_session_form import FormationSessionForm
+from cirrushieldapi.views.email_view import send_id
 from main.models.formationsession import FormationSession, Objectifs_peda
 
 
@@ -85,6 +86,9 @@ class SaveFormation(FormView, UserPassesTestMixin):
 
                 final_session.trainee.set(form.cleaned_data["trainee"])
                 final_session.save()
+                current_site = Site.objects.get_current()
+                link_reset_passwd = current_site.domain + '/password-reset/'
+                send_id(link_reset_passwd, final_session, current_site)
                 messages.success(self.request, "La session a bien été importée")
 
         return super(SaveFormation, self).form_valid(form)

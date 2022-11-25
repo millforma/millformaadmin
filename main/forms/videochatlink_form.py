@@ -6,10 +6,9 @@ from main.widget import DatePickerInput, TimePickerInput
 class SessionForm(forms.ModelForm):
     class Meta:
         model = VideoChat
-        fields = ('date_start', 'time_start', 'date_end', 'time_end')
+        fields = ('date_start', 'time_start', 'time_end')
         widgets = {
             'date_start': DatePickerInput(),
-            'date_end': DatePickerInput(),
             'time_start': TimePickerInput(),
             'time_end': TimePickerInput(),
         }
@@ -19,8 +18,7 @@ class SessionForm(forms.ModelForm):
             'user')  # To get request.user. Do not use kwargs.pop('user', None) due to potential security hole
 
         super(SessionForm, self).__init__(*args, **kwargs)
-        self.fields['date_start'].label = "Date de début"
-        self.fields['date_end'].label = "Date de fin"
+        self.fields['date_start'].label = "Date du jour"
         self.fields['time_start'].label = "Heure de début"
         self.fields['time_end'].label = "Heure de fin"
 

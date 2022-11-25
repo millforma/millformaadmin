@@ -7,11 +7,8 @@ from django.contrib import messages
 from django.contrib.sites.models import Site
 
 
-
-
-
 # function which is called on button télécharger on home view
-def send_convention(request , formation_id):
+def send_convention(request, formation_id):
     session = FormationSession.objects.get(id=formation_id)
     current_site = Site.objects.get_current()
     # links for email purpose
@@ -38,20 +35,25 @@ def send_convention(request , formation_id):
     return redirect('main:home')
 
 
+def send_emargement_trainees(request, formation_id, date):
+    final_session = FormationSession.objects.get(id=formation_id)
+    current_site = Site.objects.get_current()
+    link_learner = current_site.domain + '/learner/' + str(final_session.id)
+    send_emargementlearnerlink(link_learner, final_session, current_site, date)
+
 
 # function which is called on button télécharger on home view
 def send_links_for_formation(request, formation_id):
     final_session = FormationSession.objects.get(id=formation_id)
     current_site = Site.objects.get_current()
+
     # links for email purpose
     link_teacher = current_site.domain + '/teacher/' + str(final_session.id)
-    link_learner = current_site.domain + '/learner/' + str(final_session.id)
     link_reset_passwd = current_site.domain + '/password-reset/'
 
-    send_emargementteacherlink(link_teacher, final_session, current_site)
-    send_emargementlearnerlink(link_learner, final_session, current_site)
     send_id(link_reset_passwd, final_session, current_site)
 
+    send_emargementteacherlink(link_teacher, final_session, current_site)
     # success
     messages.success(request, "La lien a bien été envoyé")
 
@@ -78,14 +80,15 @@ def send_emargementteacherlink(link, formation, current_site):
 
 
 # send emargement link for all trainees of the Formationsession
-def send_emargementlearnerlink(link, formation, current_site):
+def send_emargementlearnerlink(link, formation, current_site, date):
     teacher = formation.teacher_name
 
-    email_subject = 'Lien pour émargements'
+    email_subject = 'Lien pour signer vos émargements'
     email_body = render_to_string('email/send_emargement_trainee.html', {
         'teacher': teacher,
         'domain': current_site,
         'formation': formation,
+        'date': date,
         'link': link,
     })
     emails = []
@@ -134,10 +137,11 @@ def send_id(link, formation, current_site):
         emails
     )
 
+
 def resend_username(user):
     email_subject = 'Votre username de connexion Mill Forma'
     email_body = render_to_string('email/resend_username.html', {
-        'username':user.username,
+        'username': user.username,
     })
 
     send_mail(
