@@ -107,7 +107,7 @@ class CreateVideoChatView(LoginRequiredMixin,UserPassesTestMixin, FormView):
 
                             formation.save()
                         Generate_emargement(request=self.request, formation_id=formation.id, event=event.id)
-                        send_emargement_trainees(self.request,formation,date_start_event)
+                        send_emargement_trainees(self.request,formation.id,date_start_event)
                         messages.add_message(self.request, messages.SUCCESS,
                                              'La session est crée, la demande de signature a été envoyée aux stagiaires')
 
