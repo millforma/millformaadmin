@@ -28,7 +28,11 @@ class Company(Entity):
                               on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return f"{self.name}"
+        if self.name != None:
+            return f"{self.name}"
+        else:
+            return f"{self.raison_sociale}"
+
 
     # Django Models not Showing Up in DB after syncdb
     class Meta:

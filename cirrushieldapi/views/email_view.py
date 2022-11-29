@@ -42,6 +42,8 @@ def send_emargement_trainees(request, formation_id, date):
     send_emargementlearnerlink(link_learner, final_session, current_site, date)
 
 
+
+
 # function which is called on button télécharger on home view
 def send_links_for_formation(request, formation_id):
     final_session = FormationSession.objects.get(id=formation_id)
@@ -77,6 +79,7 @@ def send_emargementteacherlink(link, formation, current_site):
         settings.EMAIL_SENDER,
         [teacher.email]
     )
+
 
 
 # send emargement link for all trainees of the Formationsession
