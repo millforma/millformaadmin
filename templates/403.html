@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <title>Mill Forma </title>
+
+    <link rel="stylesheet" href="{% static 'assets/css/404.css' %}">
+
+</head>
+
+  <body>
+
+  <h1>404</h1>
+    <div class="cloak__wrapper">
+        <div class="cloak__container">
+            <div class="cloak"></div>
+        </div>
+    </div>
+    <div class="info">
+        <h2>Ooops !</h2>
+        <p>Vous n'avez pas accès à cette page ( si vous etes apprenant veuillez vous connecter en suivant le lien recu par email)</p><a href="{% url 'main:home' %}" >Accueil</a>
+    </div>
+
+  </body>
+
+</html>

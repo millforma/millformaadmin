@@ -72,6 +72,8 @@
                                         <tr>
                                             <th>Année</th>
                                             <th>Nom</th>
+                                            <th>Renseigner sessions</th>
+                                            <th>Suivre émargements</th>
                                             <th>Formateur</th>
                                             <th>Email responsable</th>
                                             <th>Lieu de la formation</th>
@@ -86,7 +88,9 @@
                                             {% for formation in formation_list %}
                                         <tr>
                                             <td>{{ formation.year }}</td>
-                                            <td><a href="{% url 'main:session' formation.id %}">{{ formation.name }}</a></td>
+                                            <td>{{ formation.name }}</td>
+                                            <td><a href="{% url 'main:session' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Reseigner"  /></a></td>
+                                            <td><a href="{% url 'main:attendance_list' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Voir"  /></a></td>
                                             <td>{{ formation.teacher_name.last_name }} {{ formation.teacher_name.first_name }}</td>
                                             <td>{{ formation.client_account.contact.email }}</td>
                                             <td>{{ formation.training_site }}</td>

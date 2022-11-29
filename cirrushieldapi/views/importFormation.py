@@ -80,8 +80,8 @@ class SaveFormation(FormView, UserPassesTestMixin):
                                                                 training_duration=form.cleaned_data[
                                                                     "training_duration"],
                                                                 teacher_price=form.cleaned_data["teacher_price"],
-
                                                                 )
+
                 final_session.objectifs_peda.set(form.cleaned_data["objectifs_peda"])
 
                 final_session.trainee.set(form.cleaned_data["trainee"])
