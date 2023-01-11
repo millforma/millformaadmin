@@ -1,27 +1,19 @@
 import os
 
 import fitz
-import requests
-from PIL import Image
+
 
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
-from django.http import HttpResponse
-from django.urls import reverse
 from django.views.generic import ListView, TemplateView
-from jsignature.utils import draw_signature
-from django.templatetags.static import static
-
 from electronicSignature.settings import BASE_DIR, STATIC_ROOT
 from main.models.file.document_type import DocumentType
 from main.models.file.pdf_document import PdfDocument
 from main.models.formationsession import FormationSession
 from main.models.person import PersonProfession
-from signature.decorators import send_verification_code
-from signature.forms import SignatureForm
 from signature.models import SignatureModel
 
 
@@ -35,7 +27,6 @@ class FormationSignListView(LoginRequiredMixin, ListView):
         profession = PersonProfession.objects.get(person_id=self.request.user.person.id)
 
         formation_session = FormationSession.objects.filter(teacher_name=user)
-
 
         context['formation_session'] = formation_session
         return context
@@ -56,7 +47,7 @@ class DocumentSignListView(LoginRequiredMixin, ListView):
         formation_id = self.kwargs['formation_id']
         formation_session = FormationSession.objects.get(id=formation_id)
         pdf_files = PdfDocument.objects.filter(formation_session=formation_session, is_signed=False,
-                                                                       type_of_document__in=type_of_doc_teacher)
+                                               type_of_document__in=type_of_doc_teacher)
         context['files'] = pdf_files
         context['formation_session'] = formation_session
         return context
@@ -68,7 +59,6 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
     def dispatch(self, request, *args, **kwargs):
         return super(SignaturePreView, self).dispatch(request, *args, **kwargs)
 
-    @send_verification_code
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         doc_id = self.kwargs['doc_id']
@@ -76,32 +66,28 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
         context['doc_url'] = doc.url()
         context['actual_filename'] = doc.full_upload_path
         context['doc_name'] = doc.original_filename
-        context['path'] =doc.file_field.name
-        context['form'] = SignatureForm()
-        messages.success(self.request, "Veuillez vérifier votre email pour le code de vérification")
+        context['path'] = doc.file_field.name
         return context
 
     def post(self, request, *args, **kwargs):
-        _p = request.POST
-        signature_form = SignatureForm(_p)
-        signature_form.is_valid()
-        return self.form_valid(signature_form)
+        doc_id = self.kwargs['doc_id']
+        doc = PdfDocument.objects.get(id=doc_id)
+        formation_session = doc.formation_session
+        user = self.request.user
+        if request.POST.get("sign_doc"):
+            try:
+                user_signature = SignatureModel.objects.get(signature_owner=user)
+                signature_file_path = user_signature.signature
+                doc = self.sign_pdf(doc, signature_file_path, user, formation_session)
+                doc.is_signed = True
+                doc.is_signed_by.add(self.request.user)
+                doc.save()
+            except SignatureModel.DoesNotExist:
+                messages.error(self.request,
+                               _("Vous devez d'abord enregistrer votre signature"))
+                return redirect('save_signature')
 
-    @staticmethod
-    def get_success_url(id_formation):
-
-
-        return reverse('signature:Attendance_list_view', kwargs={'formation_id': id_formation})
-
-    def form_invalid(self, signature_form):
-        # Taken from Django source code:
-        """ If the form is invalid, render the invalid form. """
-
-        return self.render_to_response(
-            self.get_context_data(
-                signature_form=signature_form
-            )
-        )
+        return redirect('main:home')
 
     def sign_pdf(self, source_file, signature, user, formation_session):
         des_file = source_file.actual_file
@@ -184,27 +170,3 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
         document.close()
         messages.success(self.request, _("Merci, votre émargement est désormais signé !"))
         return source_file
-
-    def form_valid(self, signature_form):
-        doc_id = self.kwargs['doc_id']
-        doc = PdfDocument.objects.get(id=doc_id)
-        formation_session = doc.formation_session
-        user = self.request.user
-        if signature_form.is_valid():
-            signature = signature_form.cleaned_data.get('signature')
-            if signature:
-                signature_file_path = draw_signature(signature, as_file=True)
-
-                result = SignatureModel.objects.create(doc=doc, signature=signature_file_path)
-                result.save()
-                if signature_form.cleaned_data['verification_code'] == doc.verification_code:
-                    doc = self.sign_pdf(doc, signature_file_path, user, formation_session)
-                    doc.is_signed = True
-                    doc.is_signed_by.add(self.request.user)
-                    doc.save()
-
-                else:
-                    messages.error(self.request, _("Le code de vérification est erroné. Veuillez vérifier votre boite mail"))
-                    return self.form_invalid(signature_form)
-
-        return redirect(self.get_success_url(formation_session.id))

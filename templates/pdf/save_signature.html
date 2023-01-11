@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block title %}Signature électronique {% endblock title %}
+{% block title %}Enregistrer votre signature{% endblock title %}
 
 {% block extracss %}
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<script nonce="{{request.csp_nonce}}" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
-<script nonce="{{request.csp_nonce}}" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script nonce="{{request.csp_nonce}}" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script nonce="{{request.csp_nonce}}" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+  <script nonce="{{request.csp_nonce}}" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script nonce="{{request.csp_nonce}}" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 {% endblock extracss %}
 
@@ -19,14 +19,16 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Signer votre émargement {{ doc_name }}</h5>
+                    <h5>Enregistrer votre signature personnelle</h5>
                 </div>
                 <div class="card-block">
-                    <div id="adobe-dc-view" ></div>
                     <form class="form-signature" action="" method="post">
-                        <button type="submit" name="save_next" value="Save&Next">Signer le document</button>
-                    </form>
+                     {% csrf_token %}
+                     {{ form }}
+                    <input type="submit" value="Valider" class="btn btn-success" />
+                    <a href="" class="btn btn-danger">Annuler</a>
 
+                  </form>
                 </div>
             </div>
         </div>
@@ -37,6 +39,9 @@
 {% endblock content %}
 
 {% block script %}
+
+
+
     <script nonce="{{request.csp_nonce}}" src="{% static 'js/django_jsignature.js' %}"></script>
     <script nonce="{{request.csp_nonce}}" src="{% static 'js/jSignature.min.js' %}"></script>
     <script nonce="{{request.csp_nonce}}" src="{% static 'js/jsignature_admin_init.js' %}"></script>
@@ -46,10 +51,11 @@
             var adobeDCView = new AdobeDC.View({clientId: "0b54dbb30fb44bd2a112643b0551126a", divId: "adobe-dc-view"});
             adobeDCView.previewFile({
                 content:{location:
-                        {url: "https://www.millforma-admin.fr/public/{{path}}" }},
+                        {url: "www.millforma-admin.fr/public/{{path}}" }},
                 metaData:{fileName: "{{doc_name}}"}
             }, {embedMode: "IN_LINE"});
         });
 
     </script>
+
 {% endblock script %}

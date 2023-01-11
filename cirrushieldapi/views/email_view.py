@@ -123,21 +123,35 @@ def send_email_verification_code(request, code):
 
 # sent for 1st connexion puprose
 def send_id(link, formation, current_site):
-    email_subject = 'Vos Informations de connexion'
-    email_body = render_to_string('email/send_id.html', {
+    email_subject = 'Bienvenue sur Mill Forma'
 
-        'domain': current_site,
-        'link': link,
-    })
     emails = []
     for trainee in formation.trainee.all():
-        emails.append(trainee.user.email)
-    emails.append(formation.teacher_name.email)
+        email_body = render_to_string('email/send_id.html', {
+            'domain': current_site,
+            'link': link,
+            'username': trainee.user.username,
+            'email': trainee.user.email,
+        })
+        send_mail(
+            email_subject,
+            email_body,
+            #go back to prod conf
+            settings.EMAIL_HOST_USER,
+            [trainee.user.email]
+        )
+    email_body = render_to_string('email/send_id.html', {
+        'domain': current_site,
+        'link': link,
+        'username': formation.teacher_name.username,
+        'email': formation.teacher_name.email,
+    })
     send_mail(
         email_subject,
         email_body,
-        settings.EMAIL_SENDER,
-        emails
+        # go back to prod conf
+        settings.EMAIL_HOST_USER,
+        [formation.teacher_name.email],
     )
 
 

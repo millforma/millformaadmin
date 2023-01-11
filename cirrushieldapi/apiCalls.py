@@ -164,7 +164,7 @@ def getTrainee(session_id):
             trainee_last_name = xpars['Data']['Contact']['Last_Name']
             if search_was_successful:
                 # hack to make a fake username
-                username = trainee_email.replace("@", "_at_") + trainee_last_name
+                username = trainee_email.replace("@", "_at_")
                 # remove accents:core_imagefile
                 username = unidecode.unidecode(username)
                 # replace special chars by '_':

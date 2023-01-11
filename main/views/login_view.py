@@ -22,11 +22,11 @@ class CustomLoginView(LoginView):
 
         user = authenticate(self.request, username=username, password=password)
         if user and user.is_active:
-            if user.groups.filter(name='learner').exists():
+            if user.last_login is None:
                 auth_login(self.request, form.get_user())
-                return redirect('signature:Attendance_list_view')
+                return redirect('signature:save_signature')
             else:
-                return HttpResponseRedirect(self.get_success_url())
+                HttpResponseRedirect(self.get_success_url())
         else:
             messages.error(self.request, "Veuillez vérifier vos coordonnées")
             return reverse_lazy('login')

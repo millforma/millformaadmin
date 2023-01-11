@@ -38,7 +38,7 @@ class Person(Entity):
     language = models.CharField(max_length=10,
                                 choices=settings.LANGUAGES,
                                 default=settings.LANGUAGE_CODE)
-
+    user_verification_code = models.IntegerField(default=1658)
     doc_is_valid=models.BooleanField(null=True)
 
 

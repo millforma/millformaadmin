@@ -206,7 +206,7 @@ def _genTableFirst(width, height, formation_id):
     title = Paragraph("<para alignment='center'>Détails de la formation</para>",
                       titlestyle)
     text = Paragraph("<b>Adresse : </b>" + str(formation_session.training_site) + "<br/>" + "<br/>" + "<br/>" +
-                     "Date de début de la formation : " + str(formation_session.date_start) + "<br/>" + "<br/>" +
+                     "Date de début de la formation : " + "Vu avec le formateur" + "<br/>" + "<br/>" +
                      "<b>Horaire du premier jour :</b>" + " Vu avec le formateur",
                      titlestyle)
     res = Table([

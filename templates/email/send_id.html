@@ -1,19 +1,18 @@
 {% autoescape off %}
 Mr/Mme ,
 
-Merci de cliquer sur lien ci-dessous afin de chosir un mot de passe pour votre compte MillForma:
+Nous avons le plaisir de vous informer que votre compte est maintenant actif.
 
-    {{ link }}
+Veuillez cliquer sur le lien ci-dessous afin de choisir un mot de passe pour votre compte.
 
+<a href="{{set_password_url}}"> Choisir votre mot de passe</a>
 
-Merci de renseigner l'adresse email où vous avez reçu ce message.
+Les details de votre compte sont listés ci-dessous:
+
+Username : {{ username }}
+Email : {{ email }}
 
 Cordialement,
 
-Mill Forma
-
-
-
-
-
+L'équipe Mill Forma,
 {% endautoescape %}

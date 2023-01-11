@@ -3,6 +3,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib import colors
 from main.models.company import Company
 from main.models.formationsession import FormationSession
+from signature.models import SignatureModel
 
 
 def genEmargementFirst(width, height, formation_id, day, event):
@@ -26,7 +27,7 @@ def genEmargementFirst(width, height, formation_id, day, event):
         ['', _genTitleDate(widthList[1], heightList[2], formation_id, day), ''],
         ['', _genTableTitle(widthList[1], heightList[3], event), ''],
         ['', _genTableContent(widthList[1], heightList[4], formation_id), ''],
-        ['', _genSignature(widthList[1], heightList[5]), ''],
+        ['', _genSignature(widthList[1], heightList[5],formation_id), ''],
     ],
         colWidths=widthList,
         rowHeights=heightList)
@@ -158,15 +159,15 @@ def _genTableTitle(width, height, event):
     textstyle = ParagraphStyle('text')
 
     textstyle.fontSize = 9
-    delta=event.end_time-event.start_time
-    numb_hours=delta
+    delta = event.end_time - event.start_time
+    numb_hours = delta
     textzeroleft = Paragraph("<b>Nom/Prénom</b>" + "<br/>" + "stagiaire", textstyle)
     textzerotwo = Paragraph(
         "<b>Début</b>" + "<br/>" + "<br/>" + "Horaires : " + str(event.start_time) + "<br/>" + "<br/>",
         textstyle)
     textzeroone = Paragraph(
         "<b>Fin</b>" + "<br/>" + "<br/>" + "Horaires : " + str(event.end_time) + "<br/>" + "<br/>"
-        + "Nombre d'heures : "+str(numb_hours),
+        + "Nombre d'heures : " + str(numb_hours),
         textstyle)
     # textoneleft = Paragraph("<b>Signature Stagiaire</b>", textstyle)
 
@@ -216,11 +217,16 @@ def _genTableContent(width, height, formation_id):
     return res
 
 
-def _genSignature(width, height):
+def _genSignature(width, height, formation_id):
     widthList = [
         width * 0.5,
         width * 0.5,
     ]
+
+    formation = FormationSession.objects.get(id=formation_id)
+    teacher = formation.teacher_name
+
+
 
     textrightstyle = ParagraphStyle('textright')
     textrightstyle.fontSize = 7.1
@@ -228,12 +234,23 @@ def _genSignature(width, height):
     textright = Paragraph("MILL-FORMA" + "<br/>"
                           + "William Berdugo" + "<br/>",
                           textrightstyle)
+
     rightImgPath = 'https://mill-forma.fr/wp-content/uploads/2021/10/si_ca.png'
     rightImgWidth = widthList[1] * 0.5
+
+    textleft = Paragraph("Le formateur" + "<br/>"
+                         + str(teacher.last_name) +" "+ str(teacher.first_name)+ "<br/>",
+                         textrightstyle)
+
     signature = Image(
         rightImgPath, rightImgWidth, height, kind='proportional')
+
+    signature_teacher = SignatureModel.objects.get(signature_owner=teacher)
+    signature_formateur = Image(
+        signature_teacher.signature, rightImgWidth, height, kind='proportional')
+
     res = Table([
-        ['', textright, signature]
+        [signature_formateur, textright, signature]
     ],
         widthList,
         height)
