@@ -1,7 +1,5 @@
 def group_processor(request):
 
-
-    global group
     user=request.user
     if user.is_superuser:
         group="commercial"

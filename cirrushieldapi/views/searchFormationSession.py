@@ -1,4 +1,5 @@
 import datetime
+from django.contrib.sites.models import Site
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -7,6 +8,7 @@ from django.contrib import messages
 
 # get formation session from cirrushield
 from cirrushieldapi.apiCalls import GetFormationSession
+from cirrushieldapi.views.email_view import send_id
 from main.models.formationsession import FormationSession
 
 
@@ -27,9 +29,6 @@ class SearchFormation(TemplateView, UserPassesTestMixin):
 
 
             list_of_tuples = FormationSession.OPCO_NAMES_CHOICES
-
-            # 👇️ [(0, (5, 'Alice')), (1, (10, 'Bob')), (2, (15, 'Carl')), (3, (20, 'Dean'))]
-            print(list(enumerate(list_of_tuples)))
 
             # ✅ get list of all indices of tuples that match the condition
 
@@ -67,6 +66,10 @@ class SearchFormation(TemplateView, UserPassesTestMixin):
 
             final_session.trainee.set(formation_session['Data']['Contrat_de_Formation']['Stagiaires'])
             final_session.save()
+
+            current_site = Site.objects.get_current()
+            link_reset_passwd = current_site.domain + '/password-reset/'
+            send_id(link_reset_passwd, final_session, current_site)
             messages.success(self.request, "La session a bien été importée")
 
         return redirect('main:home')

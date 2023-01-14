@@ -26,7 +26,7 @@ class CustomLoginView(LoginView):
                 auth_login(self.request, form.get_user())
                 return redirect('signature:save_signature')
             else:
-                HttpResponseRedirect(self.get_success_url())
+                return HttpResponseRedirect(self.get_success_url())
         else:
             messages.error(self.request, "Veuillez vérifier vos coordonnées")
             return reverse_lazy('login')
