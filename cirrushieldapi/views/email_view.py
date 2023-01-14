@@ -136,10 +136,10 @@ def send_id(link, formation, current_site):
         send_mail(
             email_subject,
             email_body,
-            #go back to prod conf
-            settings.EMAIL_HOST_USER,
+            settings.EMAIL_SENDER,
             [trainee.user.email]
         )
+
     email_body = render_to_string('email/send_id.html', {
         'domain': current_site,
         'link': link,
@@ -149,8 +149,7 @@ def send_id(link, formation, current_site):
     send_mail(
         email_subject,
         email_body,
-        # go back to prod conf
-        settings.EMAIL_HOST_USER,
+        settings.EMAIL_SENDER,
         [formation.teacher_name.email],
     )
 
