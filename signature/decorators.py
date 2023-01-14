@@ -9,7 +9,7 @@ def send_verification_code(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
         try:
-            user = request
+            user = request.user
             code = random.randint(1111, 9999)
             send_email_verification_code(request, code)
             user.person.user_verification_code = code
