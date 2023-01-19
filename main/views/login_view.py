@@ -22,9 +22,13 @@ class CustomLoginView(LoginView):
 
         user = authenticate(self.request, username=username, password=password)
         if user and user.is_active:
-            if user.last_login is None:
-                auth_login(self.request, form.get_user())
-                return redirect('signature:save_signature')
+            if (user.last_login is None) or (user.person.user_verification_code == 1658):
+                if user.groups.filter(name='teacher').exists() :
+                    auth_login(self.request, form.get_user())
+                    return redirect('signature:save_signature')
+                elif user.groups.filter(name='learner').exists():
+                    auth_login(self.request, form.get_user())
+                    return redirect('signature:save_signature')
             else:
                 return HttpResponseRedirect(self.get_success_url())
         else:

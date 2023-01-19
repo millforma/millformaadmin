@@ -65,6 +65,45 @@
 
                                     </tbody>
                                 </table>
+
+                        {% elif group == 'learner' %}
+                            <table class="table table-hover" id="myTable">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Année</th>
+                                            <th>Nom</th>
+                                            <th>Signer émargements</th>
+                                            <th>Formateur</th>
+                                            <th>Session Videos effectuées</th>
+                                            <th>Date début authorisée</th>
+                                            <th>Date Fin autorisée</th>
+                                            <th>Heures effectuées</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if formation_list %}
+                                            {% for formation in formation_list %}
+                                        <tr>
+                                            <td>{{ formation.year }}</td>
+                                            <td>{{ formation.name }}</td>
+                                            <td><a href="{% url 'main:attendance_list' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Signer"  /></a></td>
+                                            <td>{{ formation.teacher_name.last_name }} {{ formation.teacher_name.first_name }}</td>
+                                            <td>{{ formation.completed_videochat_sessions}}</td>
+                                            <td>{{ formation.date_autorised_start }}</td>
+                                            <td>{{ formation.date_autorised_end }}</td>
+                                            <td>{{ formation.training_done }} /{{ formation.training_duration }}h</td>
+                                        </tr>
+
+                                        {% endfor %}
+                                        {% else %}
+                                            <tr><td>Il n'y a pas de formations</td></tr>
+                                        {% endif %}
+
+                                    </tbody>
+                                </table>
+
+
                         {% else %}
                             <table class="table table-hover" id="myTable">
 

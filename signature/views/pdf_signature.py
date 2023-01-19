@@ -1,7 +1,5 @@
 import os
-
 import fitz
-
 
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -16,40 +14,35 @@ from main.models.formationsession import FormationSession
 from main.models.person import PersonProfession
 from signature.models import SignatureModel
 
-
-class FormationSignListView(LoginRequiredMixin, ListView):
-    template_name = 'pdf/formationSignList.html'
-    model = FormationSession
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = self.request.user
-        profession = PersonProfession.objects.get(person_id=self.request.user.person.id)
-
-        formation_session = FormationSession.objects.filter(teacher_name=user)
-
-        context['formation_session'] = formation_session
-        return context
-
-
 class DocumentSignListView(LoginRequiredMixin, ListView):
     template_name = 'pdf/documentSignList.html'
     model = PdfDocument
 
     def get_context_data(self, **kwargs):
         global type_of_doc_teacher
+        global type_of_doc_learner
+        global pdf_files
         context = super().get_context_data(**kwargs)
+
         try:
             type_of_doc_teacher = DocumentType.objects.filter(name__in=[2, 10, 6])
+            type_of_doc_learner = DocumentType.objects.filter(name__in=[1])
         except DocumentType.DoesNotExist:
             messages.error(self.request, _("Initial data is not well configured"))
 
-        formation_id = self.kwargs['formation_id']
-        formation_session = FormationSession.objects.get(id=formation_id)
-        pdf_files = PdfDocument.objects.filter(formation_session=formation_session, is_signed=False,
-                                               type_of_document__in=type_of_doc_teacher)
+        formation_session = FormationSession.objects.filter(teacher_name=self.request.user)
+
+        if self.request.user.groups.filter(name='teacher').exists():
+            pdf_files = PdfDocument.objects.filter(formation_session__in=formation_session, is_signed=False,
+                                                   type_of_document__in=type_of_doc_teacher)
+
+        elif self.request.user.groups.filter(name='learner').exists():
+            pdf_files = PdfDocument.objects.filter(formation_session__in=formation_session, is_signed=False,
+                                                   type_of_document__in=type_of_doc_learner)
+
         context['files'] = pdf_files
         context['formation_session'] = formation_session
+
         return context
 
 
@@ -77,10 +70,19 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
         if request.POST.get("sign_doc"):
             try:
                 user_signature = SignatureModel.objects.get(signature_owner=user)
-                signature_file_path = user_signature.signature
-                doc = self.sign_pdf(doc, signature_file_path, user, formation_session)
+                user_signature_file_path = user_signature.signature
+                teacher=formation_session.teacher_name
+
+                if teacher not in doc.is_signed_by :
+                    teacher_signature = SignatureModel.objects.get(signature_owner=teacher)
+                    doc = self.sign_pdf(doc, user_signature_file_path, user, formation_session, teacher_signature.signature)
+                else:
+                    doc = self.sign_pdf(doc, user_signature_file_path, user, formation_session, None)
+
+
                 doc.is_signed = True
                 doc.is_signed_by.add(self.request.user)
+                doc.is_signed_by.add(teacher)
                 doc.save()
             except SignatureModel.DoesNotExist:
                 messages.error(self.request,
@@ -89,9 +91,10 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
 
         return redirect('main:home')
 
-    def sign_pdf(self, source_file, signature, user, formation_session):
+    def sign_pdf(self, source_file, signature, user, formation_session, teacher_signature):
         des_file = source_file.actual_file
         img_filename = signature
+
 
         image_file = os.path.join(STATIC_ROOT, 'assets/images/electronic_signature.png')
 
@@ -117,7 +120,10 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
             page.insertImage(img_one_right, filename=img_filename)
             page.insertImage(img_2fa_one_left, filename=image_file)
             page.insertImage(img_2fa_one_right, filename=image_file)
-
+            #insert teacher signature
+            if teacher_signature != None:
+                rect_teacher = fitz.Rect(round(w_page * 0.06), h_page*0.1, round(w_page * 0.56), 0.06*h_page)
+                page.insertImage(rect_teacher, filename=teacher_signature)
             # See http://pymupdf.readthedocs.io/en/latest/document/#Document.save and
             # http://pymupdf.readthedocs.io/en/latest/document/#Document.saveIncr for
             # additional parameters, especially if you want to overwrite existing PDF

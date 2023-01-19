@@ -29,9 +29,11 @@ class SaveSignatureView(LoginRequiredMixin, TemplateView):
         signature_form.is_valid()
         return self.form_valid(signature_form)
 
-    @staticmethod
-    def get_success_url():
+
+    def get_success_url(self):
+
         return reverse('main:home')
+
 
     def form_invalid(self, signature_form):
         # Taken from Django source code:
