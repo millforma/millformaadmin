@@ -21,11 +21,13 @@
                 <div class="card-header">
                     <h5>Signer votre émargement {{ doc_name }}</h5>
                 </div>
-                <div class="card-block">
-                    <div id="adobe-dc-view" ></div>
                     <form class="form-signature" action="" method="post">
-                        <button type="submit" name="save_next" value="Save&Next">Signer le document</button>
+                        {% csrf_token %}
+                        <button class="btn-outline-info" type="submit" name="save_next" value="Save&Next">Signer le document</button>
                     </form>
+                <div class="card-block" style="max-width: 1500px;">
+                    <div id="adobe-dc-view" ></div>
+
 
                 </div>
             </div>
