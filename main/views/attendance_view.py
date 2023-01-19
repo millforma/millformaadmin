@@ -8,7 +8,7 @@ class AttendanceView(LoginRequiredMixin,UserPassesTestMixin, TemplateView):
     template_name = "main/viewattendance.html"
 
     def test_func(self):
-        return self.request.user.groups.filter(name='commercial').exists()
+        return self.request.user.groups.filter(name='commercial').exists() or self.request.user.groups.filter(name='teacher') or self.request.user.is_superuser
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
