@@ -30,6 +30,7 @@ class DocumentType(BaseModel):
         (KBIS, "Kbis"),
         (RIB, "Rib"),
         (INSEE, "Declaration Insee"),
+        (CONVENTION, "Convention de formation"),
     ]
 
     name = models.IntegerField(
