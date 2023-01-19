@@ -55,7 +55,7 @@
                                             <td>{{ formation.completed_videochat_sessions}}</td>
                                             <td>{{ formation.date_autorised_start }}</td>
                                             <td>{{ formation.date_autorised_end }}</td>
-                                            <td>{{ formation.training_done }} /{{ formation.training_duration }}h</td>
+                                            <td>{{ formation.training_done }} / {{ formation.training_duration }} Heures</td>
                                         </tr>
 
                                         {% endfor %}
@@ -87,12 +87,12 @@
                                         <tr>
                                             <td>{{ formation.year }}</td>
                                             <td>{{ formation.name }}</td>
-                                            <td><a href="{% url 'main:attendance_list' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Signer"  /></a></td>
+                                            <td><a href="{% url 'signature:Attendance_list_view' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Signer"  /></a></td>
                                             <td>{{ formation.teacher_name.last_name }} {{ formation.teacher_name.first_name }}</td>
                                             <td>{{ formation.completed_videochat_sessions}}</td>
                                             <td>{{ formation.date_autorised_start }}</td>
                                             <td>{{ formation.date_autorised_end }}</td>
-                                            <td>{{ formation.training_done }} /{{ formation.training_duration }}h</td>
+                                            <td>{{ formation.training_done }} / {{ formation.training_duration }} Heures</td>
                                         </tr>
 
                                         {% endfor %}
@@ -128,7 +128,7 @@
                                         <tr>
                                             <td>{{ formation.year }}</td>
                                             <td>{{ formation.name }}</td>
-                                            <td><a href="{% url 'main:session' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Reseigner"  /></a></td>
+                                            <td><a href="{% url 'main:session' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Renseigner"  /></a></td>
                                             <td><a href="{% url 'main:attendance_list' formation.id %}"><input class="btn btn-pill btn-primary" type="submit" value="Voir"  /></a></td>
                                             <td>{{ formation.teacher_name.last_name }} {{ formation.teacher_name.first_name }}</td>
                                             <td>{{ formation.client_account.contact.email }}</td>
@@ -136,7 +136,7 @@
                                             <td>{{ formation.completed_videochat_sessions}}</td>
                                             <td>{{ formation.date_autorised_start }}</td>
                                             <td>{{ formation.date_autorised_end }}</td>
-                                            <td>{{ formation.training_done }} /{{ formation.training_duration }}h</td>
+                                            <td>{{ formation.training_done }} / {{ formation.training_duration }} Heures</td>
                                         </tr>
 
                                         {% endfor %}
