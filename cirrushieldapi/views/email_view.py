@@ -12,7 +12,7 @@ def send_convention(request, formation_id):
     session = FormationSession.objects.get(id=formation_id)
     current_site = Site.objects.get_current()
     # links for email purpose
-    link = current_site.domain + '/learner/' + str(session.id)
+    link = 'https://www.millforma-admin.fr' + '/learner/' + str(session.id)
     teacher = session.teacher_name
 
     email_subject = 'Signature convention de formation'
@@ -38,7 +38,7 @@ def send_convention(request, formation_id):
 def send_emargement_trainees(request, formation_id, date):
     final_session = FormationSession.objects.get(id=formation_id)
     current_site = request.get_host()
-    link_learner = current_site + '/learner/' + str(final_session.id)
+    link_learner = 'https://www.millforma-admin.fr' + '/learner/' + str(final_session.id)
     send_emargementlearnerlink(link_learner, final_session, current_site, date)
 
 
@@ -50,8 +50,8 @@ def send_links_for_formation(request, formation_id):
     current_site = request.get_host()
 
     # links for email purpose
-    link_teacher = current_site + '/teacher/' + str(final_session.id)
-    link_reset_passwd = current_site + '/password-reset/'
+    link_teacher = 'https://www.millforma-admin.fr' + '/teacher/' + str(final_session.id)
+    link_reset_passwd = 'https://www.millforma-admin.fr' + '/password-reset/'
 
     send_id(link_reset_passwd, final_session, current_site)
 
