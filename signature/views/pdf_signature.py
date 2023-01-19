@@ -73,7 +73,7 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
                 user_signature_file_path = user_signature.signature
                 teacher=formation_session.teacher_name
 
-                if teacher not in doc.is_signed_by :
+                if teacher not in doc.is_signed_by.all():
                     teacher_signature = SignatureModel.objects.get(signature_owner=teacher)
                     doc = self.sign_pdf(doc, user_signature_file_path, user, formation_session, teacher_signature.signature)
                 else:

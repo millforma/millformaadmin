@@ -84,7 +84,14 @@ h6 {
   color: #111;
   font-weight: 400;
 }
-
+.btn_signature {
+    width: 250px;
+    height: 104px;
+    display: block;
+    margin-left: 80%;
+    margin-right: auto;
+    margin-top: 35px;
+}
 h1 {
   font-size: 48px;
 }
