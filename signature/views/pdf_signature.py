@@ -122,8 +122,11 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
             page.insertImage(img_2fa_one_right, filename=image_file)
             #insert teacher signature
             if teacher_signature != None:
-                rect_teacher = fitz.Rect(round(w_page * 0.06), h_page*0.1, round(w_page * 0.56), 0.06*h_page)
-                page.insertImage(rect_teacher, filename=teacher_signature)
+                img_teacher_signature = fitz.Rect(round(w_page * 0.14), h_page * 0.85, round(w_page * 0.34), h_page * 0.91)
+
+                page.drawRect(img_teacher_signature, color=(.25, 1, 0.25))
+
+                page.insertImage(img_teacher_signature, filename=teacher_signature)
             # See http://pymupdf.readthedocs.io/en/latest/document/#Document.save and
             # http://pymupdf.readthedocs.io/en/latest/document/#Document.saveIncr for
             # additional parameters, especially if you want to overwrite existing PDF
