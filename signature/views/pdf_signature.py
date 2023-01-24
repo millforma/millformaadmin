@@ -123,15 +123,18 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
             #insert teacher signature
             if teacher_signature != None:
                 img_teacher_signature = fitz.Rect(round(w_page * 0.14), h_page * 0.85, round(w_page * 0.34), h_page * 0.91)
-                rect_name_teacher = (round(w_page * 0.14), h_page * 0.80, round(w_page * 0.34), h_page * 0.85)
-                page.insertImage(img_teacher_signature, filename=img_filename)
+                rect_first_name_teacher = (round(w_page * 0.14), h_page * 0.80, round(w_page * 0.34), h_page * 0.85)
+                rect_last_name_teacher = (round(w_page * 0.19), h_page * 0.80, round(w_page * 0.39), h_page * 0.85)
+
+                page.insertImage(img_teacher_signature, filename=image_file)
                 page.insertImage(img_teacher_signature, filename=teacher_signature)
+
                 first_name_teacher = formation_session.teacher_name.first_name
                 last_name_teacher = formation_session.teacher_name.last_name
-                name_tea = page.insertTextbox(rect_name_teacher, first_name_teacher,
+                name_tea = page.insertTextbox(rect_first_name_teacher, first_name_teacher,
                                         fontsize=13,
                                         align=1)
-                las_name_tea = page.insertTextbox(rect_name_teacher, last_name_teacher,
+                las_name_tea = page.insertTextbox(rect_last_name_teacher, last_name_teacher,
                                               fontsize=13,
                                               align=1)
             # See http://pymupdf.readthedocs.io/en/latest/document/#Document.save and
