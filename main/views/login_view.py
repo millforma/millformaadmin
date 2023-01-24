@@ -30,6 +30,7 @@ class CustomLoginView(LoginView):
                     auth_login(self.request, form.get_user())
                     return redirect('main:home')
             else:
+                auth_login(self.request, form.get_user())
                 return redirect('main:home')
         else:
             messages.error(self.request, "Veuillez vérifier vos coordonnées")
