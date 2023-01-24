@@ -123,7 +123,7 @@ class SignaturePreView(LoginRequiredMixin, TemplateView):
             #insert teacher signature
             if teacher_signature != None:
                 img_teacher_signature = fitz.Rect(round(w_page * 0.14), h_page * 0.85, round(w_page * 0.34), h_page * 0.91)
-                rect_title = (round(w_page * 0.14), h_page * 0.79, round(w_page * 0.34), h_page * 0.80)
+                rect_title = (round(w_page * 0.14), h_page * 0.79, round(w_page * 0.34), h_page * 0.84)
                 rect_first_name_teacher = (round(w_page * 0.14), h_page * 0.81, round(w_page * 0.34), h_page * 0.86)
                 rect_last_name_teacher = (round(w_page * 0.14), h_page * 0.83, round(w_page * 0.34), h_page * 0.88)
 
