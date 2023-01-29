@@ -49,7 +49,7 @@ class FormationSession(BaseModel):
     commercial = models.ForeignKey(to=User, limit_choices_to={'groups__name': "commercial"},
                                    on_delete=models.SET_NULL, related_name="commercial", blank=True,null=True)
     name = models.CharField(max_length=200)
-    trainee = models.ManyToManyField(Person,on_delete=models.SET_NULL,blank=True, null=True)
+    trainee = models.ManyToManyField(Person,blank=True, null=True)
     num_present_trainee = models.IntegerField(default=0)
     doc_has_been_sent = models.BooleanField(default=False)
     foad = models.BooleanField(default=False)
@@ -69,7 +69,7 @@ class FormationSession(BaseModel):
     client_account = models.ForeignKey(to=Company, on_delete=models.SET_NULL, blank=True,null=True)
     old_num_formation = models.CharField(max_length=35, default="DC-00000")
     date_creation_formation = models.DateField(auto_now=True)
-    objectifs_peda=models.ManyToManyField(Objectifs_peda,on_delete=models.SET_NULL, blank=True,null=True)
+    objectifs_peda=models.ManyToManyField(Objectifs_peda, blank=True,null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
