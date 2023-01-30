@@ -91,7 +91,8 @@ def GetFormationSession(formation_id):
     xpars['Data']['Contrat_de_Formation']['Client_Account'] = getClient(client, foad)
 
     if xpars['Data']['Contrat_de_Formation']['Training_Offer'] != None:
-        xpars['Data']['Contrat_de_Formation']['Training_Offer']=getObjectif(xpars['Data']['Contrat_de_Formation']['Training_Offer'])
+        xpars['Data']['Contrat_de_Formation']['Training_Offer'] = getObjectif(
+            xpars['Data']['Contrat_de_Formation']['Training_Offer'])
 
     if (xpars['Data']['Contrat_de_Formation']['Formation_a_distance_liste'] != "Oui"):
         xpars['Data']['Contrat_de_Formation']['Numero_de_la_rue'] = create_address(
@@ -111,6 +112,7 @@ def GetFormationSession(formation_id):
 
     return search_result
 
+
 def getObjectif(objectif_id):
     authToken = GetAuthToken()
     authToken = authToken.replace('"', '')
@@ -122,7 +124,7 @@ def getObjectif(objectif_id):
     xpars = xmltodict.parse(response.text)
 
     sentences = re.split(r'(\r\n?|\n)+', xpars['Data']['Product']['Objectif_pedagogique'])
-    my_objectifs=[]
+    my_objectifs = []
     for objectif in sentences:
         if objectif != "" and objectif != '\n':
             my_objectifs.append(
@@ -132,6 +134,7 @@ def getObjectif(objectif_id):
             )
 
     return my_objectifs
+
 
 def getTrainee(session_id):
     final_trainees = []
@@ -164,7 +167,7 @@ def getTrainee(session_id):
             trainee_last_name = xpars['Data']['Contact']['Last_Name']
             if search_was_successful:
                 # hack to make a fake username
-                username = trainee_email.replace("@", "_at_")
+                username = str(trainee_last_name + trainee_first_name)
                 # remove accents:core_imagefile
                 username = unidecode.unidecode(username)
                 # replace special chars by '_':
@@ -173,12 +176,17 @@ def getTrainee(session_id):
                 )
                 try:
                     trainee = User.objects.get(
-                        username=username,
+                        first_name=trainee_first_name,last_name=trainee_last_name
                     )
 
                     user_group = Group.objects.get(name='learner')
                     trainee.groups.add(user_group)
+                    trainee.first_name = trainee_first_name
+                    trainee.last_name = trainee_last_name
+                    trainee.email = trainee_email
+                    trainee.username = username
                     trainee.save()
+
                     if trainee_phone is not None:
                         phone_trainee = Phone.objects.create(phone_number=trainee_phone)
                         phone_trainee.phone_number = phone_trainee.standardize(phone_trainee.phone_number)
@@ -361,11 +369,11 @@ def getClient(client_id, foad):
     client_account_tel_fixe = xpars['Data']['Account']['Tel_Fixe_1']
     if type(xpars['Data']['Account']['Numero_de_la_rue']) == str:
         client_account_Num_rue = xpars['Data']['Account']['Numero_de_la_rue']
-    else :
+    else:
         client_account_Num_rue = ""
     if type(xpars['Data']['Account']['Billing_Street']) == str:
         client_account_billingstreet = xpars['Data']['Account']['Billing_Street']
-    else :
+    else:
         client_account_billingstreet = ""
 
     if search_was_successful:
@@ -407,7 +415,6 @@ def getClient(client_id, foad):
                                             Industry=client_account_industry, num_siret=client_account_siret,
                                             contact=representant_company, phone=phone_company)
             if type(client_account_billingstreet) != str or type(client_account_Num_rue) != str:
-
                 address_company = Address.objects.create(details=client_account_Num_rue + client_account_billingstreet,
                                                          postal_code=client_account_billing_zip)
 
