@@ -321,7 +321,7 @@ def _genSignature(width, height):
                           + "William Berdugo" + "<br/>"
                           + "«Bon pour accord»",
                           textrightstyle)
-    rightImgPath = 'https://mill-forma.fr/wp-content/uploads/2021/10/si_ca.png'
+    rightImgPath = 'https://mill-forma.fr/wp-content/uploads/2024/01/si_millforma.png'
     rightImgWidth = widthList[1]
     signature = Image(
         rightImgPath, rightImgWidth, height, kind='proportional')

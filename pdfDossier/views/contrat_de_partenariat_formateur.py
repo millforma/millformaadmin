@@ -338,7 +338,7 @@ def _genPagethreeEnd(width, height):
         "« Lu et approuvé »" + "<br/>",
         textleftstyle)
 
-    rightImgPath = 'https://mill-forma.fr/wp-content/uploads/2021/10/si_ca.png'
+    rightImgPath = 'https://mill-forma.fr/wp-content/uploads/2024/01/si_millforma.png'
     rightImgWidth = widthList[1]
     rightImg = Image(
         rightImgPath, 0.25 * width, height, kind='proportional')

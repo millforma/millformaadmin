@@ -22,12 +22,12 @@ def send_convention(request, formation_id):
         'formation': session,
         'link': link,
     })
-    send_mail(
+    '''send_mail(
         email_subject,
         email_body,
         settings.EMAIL_SENDER,
         [teacher.email]
-    )
+    )'''
 
     # success
     messages.success(request, "La convention de formation a bien été envoyée")
@@ -53,9 +53,9 @@ def send_links_for_formation(request, formation_id):
     link_teacher = 'https://www.millforma-admin.fr' + '/teacher/' + str(final_session.id)
     link_reset_passwd = 'https://www.millforma-admin.fr' + '/password-reset/'
 
-    send_id(link_reset_passwd, final_session, current_site)
+    '''send_id(link_reset_passwd, final_session, current_site)
 
-    send_emargementteacherlink(link_teacher, final_session, current_site)
+    send_emargementteacherlink(link_teacher, final_session, current_site)'''
     # success
     messages.success(request, "La lien a bien été envoyé")
 
@@ -73,12 +73,12 @@ def send_emargementteacherlink(link, formation, current_site):
         'formation': formation,
         'link': link,
     })
-    send_mail(
+    '''send_mail(
         email_subject,
         email_body,
         settings.EMAIL_SENDER,
         [teacher.email]
-    )
+    )'''
 
 
 
@@ -133,12 +133,12 @@ def send_id(link, formation, current_site):
             'username': trainee.user.username,
             'email': trainee.user.email,
         })
-        send_mail(
+        '''send_mail(
             email_subject,
             email_body,
             settings.EMAIL_SENDER,
             [trainee.user.email]
-        )
+        )'''
 
     email_body = render_to_string('email/send_id.html', {
         'domain': current_site,
@@ -146,12 +146,12 @@ def send_id(link, formation, current_site):
         'username': formation.teacher_name.username,
         'email': formation.teacher_name.email,
     })
-    send_mail(
+    '''send_mail(
         email_subject,
         email_body,
         settings.EMAIL_SENDER,
         [formation.teacher_name.email],
-    )
+    )'''
 
 
 def resend_username(user):

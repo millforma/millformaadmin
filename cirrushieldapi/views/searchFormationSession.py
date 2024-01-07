@@ -69,7 +69,7 @@ class SearchFormation(TemplateView, UserPassesTestMixin):
 
             current_site = Site.objects.get_current()
             link_reset_passwd = 'https://www.millforma-admin.fr' + '/password-reset/'
-            send_id(link_reset_passwd, final_session, current_site)
+            #send_id(link_reset_passwd, final_session, current_site)
             messages.success(self.request, "La session a bien été importée")
 
         return redirect('main:home')

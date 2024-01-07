@@ -29,7 +29,7 @@ def genConvocation(width, height, trainee, formation_id):
         ['', _genContenuFirst(widthList[1], heightList[1], trainee), ''],
         ['', _genTitreSecond(widthList[1], heightList[2], formation_id), ''],
         ['', _genTableFirst(widthList[1], heightList[3], formation_id), ''],
-        ['', _genContenuSecond(widthList[1], heightList[4]), ''],
+        ['', _genContenuSecond(widthList[1], heightList[4], formation_id), ''],
         ['', _genContenuThird(widthList[1], heightList[5]), ''],
         ['', _genSignature(widthList[1], heightList[6]), ''],
 
@@ -123,7 +123,7 @@ def _genContenuFirst(width, height, trainee):
     return res
 
 
-def _genContenuSecond(width, height):
+def _genContenuSecond(width, height, formation_id):
     widthList = [
         width * 0.2,
         width * 0.8,
@@ -135,11 +135,12 @@ def _genContenuSecond(width, height):
 
     textrightstyle = ParagraphStyle('textright')
     textrightstyle.fontSize = 12
+    formation_session = FormationSession.objects.get(id=formation_id)
 
-    textright = Paragraph("Itinéraires par les transports en commun : " + "<br/>" + "<br/>" +
+    textright = (Paragraph("Itinéraires par les transports en commun : " + "<br/>" + "<br/>" +
                           "<font color='blue'><link href='https://www.ratp.fr/itineraires'>"
                           "https://www.ratp.fr/itineraires</link></font>" + "<br/>",
-                          textrightstyle)
+                          textrightstyle) if not formation_session.foad else "")
     textrighttwo = Paragraph("Règlement intérieur de formation : " + "<br/>" + "<br/>" +
                              "<font color='blue'><link href='https://mill-forma.fr/wp-content/uploads/2022/05/V2_Reglement-interieur-stagiaires.pdf'>https://mill-forma.fr/wp-content/uploads/2022/05/V2_Reglement-interieur-stagiaires.pdf</link></font>",
                              textrightstyle)
@@ -152,7 +153,7 @@ def _genContenuSecond(width, height):
     leftbottom = Image(
         leftbottomImgPath, leftbottomImgwidth, height * 0.5, kind='proportional')
     res = Table([
-        [lefttop, textright],
+        [lefttop if not formation_session.foad else "", textright],
         [leftbottom, textrighttwo],
     ],
         widthList,
@@ -169,7 +170,7 @@ def _genContenuThird(width, height):
     textstyle = ParagraphStyle('text')
     textstyle.fontSize = 12
     text = Paragraph(
-        "<br/>" + "<br/>" + """Horaires réglementaires : De 08H30 à 12H30 et de 13H30 à 17H30""" + "<br/>" + "<br/>" +
+        "<br/>" + "<br/>" + """Tranches horaires réglementaires : De 08h30 à 12h30 et de 13h30 à 17h30""" + "<br/>" + "<br/>" +
         """Objectifs pédagogiques et opérationnels de la formation : voir programme""" + "<br/>" + "<br/>" +
         """Vous serez accueillis par votre formateur.""" + "<br/>" + "<br/>" +
         """Vous pouvez nous contacter au <b>06 59 02 02 02</b> si vous souhaitez des informations supplémentaires."""
@@ -206,7 +207,7 @@ def _genTableFirst(width, height, formation_id):
     title = Paragraph("<para alignment='center'>Détails de la formation</para>",
                       titlestyle)
     text = Paragraph("<b>Adresse : </b>" + str(formation_session.training_site) + "<br/>" + "<br/>" + "<br/>" +
-                     "Date de début de la formation : " + "Vu avec le formateur" + "<br/>" + "<br/>" +
+                     "Date de début de la formation : " + str(formation_session.date_start) + "<br/>" + "<br/>" +
                      "<b>Horaire du premier jour :</b>" + " Vu avec le formateur",
                      titlestyle)
     res = Table([
@@ -241,7 +242,7 @@ def _genSignature(width, height):
     textright = Paragraph("MILL-FORMA" + "<br/>"
                           + "William Berdugo" + "<br/>",
                           textrightstyle)
-    rightImgPath = 'https://mill-forma.fr/wp-content/uploads/2021/10/si_ca.png'
+    rightImgPath = 'https://mill-forma.fr/wp-content/uploads/2024/01/si_millforma.png'
     rightImgWidth = widthList[1]
     signature = Image(
         rightImgPath, rightImgWidth, height, kind='proportional')

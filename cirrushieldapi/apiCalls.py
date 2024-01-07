@@ -183,7 +183,6 @@ def getTrainee(session_id):
                     trainee.groups.add(user_group)
                     trainee.first_name = trainee_first_name
                     trainee.last_name = trainee_last_name
-                    trainee.email = trainee_email
                     trainee.username = username
                     trainee.save()
 
@@ -200,7 +199,7 @@ def getTrainee(session_id):
 
                 except User.DoesNotExist:
                     trainee_password = User.objects.make_random_password(),
-                    trainee = User.objects.create_user(username=username, email=trainee_email,
+                    trainee = User.objects.create_user(username=username,
                                                        password=str(trainee_password))
                     trainee.first_name = trainee_first_name
                     trainee.last_name = trainee_last_name

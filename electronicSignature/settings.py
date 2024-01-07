@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'pdfDossier',
 ]
-SITE_ID = config('SITE_ID')
+SITE_ID = 4
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -164,16 +164,13 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
 
-CORS_ALLOWED_ORIGINS = [
-    "http://millforma-admin.fr/",
-    "https://millforma-admin.fr/",
-    "http://localhost:8080",
-]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 CSP_DEFAULT_SRC = ("'none'",)
 CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com', 'cdn.datatables.net', 'stackpath.bootstrapcdn.com',"'unsafe-inline'",)
-CSP_SCRIPT_SRC = ("'self'",'documentcloud.adobe.com','viewlicense.adobe.io',"'unsafe-inline'","'unsafe-eval'",)
+CSP_SCRIPT_SRC = ("'self'",'viewlicense.adobe.io/viewsdklicense/jwt','documentcloud.adobe.com','viewlicense.adobe.io',"'unsafe-inline'","'unsafe-eval'",)
 CSP_FONT_SRC = ("'self'", 'fonts.gstatic.com', 'fonts.googleapis.com',"'unsafe-inline'",)
 CSP_IMG_SRC = ("'self'","'unsafe-inline'",)
-CSP_CONNECT_SRC = ("'self'", 'millforma-admin.fr',"'unsafe-inline'","'unsafe-eval'",)
+CSP_CONNECT_SRC = ("'self'",'viewlicense.adobe.io','documentcloud.adobe.com', 'millforma-admin.fr',"'unsafe-inline'","'unsafe-eval'",)
 CSP_FRAME_SRC = ("'self'", 'documentcloud.adobe.com', "'unsafe-inline'","'unsafe-eval'",)
 CSP_INCLUDE_NONCE_IN = ("script-src",)

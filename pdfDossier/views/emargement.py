@@ -235,7 +235,7 @@ def _genSignature(width, height, formation_id):
                           + "William Berdugo" + "<br/>",
                           textrightstyle)
 
-    rightImgPath = 'https://mill-forma.fr/wp-content/uploads/2021/10/si_ca.png'
+    rightImgPath = 'https://mill-forma.fr/wp-content/uploads/2024/01/si_millforma.png'
     rightImgWidth = widthList[1] * 0.5
 
     textleft = Paragraph("Le formateur" + "<br/>"
